@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MDFriday/home.md",
+                "file": "MDFriday/hugo.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "home"
+              "title": "hugo"
             }
           }
         ]
@@ -139,14 +139,14 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MDFriday/home.md"
+                "file": "MDFriday/hugo.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of home"
+              "title": "Outline of hugo"
             }
           },
           {
-            "id": "d541a7582dc2f154",
+            "id": "7e3b7de861e4573a",
             "type": "leaf",
             "state": {
               "type": "Friday",
@@ -156,7 +156,7 @@
             }
           },
           {
-            "id": "adbfc49906f71c1a",
+            "id": "a208286acaa94679",
             "type": "leaf",
             "state": {
               "type": "Friday",
@@ -183,8 +183,19 @@
       "mdfriday:Create new Friday note": false
     }
   },
-  "active": "adbfc49906f71c1a",
+  "active": "08cf6bfba08ab52f",
   "lastOpenFiles": [
+    "MDFriday/home.md",
+    "MDFriday/theme-initio/content/posts/2.md",
+    "MDFriday/theme-initio/content/posts/12.md",
+    "MDFriday/theme-initio/content/posts/1.md",
+    "MDFriday/theme-initio/content/about/contact.md",
+    "MDFriday/theme-initio/content/about/me.md",
+    "MDFriday/theme-initio/content/posts/10.md",
+    "MDFriday/theme-initio/content/posts/11.md",
+    "MDFriday/hugo.md",
+    "MDFriday/theme-initio/README.md",
+    "MDFriday/theme-initio/content/subheader.md",
     "MDFriday/theme-initio/static/downloads/banner_sun_full.jpeg.zip",
     "MDFriday/theme-initio/static/downloads",
     "MDFriday/theme-initio/content/services/service2.md",
@@ -205,24 +216,13 @@
     "MDFriday/theme-initio/content/social/social2.md",
     "MDFriday/theme-initio/content/social/social6.md",
     "MDFriday/theme-initio/content/social/social11.md",
-    "MDFriday/theme-initio/content/social/social9.md",
-    "MDFriday/theme-initio/content/social/social10.md",
-    "MDFriday/theme-initio/content/social/social8.md",
     "MDFriday/theme-initio/content/social",
-    "MDFriday/theme-initio/content/about/me.md",
-    "MDFriday/theme-initio/content/about/contact.md",
     "MDFriday/theme-initio/content/about",
-    "MDFriday/theme-initio/content/posts/2.md",
-    "MDFriday/theme-initio/content/posts/6.md",
-    "MDFriday/theme-initio/content/posts/7.md",
-    "MDFriday/theme-initio/content/posts/3.md",
-    "MDFriday/theme-initio/content/posts/8.md",
     "MDFriday/theme-initio/content/posts",
     "MDFriday/theme-initio/content/clients",
     "MDFriday/theme-initio/static/banner_mountain.jpeg",
     "MDFriday/theme-initio/static/me.png",
     "MDFriday/theme-initio/static",
-    "MDFriday/theme-initio/content/mdfriday.jpeg",
-    "MDFriday/theme-initio/content"
+    "MDFriday/theme-initio/content/mdfriday.jpeg"
   ]
 }

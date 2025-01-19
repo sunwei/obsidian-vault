@@ -6083,6 +6083,7 @@ var FileInfo = class {
       yield this.app.fileManager.processFrontMatter(file, (frontmatter) => {
         frontmatter[key] = value;
       });
+      yield new Promise((resolve) => setTimeout(resolve, 100));
     });
   }
   hasFridayPluginEnabled() {
@@ -7625,6 +7626,7 @@ var WebPreviewModal = class extends import_obsidian8.Modal {
 var path3 = __toESM(require("path"));
 var supportedImageExtensions = ["png", "jpg", "jpeg", "gif", "svg", "bmp", "webp"];
 var supportedCompressionExtensions = ["zip"];
+var NEW_ID = "-1";
 var Hugoverse = class {
   constructor(plugin) {
     this.manifestConfig = null;
@@ -7700,14 +7702,10 @@ ${errors.join("\n")}`, 8e3);
         callback(0);
         return errors;
       }
+      const activeFiles = [];
       try {
         callback(1);
-        const siteId = yield this.createSite();
-        if (siteId === "" || siteId === void 0) {
-          return "";
-        }
-        callback(10);
-        yield this.plugin.fileInfo.updateFrontMatter(FM_SITE_ID, siteId);
+        yield this.handleSite();
         callback(15);
         const folder = this.plugin.app.vault.getAbstractFileByPath(this.plugin.fileInfo.getProjFolder());
         if (folder instanceof import_obsidian9.TFolder) {
@@ -7731,12 +7729,8 @@ ${errors.join("\n")}`, 8e3);
               if (currentFile instanceof import_obsidian9.TFile) {
                 if (currentFile.extension === "md") {
                   const fileProcessing = (() => __async(this, null, function* () {
-                    const postId = yield this.createPost(currentFile);
-                    if (postId === "")
-                      return;
-                    const sitePostId = yield this.createSitePost(siteId, postId, currentFile);
-                    if (sitePostId === "")
-                      return;
+                    yield this.handlePost(currentFile);
+                    activeFiles.push(currentFile.path);
                     processedFiles++;
                     const progress = 45 + 50 * (processedFiles / totalFiles);
                     callback(progress);
@@ -7744,12 +7738,8 @@ ${errors.join("\n")}`, 8e3);
                   filePromises.push(fileProcessing);
                 } else if (supportedImageExtensions.includes(currentFile.extension) || supportedCompressionExtensions.includes(currentFile.extension)) {
                   const imageProcessing = (() => __async(this, null, function* () {
-                    const resourceId = yield this.createResource(currentFile);
-                    if (resourceId === "")
-                      return;
-                    const sitePostId = yield this.createSiteResource(siteId, resourceId, currentFile);
-                    if (sitePostId === "")
-                      return;
+                    yield this.handleResource(currentFile);
+                    activeFiles.push(currentFile.path);
                     processedFiles++;
                     const progress = 45 + 50 * (processedFiles / totalFiles);
                     callback(progress);
@@ -7760,13 +7750,13 @@ ${errors.join("\n")}`, 8e3);
             }))(file);
           });
           yield Promise.all(filePromises);
-          yield new Promise((resolve) => setTimeout(resolve, 3e3));
         } else {
           console.warn(`Path "${this.plugin.fileInfo.getContentFolder()}" is not a folder.`);
           new import_obsidian9.Notice(`Path "${this.plugin.fileInfo.getContentFolder()}" is not a folder.`, 5e3);
           return "";
         }
-        const preUrl = yield this.previewSite(siteId);
+        yield this.removeDisappearedFiles(activeFiles);
+        const preUrl = yield this.previewSite(this.plugin.fileInfo.getSiteId());
         if (preUrl == "") {
           throw new Error("Failed to generate preview.");
         }
@@ -7781,6 +7771,101 @@ ${errors.join("\n")}`, 8e3);
         callback(0);
         return "";
       }
+    });
+  }
+  removeDisappearedFiles(activeFiles) {
+    return __async(this, null, function* () {
+      const removedPaths = this.plugin.store.getRemovedPaths(activeFiles);
+      const siteId = this.plugin.fileInfo.getSiteId();
+      try {
+        for (const path4 of removedPaths) {
+          const fileId = this.plugin.store.getAssociatedId(siteId, path4);
+          const fileType = this.plugin.store.getAssociatedType(siteId, path4);
+          const res = yield this.deleteEntity(fileType, fileId);
+          if (res) {
+            this.plugin.store.removeFileFromProject(siteId, path4);
+          }
+        }
+      } catch (error) {
+        console.error(error.toString());
+      }
+    });
+  }
+  handleSite() {
+    return __async(this, null, function* () {
+      let siteId = this.plugin.fileInfo.getSiteId();
+      if (Number(siteId) <= 0) {
+        siteId = yield this.createSite(NEW_ID);
+        if (siteId === "" || siteId === void 0) {
+          throw new Error("Failed to create site.");
+        }
+        this.plugin.store.createProject(siteId, this.plugin.app.workspace.getActiveFile());
+        yield this.plugin.fileInfo.updateFrontMatter(FM_SITE_ID, siteId);
+      } else {
+        this.plugin.store.loadProject(siteId);
+        const siteUpdated = yield this.plugin.store.updateProject(siteId, this.plugin.app.workspace.getActiveFile());
+        if (siteUpdated) {
+          const uid = yield this.createSite(siteId);
+          if (uid === "" || uid === void 0 || uid !== siteId) {
+            throw new Error("Failed to update site.");
+          }
+        }
+      }
+      return;
+    });
+  }
+  handlePost(file) {
+    return __async(this, null, function* () {
+      const siteId = this.plugin.fileInfo.getSiteId();
+      const found = this.plugin.store.isFileInProject(siteId, file.path);
+      if (!found) {
+        const postId = yield this.createPost(NEW_ID, file);
+        if (postId === "") {
+          throw new Error("Failed to create post in site: " + siteId);
+        }
+        const sitePostId = yield this.createSitePost(siteId, postId, file);
+        if (sitePostId === "") {
+          throw new Error("Failed to create site post for site: " + siteId + ", post: " + postId);
+        }
+        this.plugin.store.addFileToProject(siteId, postId, sitePostId, "SitePost", file);
+      } else {
+        const postId = this.plugin.store.getFileId(siteId, file.path);
+        const updated = yield this.plugin.store.updateFileInProject(siteId, postId, file);
+        if (updated) {
+          const uid = yield this.createPost(postId, file);
+          if (uid === "" || uid != postId) {
+            throw new Error("Failed to update post: " + postId);
+          }
+        }
+      }
+      return;
+    });
+  }
+  handleResource(file) {
+    return __async(this, null, function* () {
+      const siteId = this.plugin.fileInfo.getSiteId();
+      const found = this.plugin.store.isFileInProject(siteId, file.path);
+      if (!found) {
+        const resourceId = yield this.createResource(NEW_ID, file);
+        if (resourceId === "") {
+          throw new Error("Failed to create resource in site: " + siteId);
+        }
+        const siteResourceId = yield this.createSiteResource(siteId, resourceId, file);
+        if (siteResourceId === "") {
+          throw new Error("Failed to create site resource for site: " + siteId + ", resource: " + resourceId);
+        }
+        this.plugin.store.addFileToProject(siteId, resourceId, siteResourceId, "SiteResource", file);
+      } else {
+        const resourceId = this.plugin.store.getFileId(siteId, file.path);
+        const updated = yield this.plugin.store.updateFileInProject(siteId, resourceId, file);
+        if (updated) {
+          const uid = yield this.createResource(resourceId, file);
+          if (uid === "" || uid != resourceId) {
+            throw new Error("Failed to update post: " + resourceId);
+          }
+        }
+      }
+      return;
     });
   }
   sendSiteRequest(action, siteId) {
@@ -7824,10 +7909,35 @@ ${errors.join("\n")}`, 8e3);
       return this.sendSiteRequest("deploy", siteId);
     });
   }
-  createSite() {
+  deleteEntity(entityType, id) {
+    return __async(this, null, function* () {
+      const deleteUrl = `${this.apiUrl}/api/content/delete`;
+      let body = new FormData();
+      body.append("id", id);
+      body.append("type", entityType);
+      body.append("status", "");
+      const boundary = "----WebKitFormBoundary" + Math.random().toString(36).substring(2, 9);
+      const arrayBufferBody = yield this.formDataToArrayBuffer(body, boundary);
+      const response = yield (0, import_obsidian9.requestUrl)({
+        url: deleteUrl,
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${yield this.user.getToken()}`,
+          "Content-Type": `multipart/form-data; boundary=${boundary}`
+        },
+        body: arrayBufferBody
+      });
+      if (response.status !== 200) {
+        throw new Error(`Entity ${entityType}, id: ${id} deletion failed: ${response.text}`);
+      }
+      return true;
+    });
+  }
+  createSite(id) {
     return __async(this, null, function* () {
       const createSiteUrl = `${this.apiUrl}/api/content?type=Site`;
       let body = new FormData();
+      body.append("id", id);
       body.append("title", this.plugin.fileInfo.getBaseName());
       body.append("description", this.plugin.fileInfo.getDescription());
       body.append("base_url", "/");
@@ -7892,6 +8002,7 @@ ${errors.join("\n")}`, 8e3);
           }
         }
         let body = new FormData();
+        body.append("id", NEW_ID);
         body.append("site", `/api/content?type=Site&id=${siteId}`);
         body.append(`${entityType === "SitePost" ? "post" : "resource"}`, `/api/content?type=${entityType === "SitePost" ? "Post" : "Resource"}&id=${entityId}`);
         body.append("path", path4);
@@ -7917,13 +8028,14 @@ ${errors.join("\n")}`, 8e3);
       }
     });
   }
-  createPost(file) {
+  createPost(id, file) {
     return __async(this, null, function* () {
       try {
         const createPostUrl = `${this.apiUrl}/api/content?type=Post`;
         const fileContent = yield this.app.vault.read(file);
         let body = new FormData();
         body.append("type", "Post");
+        body.append("id", id);
         body.append("title", file.name);
         body.append("author", this.plugin.user.getName());
         body.append("params", "key: value");
@@ -7949,14 +8061,16 @@ ${errors.join("\n")}`, 8e3);
       }
     });
   }
-  createResource(file) {
+  createResource(id, file) {
     return __async(this, null, function* () {
       try {
         const createResourceUrl = `${this.apiUrl}/api/content?type=Resource`;
         const fileContent = yield this.app.vault.readBinary(file);
         let body = new FormData();
         body.append("type", "Resource");
+        body.append("id", id);
         body.append("name", file.name);
+        body.append("size", fileContent.byteLength.toString());
         const fileExtension = file.extension;
         let mimeType = "application/octet-stream";
         if (fileExtension) {
@@ -8051,6 +8165,164 @@ ${value}\r
   }
 };
 
+// src/store.ts
+var crypto = __toESM(require("crypto"));
+var Store = class {
+  constructor(plugin) {
+    this.plugin = plugin;
+  }
+  loadProject(projectId) {
+    this.currentProject = this.projectJson(this.projectKey(projectId));
+  }
+  saveProjects(key, data) {
+    if (this.debounceSaveProjects) {
+      clearTimeout(this.debounceSaveProjects);
+    }
+    this.debounceSaveProjects = setTimeout(() => {
+      localStorage.setItem(key, JSON.stringify(data));
+      console.log("Projects saved");
+    }, 1e3);
+  }
+  projectKey(projectId) {
+    return `mdf_proj_${projectId}`;
+  }
+  projectJson(projectKey) {
+    const data = localStorage.getItem(projectKey);
+    return data ? JSON.parse(data) : {};
+  }
+  createProject(projectId, file) {
+    if (localStorage.getItem(this.projectKey(projectId)) !== null) {
+      throw new Error(`project ID ${projectId} already exists`);
+    }
+    this.currentProject = {
+      project_id: projectId,
+      created_at: file.stat.ctime,
+      updated_at: file.stat.mtime,
+      hash: "",
+      files: {}
+    };
+    this.saveProject(projectId, file);
+  }
+  saveProject(projectId, file) {
+    this.getFileHash(file).then((hash) => {
+      this.currentProject.hash = hash;
+      this.saveProjects(this.projectKey(projectId), this.currentProject);
+    });
+  }
+  updateProject(projectId, file) {
+    return __async(this, null, function* () {
+      const project = this.currentProject;
+      if (!project) {
+        throw new Error(`Project ID ${projectId} does not exist`);
+      }
+      if (yield this.hasUpdated(project, file)) {
+        this.saveProject(projectId, file);
+        return true;
+      }
+      return false;
+    });
+  }
+  getRemovedPaths(activePaths) {
+    const filePaths = Object.keys(this.currentProject.files);
+    return filePaths.filter((path4) => !activePaths.includes(path4));
+  }
+  isFileInProject(projectId, filePath) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    return project.files[filePath] !== void 0;
+  }
+  getFileId(projectId, filePath) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    return project.files[filePath].file_id;
+  }
+  getAssociatedId(projectId, filePath) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    return project.files[filePath].associated_id;
+  }
+  getAssociatedType(projectId, filePath) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    return project.files[filePath].associated_type;
+  }
+  addFileToProject(projectId, fileId, aid, aType, file) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    this.saveFileToProject(project, fileId, aid, aType, file);
+  }
+  saveFileToProject(project, fileId, aid, aType, file) {
+    this.getFileHash(file).then((hash) => {
+      project.files[file.path] = {
+        file_id: fileId,
+        associated_id: aid,
+        associated_type: aType,
+        path: file.path,
+        created_at: file.stat.ctime,
+        updated_at: file.stat.mtime,
+        hash
+      };
+      this.saveProjects(this.projectKey(project.project_id), project);
+    });
+  }
+  removeFileFromProject(projectId, filePath) {
+    const project = this.currentProject;
+    if (!project) {
+      throw new Error(`Project ID ${projectId} does not exist`);
+    }
+    if (project.files[filePath]) {
+      delete project.files[filePath];
+      this.saveProjects(this.projectKey(projectId), project);
+    } else {
+      throw new Error(`File path ${filePath} does not exist in project ${projectId}`);
+    }
+  }
+  updateFileInProject(projectId, fileId, file) {
+    return __async(this, null, function* () {
+      const project = this.currentProject;
+      if (!project) {
+        throw new Error(`Project ID ${projectId} does not exist`);
+      }
+      const fileEntity = project.files[file.path];
+      if (!fileEntity) {
+        throw new Error(`File path ${fileId} does not exist in project ${projectId}`);
+      }
+      if (yield this.hasUpdated(fileEntity, file)) {
+        this.saveFileToProject(project, fileId, fileEntity.associated_id, fileEntity.associated_type, file);
+        return true;
+      }
+      return false;
+    });
+  }
+  hasUpdated(entity, file) {
+    return __async(this, null, function* () {
+      if (entity["created_at"] == file.stat.ctime && entity["updated_at"] == file.stat.mtime) {
+        return false;
+      }
+      return entity["created_at"] !== file.stat.ctime || entity["updated_at"] < file.stat.mtime || entity["hash"] !== (yield this.getFileHash(file));
+    });
+  }
+  getFileHash(file) {
+    return __async(this, null, function* () {
+      const hash = crypto.createHash("sha256");
+      const fileBuffer = yield this.plugin.app.vault.readBinary(file);
+      const buffer = Buffer.from(fileBuffer);
+      hash.update(buffer);
+      return hash.digest("hex");
+    });
+  }
+};
+
 // src/main.ts
 var DEFAULT_SETTINGS = {
   username: "",
@@ -8081,6 +8353,7 @@ var FridayPlugin2 = class extends import_obsidian10.Plugin {
       this.fileInfo = new FileInfo();
       this.apiUrl = false ? API_URL_DEV : API_URL_PRO;
       this.user = new User(this);
+      this.store = new Store(this);
       this.hugoverse = new Hugoverse(this);
     });
   }

@@ -1,6 +1,6 @@
 ---
 friday-plugin: enabled
-site: "11"
+site: "9"
 theme: github.com/mdfriday/theme-initio
 project: MDFriday/theme-initio
 defaultLanguage: zh

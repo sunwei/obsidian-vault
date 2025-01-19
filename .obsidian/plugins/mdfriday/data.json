@@ -1,7 +1,0 @@
-{
-  "username": "me@sunwei.xyz",
-  "password": "wayde191",
-  "userToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImV4cCI6IjIwMjUtMDItMTRUMjA6NTM6MjMuMjQ0Mjg2OTM3KzA4OjAwIiwiaWF0IjpudWxsLCJpc3MiOm51bGwsImp0aSI6bnVsbCwibmJmIjpudWxsLCJzdWIiOm51bGwsInVzZXIiOiJtZUBzdW53ZWkueHl6In0.979BRB4U4cgVKhI82GMQi9UeGGKVyGYnsTPBOn7ztPc",
-  "rootDomain": "",
-  "netlifyToken": ""
-}

@@ -1,6 +1,6 @@
 ---
 friday-plugin: enabled
-site: "8"
+site: "16"
 theme: github.com/mdfriday/hugo-book
 project: MDFriday/hugo-book
 defaultLanguage: en
