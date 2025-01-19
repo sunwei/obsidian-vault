@@ -1,10 +1,10 @@
 # username
 
-Sun Wei
+韦德说
 
 # description
 
-For any business inquiries, please contact us at
+如有任何商务咨询，请通过以下邮箱联系我们：
 
 # email
 
