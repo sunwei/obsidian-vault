@@ -1,6 +1,6 @@
 +++
 title = "twitter"
-url = "https://twitter.com/nickname"
+url = "https://x.com/szm_tech"
 weight = 4
 +++
 

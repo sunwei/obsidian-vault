@@ -1,6 +1,6 @@
 +++
 title = "weibo"
-url = "https://sina.com/nickname"
+url = "https://weibo.com/u/6991066931"
 weight = 9
 +++
 

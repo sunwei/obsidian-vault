@@ -1,6 +1,6 @@
 +++
 title = "bilibili"
-url = "https://bilibili.com/nickname"
+url = "https://space.bilibili.com/491786455"
 weight = 11
 +++
 

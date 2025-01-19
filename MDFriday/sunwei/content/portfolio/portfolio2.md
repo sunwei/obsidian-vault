@@ -1,7 +1,30 @@
 +++
-title = "Pure ipsum - development services for people"
-image = "images/s1.jpg"
-weight = 1
+title = "定制 Hugo 主题并适配 MDFriday"
+image = "portfolio/hugo-book.png"
+weight = 2
 +++
 
-I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.
+### 成功案例 2：定制 Hugo 主题并适配 MDFriday
+
+#### 简述：
+我定制了 **Hugo Book** 主题并将其适配至 **MDFriday**，使得用户可以通过 **Obsidian** 来编写书籍或文档，并将其自动转化为专业的在线书籍或文档网站。这一解决方案大大简化了书籍和文档发布的过程，适合创作者、作家、技术作者等群体。
+
+#### 详细描述：
+为了让创作者能够更高效地创建并发布书籍和文档内容，我在 **Hugo Book** 主题的基础上进行了定制，并与 **MDFriday** 进行了完美的适配。这一方案的核心优势在于通过 **Obsidian** 写作并结合 Hugo 的高效渲染，用户可以轻松地将自己的书籍或文档在线展示，而无需关注复杂的建站过程。以下是该项目的关键组成部分：
+
+1. **Hugo Book 主题定制**  
+   **Hugo Book** 是一个专为书籍、文档和知识库设计的 Hugo 主题，具有简洁的布局和易于导航的功能。为了满足用户的需求，我对该主题进行了定制，确保其兼容 MDFriday 后端服务，并根据用户的特定需求优化了主题设计。用户可以通过自定义样式来调整页面布局和外观，使其更符合个人或品牌的风格。
+
+2. **MDFriday 适配与集成**  
+   将 Hugo Book 主题与 **MDFriday** 后端服务进行适配，使得 **Obsidian** 用户能够直接将书籍内容（Markdown 文件）上传并渲染为网站。这一集成让创作者无需再学习复杂的静态网站生成工具，专注于内容创作和写作，最终实现自动化的内容发布。
+
+3. **Obsidian 写作与发布流程简化**  
+   用户通过 **Obsidian** 撰写书籍或文档内容，并利用 **Friday 插件** 将这些内容上传至 Hugoverse。MDFriday 会自动生成静态页面，并使用 Hugo Book 主题进行展示，形成完整的线上书籍或文档网站。无论是长篇小说、技术手册，还是知识分享，用户都能在几分钟内将自己的作品发布到互联网上。
+
+4. **易于使用的定制化解决方案**  
+   这一定制化方案简化了创作者的工作流程，使得他们无需技术背景即可轻松管理和发布书籍或文档内容。通过这种方式，创作者可以专注于写作，而无需担心网站的搭建和维护问题。
+
+通过这项服务，我帮助创作者和技术作者打造了一个无需编码、即写即发的书籍和文档发布平台，解决了传统写作与发布过程中的繁琐步骤。无论是个人博客、专业书籍还是文档库，都能以最简便的方式实现。
+
+项目地址：
+- [Hugo Book 主题](https://github.com/mdfriday/hugo-book)
