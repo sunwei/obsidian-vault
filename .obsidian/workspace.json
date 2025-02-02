@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "37ece055515b637a",
+        "id": "cfc8d34602f7091c",
         "type": "tabs",
         "children": [
           {
-            "id": "08cf6bfba08ab52f",
+            "id": "84343972e7cd8385",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MDFriday/home.md",
+                "file": "MDFriday/friday/Friday Help.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "home"
+              "title": "Friday Help"
             }
           }
         ]
@@ -40,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -139,24 +140,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MDFriday/hugo.md"
+                "file": "MDFriday/friday/Friday Help.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of hugo"
+              "title": "Outline of Friday Help"
             }
           },
           {
-            "id": "7e3b7de861e4573a",
-            "type": "leaf",
-            "state": {
-              "type": "Friday",
-              "state": {},
-              "icon": "dice-5",
-              "title": "Friday Service"
-            }
-          },
-          {
-            "id": "a208286acaa94679",
+            "id": "09f8c370381ca18d",
             "type": "leaf",
             "state": {
               "type": "Friday",
@@ -166,7 +160,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -183,53 +177,53 @@
       "mdfriday:Create new Friday note": false
     }
   },
-  "active": "08cf6bfba08ab52f",
+  "active": "84343972e7cd8385",
   "lastOpenFiles": [
-    "MDFriday/theme-initio/content/about/me.md",
-    "MDFriday/theme-initio/content/about/contact.md",
-    "MDFriday/theme-initio/content/privacy_terms.md",
-    "MDFriday/theme-initio/content/posts/9.md",
-    "MDFriday/theme-initio/content/posts/8.md",
-    "MDFriday/theme-initio/content/posts/7.md",
-    "MDFriday/theme-initio/content/posts/6.md",
-    "MDFriday/theme-initio/content/posts/5.md",
-    "MDFriday/theme-initio/content/posts/4.md",
-    "MDFriday/theme-initio/content/posts/3.md",
-    "MDFriday/theme-initio/content/posts/2.md",
-    "MDFriday/home.md",
-    "MDFriday/sunwei/content/posts/images/sunwei.xyz.png",
-    "MDFriday/sunwei/content/posts/images",
-    "MDFriday/sunwei/content/posts/untitled folder",
-    "MDFriday/sunwei/content/posts/001.md",
-    "MDFriday/sunwei/content/downloads/download1.md",
-    "MDFriday/theme-initio/content/downloads/download2.md",
-    "MDFriday/initio-demo.md",
-    "MDFriday/sunwei/content/downloads",
-    "MDFriday/hugo.md",
-    "MDFriday/sunwei/content/downloads",
-    "MDFriday/theme-initio/content/downloads/download1.md",
-    "MDFriday/theme-initio/static/downloads/banner_sun_full.jpeg.zip",
-    "MDFriday/theme-initio/static/downloads",
-    "MDFriday/theme-initio/content/services/service2.md",
-    "MDFriday/theme-initio/content/services/service1.md",
-    "MDFriday/theme-initio/content/services",
-    "MDFriday/theme-initio/content/downloads",
-    "MDFriday/theme-initio/content/portfolio/portfolio1.md",
-    "MDFriday/theme-initio/content/portfolio/portfolio2.md",
-    "MDFriday/theme-initio/content/portfolio/portfolio3.md",
-    "MDFriday/theme-initio/content/portfolio",
-    "MDFriday/theme-initio/content/social/social1.md",
-    "MDFriday/theme-initio/content/social/social5.md",
-    "MDFriday/theme-initio/content/social/social4.md",
-    "MDFriday/theme-initio/content/social",
-    "MDFriday/theme-initio/static/banner_mountain.jpeg",
-    "MDFriday/theme-initio/static/me.png",
-    "MDFriday/theme-initio/content/mdfriday.jpeg",
-    "MDFriday/sunwei/static/portfolio/hugo-book.png",
-    "MDFriday/sunwei/static/portfolio/screenshot.png",
-    "MDFriday/sunwei/static/portfolio/mdfriday.png",
-    "MDFriday/sunwei/static/portfolio/mdfriday-motto.png",
-    "MDFriday/sunwei/content/about/wechat.jpeg",
-    "MDFriday/sunwei/content/mdfriday.jpeg"
+    "MDFriday/friday/Friday Help.md",
+    "MDFriday/Untitled Friday Site.md",
+    "MDFriday/friday/help/content/zh/book/practices/collapsed/3rd-level/_index.md",
+    "MDFriday/friday/help/content/zh/book/practices/collapsed/3rd-level/4th-level.md",
+    "MDFriday/friday/help/content/zh/book/practices/table-of-contents/without-toc.md",
+    "MDFriday/friday/help/content/zh/book/practices/table-of-contents/with-toc.md",
+    "MDFriday/friday/help/content/zh/book/practices/table-of-contents/_index.md",
+    "MDFriday/friday/help/content/zh/book/practices/collapsed/_index.md",
+    "MDFriday/friday/help/content/zh/book/practices/collapsed/3rd-level",
+    "MDFriday/friday/help/content/zh/book/practices/table-of-contents",
+    "MDFriday/friday/help/content/zh/book/practices/collapsed",
+    "MDFriday/friday/help/content/zh/book/practices/_index.md",
+    "MDFriday/friday/help/content/zh/book/practices",
+    "MDFriday/friday/help/content/zh/book/themes/saasify.md",
+    "MDFriday/friday/help/content/zh/book/example/table-of-contents/_index.md",
+    "MDFriday/friday/help/content/zh/book/themes/tabs.md",
+    "MDFriday/friday/help/content/zh/book/themes/mermaid.md",
+    "MDFriday/friday/help/content/zh/book/themes/katex.md",
+    "MDFriday/friday/help/content/zh/book/themes/hints.md",
+    "MDFriday/friday/help/content/zh/book/themes/details.md",
+    "MDFriday/friday/help/content/zh/book/themes/columns.md",
+    "MDFriday/friday/help/content/zh/book/themes/buttons.md",
+    "MDFriday/friday/help/content/zh/book/themes/_index.md",
+    "MDFriday/friday/help/content/zh/book/themes",
+    "MDFriday/friday/help/content/zh/book/shortcodes/_index.md",
+    "MDFriday/friday/help/content/zh/links.md",
+    "MDFriday/friday/help/content/zh/_index.md",
+    "MDFriday/friday/help/content/zh/book/example/collapsed/3rd-level/_index.md",
+    "MDFriday/friday/help/content/zh/book/example/collapsed/3rd-level/4th-level.md",
+    "MDFriday/friday/help/content/zh/book/example/collapsed/_index.md",
+    "MDFriday/friday/help/content/zh/book/example/table-of-contents/without-toc.md",
+    "MDFriday/friday/help/content/zh/book/example/collapsed/3rd-level",
+    "MDFriday/friday/help/content/zh/book/example/table-of-contents",
+    "MDFriday/friday/help/content/zh/book/example/collapsed",
+    "MDFriday/friday/help/content/zh/book/shortcodes",
+    "MDFriday/friday/help/content/zh/book/example",
+    "MDFriday/friday/proj/static/images/company/investor-4.svg",
+    "MDFriday/friday/proj/static/images/company/investor-3.svg",
+    "MDFriday/friday/proj/static/images/company/investor-2.svg",
+    "MDFriday/friday/proj/static/images/company/investor-1.svg",
+    "MDFriday/friday/proj/static/images/company/exec-3.svg",
+    "MDFriday/friday/proj/static/images/company/exec-2.svg",
+    "MDFriday/friday/proj/static/images/company/exec-1.svg",
+    "MDFriday/friday/proj/static/images/feature-1.svg",
+    "MDFriday/friday/proj/static/images/feature-3.svg",
+    "MDFriday/friday/proj/static/images/logo.svg"
   ]
 }

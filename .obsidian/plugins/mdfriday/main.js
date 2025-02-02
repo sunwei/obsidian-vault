@@ -2761,7 +2761,7 @@ var FM_PROJ = "project";
 var FM_CONTENT = "content";
 var FM_CONTENT_EMPTY = "empty";
 var FM_THEME = "theme";
-var FM_DEFAULT_THEME = "github.com/mdfriday/theme-long-teng";
+var FM_DEFAULT_THEME = "github.com/mdfriday/theme-hero";
 var FM_MENU = "menu";
 var FM_DEFAULT_LANGUAGE = "defaultLanguage";
 var FM_GA = "ga";
@@ -6099,7 +6099,7 @@ var FileInfo = class {
     return contentPath !== FM_CONTENT_EMPTY && contentPath !== null && this.isContentFolderExists;
   }
   getContentFolder() {
-    return path.join(this.getProjFolder(), FM_CONTENT);
+    return path.posix.join(this.getProjFolder(), FM_CONTENT);
   }
   getProjFolder() {
     var _a, _b;
@@ -6532,7 +6532,7 @@ function instance2($$self, $$props, $$invalidate) {
         let currentPath = "";
         for (const part of directoryPath.split("/")) {
           if (part) {
-            currentPath = path2.join(currentPath, part);
+            currentPath = path2.posix.join(currentPath, part);
             if (!(yield adapter.stat(currentPath))) {
               yield adapter.mkdir(currentPath);
             }
@@ -8180,7 +8180,6 @@ var Store = class {
     }
     this.debounceSaveProjects = setTimeout(() => {
       localStorage.setItem(key, JSON.stringify(data));
-      console.log("Projects saved");
     }, 1e3);
   }
   projectKey(projectId) {
@@ -8486,5 +8485,3 @@ JSZip uses the library pako released under the MIT license :
 https://github.com/nodeca/pako/blob/main/LICENSE
 */
 /*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
-
-/* nosourcemap */
