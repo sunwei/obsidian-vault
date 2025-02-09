@@ -11,4 +11,4 @@ It features a clean and modern design, perfect for showcasing all aspects of a S
 
 ##### cover
 
-home.png
+sassify-post-home.png

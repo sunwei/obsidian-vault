@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 359.5
   },
   "right": {
     "id": "146f8343ad591ff7",
@@ -179,7 +179,9 @@
   },
   "active": "3680a8c9b2a95aa0",
   "lastOpenFiles": [
+    "MDFriday/friday/gallery/content/themes/saasify/index.md",
     "MDFriday/friday/Friday Gallery.md",
+    "MDFriday/friday/gallery/content/themes/saasify/sassify-post-home.png",
     "MDFriday/friday/Friday Help.md",
     "MDFriday/friday/Friday.md",
     "MDFriday/friday/gallery/content/themes/gallery/gallery.png.sb-5b601e4c-o4ayLU",
@@ -194,10 +196,8 @@
     "MDFriday/friday/gallery/content/themes/gallery/home.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/raoul-droog-yMSecCHsIBc-unsplash.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/michael-sum-LEpfefQf4rU-unsplash.jpg",
-    "MDFriday/friday/gallery/content/themes/gallery/manja-vitolic-gKXKBY-C-Dk-unsplash.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/index.md",
     "MDFriday/friday/gallery/content/themes/gallery",
-    "MDFriday/friday/gallery/content/themes/saasify/index.md",
     "MDFriday/friday/gallery/content/themes/saasify",
     "MDFriday/friday/gallery/content/themes/saasify-/index.md",
     "MDFriday/friday/gallery/content/themes/saasify-",
@@ -223,7 +223,6 @@
     "MDFriday/friday/gallery/content/themes/_index.md",
     "MDFriday/friday/gallery/content/social",
     "MDFriday/friday/gallery/content/private",
-    "MDFriday/friday/gallery/content/links.md",
-    "MDFriday/friday/gallery/content/about.md"
+    "MDFriday/friday/gallery/content/links.md"
   ]
 }
