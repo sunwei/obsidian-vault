@@ -2,14 +2,12 @@
 
 - Features
 - Themes
-- Blog
 - Pricing
 
 ##### footer
 
 - Features
-- Themes
-- About
+- Learn
 - LEGAL
 
 ##### get_started
@@ -20,13 +18,16 @@
 
 - [Pricing](/service/pricing.html)
 
+##### Learn
+
+- [Help](https://help.mdfriday.com)
+- [Themes](https://help.mdfriday.com/book/themes/)
+- [Blog](/posts/)
+- [About](/about/company.html)
+
 ##### Themes
 
-- [Themes](/categories/themes/)
-
-##### Blog
-
-- [Blog](/posts/)
+- [Themes](https://help.mdfriday.com/book/themes/)
 
 ##### Features
 
@@ -34,9 +35,6 @@
 - [Built-In Multilingual Support](/features/global.html)
 - [Robust Technology and Security](/features/technology.html)
 
-##### About
-
-- [About](/about/company.html)
 
 ##### LEGAL
 
