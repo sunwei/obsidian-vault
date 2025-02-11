@@ -5,12 +5,15 @@ description: "Turn markdown docs into website, in minutes."
 
 ##### headline
 
-Turn MD docs to website, in  minutes
+Turn MD into a Pro website in minutes!
 
 ##### sub_headline
 
-Transform your Markdown documents into professional, multilingual websites. 
-With 500+ free themes and powerful shortcodes to enhance your pages, it’s as easy as taking notes.
+Write in Markdown and get a **custom-domain** website in just minutes – **no coding**, **no SEO hassle**. 
+Choose from **500+ professional themes**, publish with **one click**, and stay in **full control of your domain**, hosting, and source code. 
+Supports **multilingual content** out of the box. 
+We also offer a "**no-trace mode**" to erase all intermediate files. 
+**Fast, effortless, and truly yours**.
 
 ##### primary_button_text
 

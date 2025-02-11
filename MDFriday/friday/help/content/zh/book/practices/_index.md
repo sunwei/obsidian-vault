@@ -1,7 +1,7 @@
 ---
 weight: 1
 bookFlatSection: true
-title: "最佳实践"
+title: "快速开始"
 ---
 
 ## 最佳实践

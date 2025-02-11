@@ -1,6 +1,6 @@
 ---
-title: "Your Website in Minutes"
+title: "Your Pro Website in Minutes"
 description: "Turn markdown docs into website, in minutes."
 ---
 
-{{< youtube zIL7IInYd6U >}}
+{{< youtube LiU-FeT7n28 >}}

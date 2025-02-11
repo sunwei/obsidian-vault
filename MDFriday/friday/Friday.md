@@ -1,6 +1,6 @@
 ---
 friday-plugin: enabled
-site: "27"
+site: "30"
 theme: github.com/mdfriday/theme-saasify
 project: MDFriday/friday/proj
 defaultLanguage: en

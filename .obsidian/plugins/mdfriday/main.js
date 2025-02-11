@@ -7624,7 +7624,7 @@ var WebPreviewModal = class extends import_obsidian8.Modal {
 
 // src/hugoverse.ts
 var path3 = __toESM(require("path"));
-var supportedImageExtensions = ["png", "jpg", "jpeg", "gif", "svg", "bmp", "webp"];
+var supportedImageExtensions = ["png", "jpg", "jpeg", "gif", "svg", "bmp", "webp", "ico", "tif", "tiff"];
 var supportedCompressionExtensions = ["zip"];
 var NEW_ID = "-1";
 var Hugoverse = class {
@@ -7891,9 +7891,11 @@ ${errors.join("\n")}`, 8e3);
         let errMsg = `Failed to ${action} site.`;
         if (response.status === 409) {
           errMsg = "Domain is already taken. Please choose a different one by changing the note name.";
+        } else if (response.status === 400) {
+          errMsg = response.json.data[0];
         }
         console.error(`Error generating site ${action}:`, response.text);
-        new import_obsidian9.Notice(errMsg, 5e3);
+        new import_obsidian9.Notice(errMsg, 8e3);
         return "";
       }
       return response.json.data[0];
@@ -7944,7 +7946,6 @@ ${errors.join("\n")}`, 8e3);
       body.append("theme", this.plugin.fileInfo.getThemeName());
       body.append("owner", this.plugin.user.getName());
       body.append("Params", this.plugin.fileInfo.getParams());
-      body.append("working_dir", "");
       body.append("default_content_language", this.plugin.fileInfo.getDefaultLanguage());
       body.append("google_analytics", this.plugin.fileInfo.getGA());
       this.plugin.fileInfo.languages.forEach((lang, index) => {
@@ -8093,6 +8094,13 @@ ${errors.join("\n")}`, 8e3);
               break;
             case "webp":
               mimeType = "image/webp";
+              break;
+            case "ico":
+              mimeType = "image/vnd.microsoft.icon";
+              break;
+            case "tif":
+            case "tiff":
+              mimeType = "image/tiff";
               break;
             case "zip":
               mimeType = "application/zip";
@@ -8485,3 +8493,5 @@ JSZip uses the library pako released under the MIT license :
 https://github.com/nodeca/pako/blob/main/LICENSE
 */
 /*! js-yaml 4.1.0 https://github.com/nodeca/js-yaml @license MIT */
+
+/* nosourcemap */

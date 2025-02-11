@@ -158,9 +158,19 @@
               "icon": "dice-5",
               "title": "Friday Service"
             }
+          },
+          {
+            "id": "a391d970e862a4c7",
+            "type": "leaf",
+            "state": {
+              "type": "Friday",
+              "state": {},
+              "icon": "dice-5",
+              "title": "Friday Service"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
@@ -177,7 +187,7 @@
       "mdfriday:Create new Friday note": false
     }
   },
-  "active": "3680a8c9b2a95aa0",
+  "active": "a391d970e862a4c7",
   "lastOpenFiles": [
     "MDFriday/friday/gallery/content/themes/saasify/index.md",
     "MDFriday/friday/Friday Gallery.md",

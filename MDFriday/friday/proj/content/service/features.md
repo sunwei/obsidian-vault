@@ -4,130 +4,172 @@ title: "Features"
 
 ##### feature_title
 
-Simplify and Empower Your Website Creation
+Create a Website in Minutes, Without the Hassle.
 
 ##### feature_description
 
-With MDFriday, focus solely on your content while we handle everything else! 
-From diverse themes to robust technical support, effortlessly transform your Markdown files into professional websites in no time.
+With MDFriday, focus entirely on writing Markdown—we take care of the rest! 
+No coding, just effortless website creation with full control over your domain, hosting, and data. 
+No need to learn HTML, CSS, or JavaScript.
 
 ##### features
 
-- design
-- global
-- technology
+- speed
+- control
+- privacy
+- simplicity
 
-##### global_title
+##### speed_title
 
-Built-In Multilingual Support
+Launch Your Site in Minutes
 
-##### global_description
+##### speed_description
 
-Reach a global audience with robust multilingual support, all without extra configuration.
+Turn your Markdown files into a fully functional website with a custom domain in just minutes. 
+No technical setup required—just write and publish.
 
-##### global_badge
+##### speed_badge
 
-Global
+Speed
 
-##### global_badgeColor
+##### speed_badgeColor
 
-#2563eb
+#f97316
 
-##### global_image
+##### speed_image
 
 /images/feature-1.svg
 
-##### global_buttonText
+##### speed_buttonText
 
 Learn More
 
-##### global_buttonLink
+##### speed_buttonLink
 
-/features/global.html
+/features/speed.html
 
-##### global_features
+##### speed_features
 
-- Multilingual Capabilities
-- Language Switcher
-- Automatic SEO Optimization
+- Instant Website Creation 
+- Custom Domain in Minutes 
+- One-Click Publishing 
+- No Coding Required
 
-##### global_imagePosition
+##### speed_imagePosition
 
 left
 
-##### design_title
+##### control_title
 
-Rich Themes and Flexible Layouts
+Full Ownership & Flexibility
 
-##### design_description
+##### control_description
 
-While we're actively expanding our library to include 500+ themes, enjoy a variety of beautifully crafted designs, with flexible customization options.
+You own everything — your domain, hosting, and site files. 
+No vendor lock-in, no restrictions. Export your site anytime.
 
-##### design_badge
+##### control_badge
 
-Design
+Control
 
-##### design_badgeColor
+##### control_badgeColor
 
-#7c3aed
+#2563eb
 
-##### design_image
+##### control_image
 
 /images/feature-2.svg
 
-##### design_buttonText
+##### control_buttonText
 
 Learn More
 
-##### design_buttonLink
+##### control_buttonLink
 
-/features/design-system.html
+/features/control.html
 
-##### design_features
+##### control_features
 
-- Hundreds of Themes Coming Soon
-- Shortcode Support
-- Full Customization
+- Own Your Domain & Hosting 
+- Export Site Anytime 
+- Open-Source Flexibility
 
-##### design_imagePosition
+##### control_imagePosition
 
 right
 
-##### technology_title 
+##### privacy_title 
 
-Robust Technology and Security
+Privacy & No-Trace Mode
 
-##### technology_description
+##### privacy_description
 
-With powerful technical backing, focus on your content while we ensure your site is secure, fast, and reliable.
+We respect creators. Your data stays yours, and we offer a no-trace mode to remove all intermediate build files, ensuring complete privacy.
 
-##### technology_badge
+##### privacy_badge
 
-Technology
+Privacy
 
-##### technology_badgeColor
+##### privacy_badgeColor
 
 #16a34a
 
-##### technology_image
+##### privacy_image
 
 /images/feature-3.svg
 
-##### technology_buttonText
+##### privacy_buttonText
 
 Learn More
 
-##### technology_buttonLink
+##### privacy_buttonLink
 
-/features/technology.html
+/features/privacy.html
 
-##### technology_features
+##### privacy_features
 
-- SEO-Friendly
-- High Performance & Security
-- Automatic SSL Certificates
-- Automatic Deployment
+- No Vendor Lock-In
+- No-Trace Mode Available
+- Full Data Ownership
 
-##### technology_imagePosition
+##### privacy_imagePosition
 
 right
+
+##### simplicity_title
+
+No Technical Knowledge Needed
+
+##### simplicity_description
+
+Forget about HTML, CSS, JavaScript, or complicated configurations. Just write in Markdown, and we handle the rest.
+
+##### simplicity_badge
+
+Simplicity
+
+##### simplicity_badgeColor
+
+#ff5722
+
+##### simplicity_image
+
+/images/feature-3.svg
+
+##### simplicity_buttonText
+
+Learn More
+
+##### simplicity_buttonLink
+
+/features/simplicity.html
+
+##### simplicity_features
+
+- No HTML, CSS, or JS Required 
+- Easy-to-Use Interface
+- Fully Automated Setup
+
+##### simplicity_imagePosition
+
+left
