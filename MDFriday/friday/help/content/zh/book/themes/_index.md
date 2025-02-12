@@ -1,7 +1,7 @@
 ---
 weight: 2
 bookFlatSection: true
-title: "主题"
+title: "主题列表"
 ---
 
 # 主题列表
