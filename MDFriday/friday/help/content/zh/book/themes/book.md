@@ -1,5 +1,5 @@
 
-# 1.主题概述#
+# 1.主题概述
 
 “Hugo Book”是一个专为书籍、文档、教程或长篇内容设计的主题。它通过简洁的布局和易于导航的结构，为读者提供良好的阅读体验。支持多种语言。。
 
@@ -29,7 +29,7 @@
 
 - 访问 [hugo book主题演示站点](【obsidian+friday 实现建站自由（老婆从不屑，到帮忙亲测！）】 https://www.bilibili.com/video/BV1GtcuezEvs/?share_source=copy_web&vd_source=fd436a14aae706a8ed4a8b58b172721d)
 
-## 3. 样例目录结构说明##
+## 3. 样例目录结构说明
 
 
 ```plaintext
