@@ -13,15 +13,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MDFriday/friday/Friday Gallery.md",
+                "file": "MDFriday/friday/Friday Help.md",
                 "mode": "source",
-                "source": false
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "Friday Gallery"
+              "title": "Friday Help"
+            }
+          },
+          {
+            "id": "6265170cd1e6f286",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://friday-help.mdfriday.com/en/book/get-started/",
+                "title": "Getting Started | Friday Help",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Getting Started | Friday Help"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -44,7 +59,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "文件列表"
             }
           },
           {
@@ -78,7 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 359.5
+    "width": 353.5
   },
   "right": {
     "id": "146f8343ad591ff7",
@@ -155,8 +170,8 @@
             "state": {
               "type": "Friday",
               "state": {},
-              "icon": "dice-5",
-              "title": "Friday Service"
+              "icon": "lucide-file",
+              "title": "插件不再活动"
             }
           },
           {
@@ -168,31 +183,45 @@
               "icon": "dice-5",
               "title": "Friday Service"
             }
+          },
+          {
+            "id": "0a654b8662fa3a48",
+            "type": "leaf",
+            "state": {
+              "type": "Friday",
+              "state": {},
+              "icon": "dice-5",
+              "title": "Friday Service"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 341.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
       "mdfriday:Create new Friday note": false
     }
   },
-  "active": "a391d970e862a4c7",
+  "active": "6265170cd1e6f286",
   "lastOpenFiles": [
-    "MDFriday/friday/gallery/content/themes/saasify/index.md",
-    "MDFriday/friday/Friday Gallery.md",
-    "MDFriday/friday/gallery/content/themes/saasify/sassify-post-home.png",
     "MDFriday/friday/Friday Help.md",
+    "MDFriday/friday/help/content/en/_index.md",
+    "MDFriday/friday/help/content/en/book/get-started/_index.md",
+    "MDFriday/Theme Book.md",
+    "MDFriday/friday/help/content/en/book/get-started/images/friday-plugin1.png",
+    "MDFriday/friday/Friday Gallery.md",
+    "MDFriday/friday/gallery/content/themes/saasify/index.md",
+    "MDFriday/friday/gallery/content/themes/saasify/sassify-post-home.png",
     "MDFriday/friday/Friday.md",
     "MDFriday/friday/gallery/content/themes/gallery/gallery.png.sb-5b601e4c-o4ayLU",
     "MDFriday/friday/gallery/content/themes/gallery/detail.png.sb-5b601e4c-SdS8KC",
@@ -205,7 +234,6 @@
     "MDFriday/friday/gallery/content/themes/gallery/screencapture-nicokaiser-github-io-hugo-theme-gallery-animals-2025-02-09-14_28_44.png",
     "MDFriday/friday/gallery/content/themes/gallery/home.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/raoul-droog-yMSecCHsIBc-unsplash.jpg",
-    "MDFriday/friday/gallery/content/themes/gallery/michael-sum-LEpfefQf4rU-unsplash.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/index.md",
     "MDFriday/friday/gallery/content/themes/gallery",
     "MDFriday/friday/gallery/content/themes/saasify",
@@ -230,9 +258,7 @@
     "MDFriday/friday/gallery/content/fashion-beauty/index.md",
     "MDFriday/friday/gallery/content/themes/dogs",
     "MDFriday/friday/gallery/content/themes/cats",
-    "MDFriday/friday/gallery/content/themes/_index.md",
     "MDFriday/friday/gallery/content/social",
-    "MDFriday/friday/gallery/content/private",
-    "MDFriday/friday/gallery/content/links.md"
+    "MDFriday/friday/gallery/content/private"
   ]
 }
