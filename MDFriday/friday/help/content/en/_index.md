@@ -1,41 +1,40 @@
 ---
-title: Introduction
+title: Documentation
 type: docs
 ---
 
-# Acerbo datus maxime
+# Welcome to **MDFriday** Help Center!
 
-{{% columns %}}
-## Astris ipse furtiva
+MDFriday is the ultimate tool for turning your Markdown files into stunning, professional websites—without any coding! With over 500 free themes, shortcode extensions, custom domain support, and multilingual options, creating your site is quick, easy, and fun！🚀
 
-Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut
-olivae sensit **arma sorori** deducit, inesset **crudus**, ego vetuere aliis,
-modo arsit? Utinam rapta fiducia valuere litora _adicit cursu_, ad facies
+---
 
-<--->
+## **Getting Started**
 
-## Suis quot vota
+New to MDFriday? No worries! Our Getting Started section is the perfect place to begin your journey. We’ll walk you through every step— from installing the plugin to launching your first website. It’s fast, easy, and you don’t need any coding skills to get started. Ready to see your ideas come to life? [Start here](https://help.mdfriday.com/en/book/get-started/) .
 
-Ea _furtique_ risere fratres edidit terrae magis. Colla tam mihi tenebat:
-miseram excita suadent es pecudes iam. Concilio _quam_ velatus posset ait quod
-nunc! Fragosis suae dextra geruntur functus vulgata.
-{{% /columns %}}
+---
 
+## **Documentation**
 
-## Tempora nisi nunc
+Looking for detailed guides or troubleshooting tips? Our **Documentation** section has you covered. From 500+ free themes to publishing your site, find all the in-depth information you need to make the most out of MDFriday. [Explore the docs](#) and become a pro in no time!
 
-Lorem **markdownum** emicat gestu. Cannis sol pressit ducta. **Est** Idaei,
-tremens ausim se tutaeque, illi ulnis hausit, sed, lumina cutem. Quae avis
-sequens!
+---
 
-    var panel = ram_design;
-    if (backup + system) {
-        file.readPoint = network_native;
-        sidebar_engine_device(cell_tftp_raster,
-                dual_login_paper.adf_vci.application_reader_design(
-                graphicsNvramCdma, lpi_footer_snmp, integer_model));
-    }
+## **Billing & Support**
 
-## Locis suis novi cum suoque decidit eadem
+Have questions or need help? Our **Billing & Support** team is here to assist you! Whether you’re curious about pricing or need assistance with a technical issue, we’ve got your back. [Get in touch with support](#) and we'll make sure you’re all set!
 
-Idmoniae ripis, at aves, ali missa adest, ut _et autem_, et ab?
+---
+
+## **Why MDFriday?**
+
+- **No coding required**: Whether you're a beginner or just don’t want to bother with code, MDFriday makes web creation easy.
+- **Fast & simple**: Get your site up and running in no time with our intuitive interface.
+- **Beautiful themes**: Choose from a variety of professionally designed themes that are fully customizable.
+- **Publish with ease**: Once your site is ready, publishing is a breeze—just a click and you’re live!
+- **Markdown Magic**: Focus on writing, and let MDFriday take care of the rest. Use Markdown to structure your content, and MDFriday turns it into a stunning site for you.
+- **Custom Domain Deployment**:: Want to use your own domain? Just provide your domain and Netlify token, and deploy with one click!
+
+Ready to build your dream site with MDFriday? [Start Now](https://help.mdfriday.com/en/book/get-started/) and let your creativity shine! ✨
+
