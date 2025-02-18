@@ -1,5 +1,8 @@
 
 # Theme Book
+## 1. Theme Overview
+
+**What is the Book Theme?**
 
 The "Book" theme is specifically designed for books, documents, tutorials, or long-form content. It offers a clean layout and an easy-to-navigate structure, providing a great reading experience for users. It also supports multiple languages.
 
@@ -24,11 +27,11 @@ The "Book" theme is specifically designed for books, documents, tutorials, or lo
 - **External Links and Citations Support**: Easy to add external links, references, images, videos, etc., to enhance content variety.
 - **Multi-language Support**: Built-in multilingual features, ideal for creating documents or websites in different languages for global accessibility.
 
-##  Live Demo
+##  2. Live Demo
 
 - Visit the [Book Theme Demo](https://www.bilibili.com/video/BV1GtcuezEvs/?share_source=copy_web&vd_source=fd436a14aae706a8ed4a8b58b172721d).
 
-## Sample Directory Structure
+## 3. Sample Directory Structure
 
 ```plaintext
 ├─MDFriday
@@ -86,7 +89,7 @@ The "Book" theme is specifically designed for books, documents, tutorials, or lo
 │                  _index.md            # Chinese homepage
 ```
 
-## How to Use the  Book Theme?
+## 4. How to Use the  Book Theme?
 
 Step-by-step instructions:
 

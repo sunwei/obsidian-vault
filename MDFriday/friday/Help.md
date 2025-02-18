@@ -1,6 +1,6 @@
 ---
 friday-plugin: enabled
-site: "40"
+site: "5"
 theme: github.com/mdfriday/theme-book
 project: MDFriday/friday/help
 defaultLanguage: zh
