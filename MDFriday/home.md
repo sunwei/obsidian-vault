@@ -1,6 +1,6 @@
 ---
 friday-plugin: enabled
-site: "16"
+site: "17"
 theme: github.com/mdfriday/theme-initio
 project: MDFriday/sunwei
 defaultLanguage: zh

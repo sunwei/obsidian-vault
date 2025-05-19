@@ -1,3 +1,5 @@
+
+
 ## TODO
 
 1. [x] 把MDFriday Gallery上线
@@ -18,3 +20,14 @@
 ### 链接
 
 [reddit]: https://www.reddit.com/r/gohugo/comments/1i61wf4/would_gohugo_work_for_me_total_noob_at_web_stuff/?rdt=53119
+
+
+
+
+
+{{< banner "banner_mountain.jpeg" "500px" >}}
+
+{{< avatar "me.png" "180px" >}}
+
+{{< /banner >}}
+

@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "d28606bfa51a72d4",
+        "id": "6a4cde96637f4fd4",
         "type": "tabs",
         "children": [
           {
-            "id": "3680a8c9b2a95aa0",
+            "id": "d6d243b1f85d4851",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MDFriday/friday/Friday Help.md",
-                "mode": "source",
+                "file": "xiaobei/519.md",
+                "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Friday Help"
-            }
-          },
-          {
-            "id": "6265170cd1e6f286",
-            "type": "leaf",
-            "state": {
-              "type": "webviewer",
-              "state": {
-                "url": "https://friday-help.mdfriday.com/en/book/get-started/",
-                "title": "Getting Started | Friday Help",
-                "mode": "webview"
-              },
-              "icon": "globe-2",
-              "title": "Getting Started | Friday Help"
+              "title": "519"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -59,7 +44,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "文件列表"
+              "title": "Files"
             }
           },
           {
@@ -93,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 353.5
+    "width": 269.5
   },
   "right": {
     "id": "146f8343ad591ff7",
@@ -155,37 +140,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "MDFriday/friday/Friday Help.md",
+                "file": "xiaobei/519.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Friday Help"
+              "title": "Outline of 519"
             }
           },
           {
-            "id": "09f8c370381ca18d",
-            "type": "leaf",
-            "state": {
-              "type": "Friday",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "插件不再活动"
-            }
-          },
-          {
-            "id": "a391d970e862a4c7",
-            "type": "leaf",
-            "state": {
-              "type": "Friday",
-              "state": {},
-              "icon": "dice-5",
-              "title": "Friday Service"
-            }
-          },
-          {
-            "id": "0a654b8662fa3a48",
+            "id": "95fa1d875cd1f80f",
             "type": "leaf",
             "state": {
               "type": "Friday",
@@ -195,70 +160,70 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 341.5
+    "width": 415.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:打开快速切换": false,
-      "graph:查看关系图谱": false,
-      "canvas:新建白板": false,
-      "daily-notes:打开/创建今天的日记": false,
-      "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
       "mdfriday:Create new Friday note": false
     }
   },
-  "active": "6265170cd1e6f286",
+  "active": "cd6487fdca7c7056",
   "lastOpenFiles": [
+    "xiaobei/518.md",
+    "xiaobei/514.md",
+    "xiaobei/513.md",
+    "xiaobei/512.md",
+    "xiaobei/519.md",
+    "xiaobei/penhuolong.png",
+    "xiaobei/gangpaobixia.png",
+    "xiaobei/Shortcode Example 1.md",
+    "sc/Shortcode Example 1 1 1.md",
+    "xiaobei/saiyulong.png",
+    "xiaobei/huoyanhou.png",
+    "xiaobei/avatar.png",
+    "xiaobei/Shortcode Example 1 1.md",
+    "xiaobei/Shortcode Example 1 1 1.md",
+    "xiaobei/Archive.zip",
+    "xiaobei",
+    "sc/Archive.zip",
+    "sc/Shortcode Example 1 1.md",
+    "sc/Shortcode Example 1.md",
+    "sc/Shortcode Example.md",
+    "sc/saiyulong.png",
+    "sc/huoyanhou.png",
+    "sc/gangpaobixia.png",
+    "MDFriday/Theme Book.md",
+    "sc/avatar.png",
+    "sc",
+    "todo.md",
+    "banner_mountain.jpeg",
+    "MDFriday/home.md",
+    "MDFriday/sunwei/content/posts/003-cursor-sse.md",
+    "MDFriday/sunwei/content/posts/003.md",
+    "MDFriday/hugo.md",
     "MDFriday/friday/Friday Help.md",
     "MDFriday/friday/help/content/en/_index.md",
     "MDFriday/friday/help/content/en/book/get-started/_index.md",
-    "MDFriday/Theme Book.md",
-    "MDFriday/friday/help/content/en/book/get-started/images/friday-plugin1.png",
     "MDFriday/friday/Friday Gallery.md",
     "MDFriday/friday/gallery/content/themes/saasify/index.md",
-    "MDFriday/friday/gallery/content/themes/saasify/sassify-post-home.png",
     "MDFriday/friday/Friday.md",
     "MDFriday/friday/gallery/content/themes/gallery/gallery.png.sb-5b601e4c-o4ayLU",
     "MDFriday/friday/gallery/content/themes/gallery/detail.png.sb-5b601e4c-SdS8KC",
     "MDFriday/friday/gallery/content/themes/gallery/detail.png.sb-5b601e4c-dKIH8O",
-    "MDFriday/friday/gallery/content/themes/gallery/gallery.png",
-    "MDFriday/friday/gallery/content/themes/gallery/section.png",
-    "MDFriday/friday/gallery/content/themes/gallery/detail.png",
-    "MDFriday/friday/gallery/content/themes/gallery/Screen Shot 2025-02-09 at 14.30.07.png",
-    "MDFriday/friday/gallery/content/themes/gallery/screencapture-nicokaiser-github-io-hugo-theme-gallery-animals-cats-2025-02-09-14_29_13.png",
-    "MDFriday/friday/gallery/content/themes/gallery/screencapture-nicokaiser-github-io-hugo-theme-gallery-animals-2025-02-09-14_28_44.png",
-    "MDFriday/friday/gallery/content/themes/gallery/home.jpg",
-    "MDFriday/friday/gallery/content/themes/gallery/raoul-droog-yMSecCHsIBc-unsplash.jpg",
     "MDFriday/friday/gallery/content/themes/gallery/index.md",
     "MDFriday/friday/gallery/content/themes/gallery",
     "MDFriday/friday/gallery/content/themes/saasify",
     "MDFriday/friday/gallery/content/themes/saasify-/index.md",
-    "MDFriday/friday/gallery/content/themes/saasify-",
-    "MDFriday/friday/gallery/content/themes/dogs/index.md",
-    "MDFriday/friday/gallery/content/themes/cats/index.md",
-    "MDFriday/friday/gallery/content/social/social9.md",
-    "MDFriday/friday/gallery/content/social/social8.md",
-    "MDFriday/friday/gallery/content/social/social7.md",
-    "MDFriday/friday/gallery/content/social/social6.md",
-    "MDFriday/friday/gallery/content/social/social5.md",
-    "MDFriday/friday/gallery/content/social/social4.md",
-    "MDFriday/friday/gallery/content/social/social3.md",
-    "MDFriday/friday/gallery/content/social/social2.md",
-    "MDFriday/friday/gallery/content/social/social11.md",
-    "MDFriday/friday/gallery/content/social/social10.md",
-    "MDFriday/friday/gallery/content/social/social1.md",
-    "MDFriday/friday/gallery/content/private/index.md",
-    "MDFriday/friday/gallery/content/nature/index.md",
-    "MDFriday/friday/gallery/content/featured-album/index.md",
-    "MDFriday/friday/gallery/content/fashion-beauty/index.md",
-    "MDFriday/friday/gallery/content/themes/dogs",
-    "MDFriday/friday/gallery/content/themes/cats",
-    "MDFriday/friday/gallery/content/social",
-    "MDFriday/friday/gallery/content/private"
+    "MDFriday/friday/gallery/content/themes/saasify-"
   ]
 }
