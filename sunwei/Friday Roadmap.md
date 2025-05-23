@@ -1,4 +1,7 @@
 
+1. 单页面发布
+2. 多页面发布
+
 
 # Obsidian Friday Plugin 产品规划文档（草稿）
 
