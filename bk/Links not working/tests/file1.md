@@ -1,0 +1,2 @@
+
+inside publish folder

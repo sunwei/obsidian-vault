@@ -1,0 +1,31 @@
+{
+  "baseURL": "/",
+  "title": "content",
+  "contentDir": "content",
+  "publishDir": "public",
+  "defaultContentLanguage": "en",
+  "taxonomies": {
+    "tag": "tags",
+    "category": "categories"
+  },
+  "module": {
+    "imports": [
+      {
+        "path": "https://gohugo.net/book.zip?version=1.1"
+      }
+    ]
+  },
+  "params": {
+    "branding": false
+  },
+  "languages": {
+    "en": {
+      "contentDir": "content",
+      "weight": 1
+    },
+    "zh": {
+      "contentDir": "content.zh",
+      "weight": 2
+    }
+  }
+}
