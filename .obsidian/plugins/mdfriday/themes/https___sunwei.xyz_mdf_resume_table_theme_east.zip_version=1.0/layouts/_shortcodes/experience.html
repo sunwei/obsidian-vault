@@ -1,0 +1,8 @@
+{{- $content := .Inner -}}
+{{- $count := .Get "count" | default 1 -}}
+
+<!-- 工作经验部分 -->
+<tr>
+    <td class="section-header" rowspan="{{ $count }}">{{ i18n "work_experience" }}</td>
+    {{ $content }}
+</tr>

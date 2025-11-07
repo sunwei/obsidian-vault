@@ -4,67 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "ab40c562f97ae8b2",
+        "id": "c02695d3774a2519",
         "type": "tabs",
         "children": [
           {
-            "id": "ed6d3e6826b7bb6a",
+            "id": "4bdda2301548f518",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "mdfriday.com/book-ob/content/content/obsidian/timeline.md",
+                "file": "MDFriday/book/content/index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "timeline"
+              "title": "index"
             }
           },
           {
-            "id": "eccb67e6aab6f66f",
+            "id": "4b7daa52785af880",
             "type": "leaf",
             "state": {
-              "type": "webviewer",
+              "type": "markdown",
               "state": {
-                "url": "http://localhost:8090/",
-                "title": "Introduction | content",
-                "mode": "webview"
+                "file": "notes/Side Projects.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "globe-2",
-              "title": "Introduction | content"
-            }
-          },
-          {
-            "id": "89302a46c87a24ba",
-            "type": "leaf",
-            "state": {
-              "type": "webviewer",
-              "state": {
-                "url": "http://localhost:8090/",
-                "title": "Introduction | content",
-                "mode": "webview"
-              },
-              "icon": "globe-2",
-              "title": "Introduction | content"
-            }
-          },
-          {
-            "id": "f122327698e1d2be",
-            "type": "leaf",
-            "state": {
-              "type": "webviewer",
-              "state": {
-                "url": "http://localhost:8090/",
-                "title": "Introduction | content",
-                "mode": "webview"
-              },
-              "icon": "globe-2",
-              "title": "Introduction | content"
+              "icon": "lucide-file",
+              "title": "Side Projects"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -96,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "pay",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -121,7 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 269.5
+    "width": 291.5
   },
   "right": {
     "id": "146f8343ad591ff7",
@@ -137,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MDFriday/home.md",
+                "file": "Aupro.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +119,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for home"
+              "title": "Backlinks for Aupro"
             }
           },
           {
@@ -156,12 +128,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MDFriday/home.md",
+                "file": "Aupro.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from home"
+              "title": "Outgoing links from Aupro"
             }
           },
           {
@@ -171,7 +143,9 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "Tags"
@@ -183,101 +157,81 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "notes/Side Projects.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
-            }
-          },
-          {
-            "id": "3c29a50eda39f8f6",
-            "type": "leaf",
-            "state": {
-              "type": "Friday_Service",
-              "state": {},
-              "icon": "lucide-ghost",
-              "title": "Friday_Service"
-            }
-          },
-          {
-            "id": "04cfa0fc00623436",
-            "type": "leaf",
-            "state": {
-              "type": "Friday_Service",
-              "state": {},
-              "icon": "dice-5",
-              "title": "Friday Service"
+              "title": "Outline of Side Projects"
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 494.5,
-    "collapsed": true
+    "width": 417.5
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "mermaid-tools:Open Mermaid Toolbar": false
+      "bases:Create new base": false
     }
   },
-  "active": "04cfa0fc00623436",
+  "active": "cd6487fdca7c7056",
   "lastOpenFiles": [
-    "mdfriday.com/book-ob/content/content/obsidian/timeline.md",
-    "Untitled.canvas",
-    "Links not working/tests/file1.md",
-    "Links not working/tests/publish.md",
-    "render.md",
-    "Links not working/tests/mdf.png",
-    "Links not working/file2.md",
-    "file2.md",
-    "Links not working/tests",
-    "Links not working/abc.png",
-    "Links not working",
-    "xiaobei/512.md",
-    "mdfriday.com/note/theme/static/css/lang.css",
-    "mdfriday.com/note/content/content-ja/index.md",
-    "mdfriday.com/note/content/content-ja",
-    "mdfriday.com/note/content/content-de/index.md",
-    "mdfriday.com/note/content/content-de",
-    "mdfriday.com/note/content/content/index.md",
-    "mdfriday.com/note/content/content",
-    "mdfriday.com/note/content/content-zh/index.md",
-    "mdfriday.com/note/content/content-zh",
-    "mdfriday.com/note/content/content-es/index.md",
-    "mdfriday.com/note/content/content-es",
-    "mdfriday.com/note/content/content-fr/index.md",
-    "mdfriday.com/note/content/content-fr",
-    "mdfriday.com/book-ob/book-ob.zip",
-    "mdfriday.com/book-ob/content/content/docs/collapsed/3rd-level/4th-level/4th-level.md",
-    "mdfriday.com/book-ob/content/content/docs/collapsed/3rd-level/3rd.md",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/matrix.md",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/matrix.jpeg",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/interstellar.md",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/interstellar.jpeg",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/inception.md",
-    "mdfriday.com/book-ob/content/content/obsidian/movies/Inception.jpg",
-    "mdfriday.com/book-ob/content/content/docs/table-of-contents/without-toc.md",
-    "mdfriday.com/book-ob/content/content/docs/table-of-contents/with-toc.md",
-    "mdfriday.com/book-ob/content/content/docs/shortcodes/youtube.md",
-    "mdfriday.com/book-ob/content/content/docs/shortcodes/x.md",
-    "mdfriday.com/book-ob/content/content/docs/shortcodes/vimeo.md",
-    "mdfriday.com/book-ob/content/content/docs/shortcodes/utterances.md",
-    "mdfriday.com/book-ob/content/content/docs/shortcodes/tabs.md",
-    "mdfriday.com/book-ob/content/content/mdfriday.png",
-    "mdfriday.com/book-ob/content/content.zh/obsidian/movies/matrix.jpeg",
-    "mdfriday.com/book-ob/content/content.zh/obsidian/movies/interstellar.jpeg",
-    "mdfriday.com/book-ob/content/content.zh/obsidian/movies/Inception.jpg",
-    "mdfriday.com/book-ob/content/content.zh/mdfriday.png"
+    "projects",
+    "Untitled.md",
+    "notes/Side Projects.md",
+    "notes",
+    "MDFriday/book/content/index.md",
+    "MDFriday/book/content/about.md",
+    "MDFriday/book/content/subscribe.md",
+    "MDFriday/book/content/thanks.md",
+    "MDFriday/book/content/projects/002-about-MDFriday.md",
+    "MDFriday/book/content/projects/001-how-it-works.md",
+    "MDFriday/book/content/projects",
+    "MDFriday/book/content/posts/004-math-typesetting.md",
+    "MDFriday/book/content/posts/005-rich-content.md",
+    "MDFriday/book/content/posts/003-markdown-syntax.md",
+    "MDFriday/book/content/posts/002-about-MDFriday.md",
+    "MDFriday/book/content/posts/001-how-it-works.md",
+    "MDFriday/book/content/posts",
+    "MDFriday/book/content",
+    "MDFriday/slides/static/favicon.svg",
+    "MDFriday/slides/static",
+    "MDFriday/slides/content/2.slide.md",
+    "MDFriday/slides/content/_index.md",
+    "MDFriday/slides/content/8.end.md",
+    "MDFriday/slides/content/6.youtube.md",
+    "MDFriday/slides/content/1.section.md",
+    "MDFriday/slides/content/7.bilibili.md",
+    "MDFriday/slides/content/4.math.md",
+    "MDFriday/slides/content/0.fragment.md",
+    "MDFriday/slides/content/images/bg.jpg",
+    "MDFriday/slides/content/images/github-logo.png",
+    "MDFriday/slides/content/images",
+    "MDFriday/slides/content/5.mermaid.md",
+    "MDFriday/slides/content",
+    "MDFriday/slides",
+    "MDFriday/book/content/docs/collapsed/3rd-level/4th-level/4th-level.md",
+    "MDFriday/book/content/docs/collapsed/3rd-level/4th-level",
+    "MDFriday/book/content/docs/collapsed/3rd-level/3rd.md",
+    "MDFriday/book/content/docs/table-of-contents/without-toc.md",
+    "MDFriday/book/content/docs/collapsed/3rd-level",
+    "MDFriday/book/content/mdfriday.png",
+    "MDFriday/book/content.zh/mdfriday.png",
+    "MDFriday/resume/content/images/bg.jpg",
+    "MDFriday/resume/content/images/github-logo.png",
+    "MDFriday/blog/static/img/triangle.jpg",
+    "MDFriday/blog/static/img/triangle-thumb.jpg",
+    "MDFriday/blog/static/img/sphere.jpg",
+    "Untitled.canvas"
   ]
 }

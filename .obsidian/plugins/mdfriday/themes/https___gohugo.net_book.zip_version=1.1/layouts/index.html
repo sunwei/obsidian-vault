@@ -1,0 +1,53 @@
+{{ define "main" }}
+<main class="container main" id="main" role="main" tabindex="-1">
+    {{- if .Content -}}
+    {{ .Content }}
+    {{- end -}}
+
+    <div class="u-mb4">
+        <h2>{{ i18n "home.portfolio" }}</h2>
+        <div class="featuredposts">
+            <ul class="featuredposts__list">
+                {{ $ps := .Site.GetPage "projects" }}
+                {{ $posts := $ps.Paginator.AllPages }}
+                {{- $featured := where $posts "Params.feature" true -}}
+                {{- if not $featured -}}
+                {{- $featured = first 6 $posts -}}
+                {{- end -}}
+                {{- range $featured -}}
+                <li class="featuredposts__item">
+                    {{ partial "featured-post.html" . }}
+                </li>
+                {{- end -}}
+            </ul>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="u-mb4">
+        <h2>{{ i18n "home.featured_posts" }}</h2>
+        <div class="featuredposts">
+            <ul class="featuredposts__list">
+                {{ $ps := .Site.GetPage "posts" }}
+                {{ $posts := $ps.Paginator.AllPages }}
+                {{- $featured := where $posts "Params.feature" true -}}
+                {{- if not $featured -}}
+                    {{- $featured = first 8 $posts -}}
+                {{- end -}}
+                {{- range $featured -}}
+                <li class="featuredposts__item">
+                    {{ partial "featured-post.html" . }}
+                </li>
+                {{- end -}}
+            </ul>
+            <p class="featuredposts__footer">
+                <a href="/posts/" class="featuredposts__see-all">
+                    {{ i18n "home.see_all_posts" }}
+                    {{- partial "icons/arrow-right.html" . -}}
+                </a>
+            </p>
+        </div>
+    </div>
+</main>
+{{ end }}

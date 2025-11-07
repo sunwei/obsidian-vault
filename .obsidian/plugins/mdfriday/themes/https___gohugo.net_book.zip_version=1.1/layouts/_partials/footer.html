@@ -1,0 +1,27 @@
+<footer class="footer h-card" role="contentinfo">
+    <div class="container footer__inner">
+        <p class="footer__item">
+            <strong>© {{ now.Format "2006" }} </strong>
+            All Rights Reserved.
+        </p>
+        <p class="footer__item footer__item--right">
+            {{- /* 显示用户配置的社交媒体链接 */ -}}
+            {{- if .Site.Home.Params.author.social -}}
+                {{- range $platform, $url := .Site.Home.Params.author.social -}}
+                    {{- if $url -}}
+                        {{- $iconPath := printf "icons/%s.html" $platform -}}
+                            <a href="{{ $url }}" class="footer__icon" title="{{ $platform | title }}" target="_blank" rel="noopener">
+                                <span class="sr-only">{{ $platform | title }}</span>
+                                {{- partial $iconPath $ -}}
+                            </a>
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+
+        </p>
+    </div>
+    {{ partial "google_analytics" . }}
+    {{ if .Site.Params.branding }}
+    {{ partial "mdf-brand" . }}
+    {{ end }}
+</footer>

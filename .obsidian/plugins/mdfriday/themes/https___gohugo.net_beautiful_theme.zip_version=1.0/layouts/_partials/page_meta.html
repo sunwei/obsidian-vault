@@ -1,0 +1,8 @@
+<div class="page-meta">
+  {{ $lastmodstr := i18n "dateFormat" }}
+  {{ $datestr := i18n "dateFormat" }}
+  {{ if ne $datestr $lastmodstr }}
+    {{ $lastmodstr | i18n "lastModified"  }}
+  {{ end }}
+</div>
+

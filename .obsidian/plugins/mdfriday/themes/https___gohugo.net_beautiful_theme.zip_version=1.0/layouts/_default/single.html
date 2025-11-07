@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        {{ .Content }}
+
+          {{ range $taxonomy, $_ := .Site.Taxonomies.Values }}
+          {{ with $terms := $.GetTerms $taxonomy }}
+          <div class="blog-tags">
+              {{ range $n, $term := $terms }}{{ if $n }}, {{ end }}
+              <a href="{{ $term.RelPermalink }}">{{ $term.Title }}</a>
+              {{- end }}
+          </div>
+          {{ end }}
+          {{ end }}
+
+        <hr/>
+        <section id="social-share">
+          <div class="list-inline footer-links">
+            {{ partial "share-links" . }}
+          </div>
+        </section>
+
+      </article>
+
+      {{ template "comments" . }} <!-- Comments block -->
+
+    </div>
+  </div>
+</div>
+{{ end }}
+
+{{ define "comments" }}
+{{ if .Params.comments }}
+<div class="disqus-comments">
+    {{ partial "disqus-wrapper.html" . }}
+</div>
+{{ end }}
+{{ end }}

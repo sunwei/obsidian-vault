@@ -1,0 +1,11 @@
+{{- $href := .Get "href" -}}
+{{- $class := .Get "class" -}}
+{{- $text := .Get "text" | default (.Inner | plainify) -}}
+
+{{- $baseClass := "hero__link" -}}
+{{- $extraClass := "" -}}
+{{- if $class -}}
+    {{- $extraClass = printf " %s--%s" $baseClass $class -}}
+{{- end -}}
+
+<a href="{{ $href }}" class="{{ $baseClass }}{{ $extraClass }}">{{ $text }}</a>

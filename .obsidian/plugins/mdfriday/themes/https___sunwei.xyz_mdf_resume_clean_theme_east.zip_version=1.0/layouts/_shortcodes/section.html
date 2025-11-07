@@ -1,0 +1,19 @@
+{{- $title := .Get "title" -}}
+{{- $i18nKey := .Get "i18n" -}}
+{{- $content := .Inner -}}
+{{- $displayTitle := "" -}}
+
+{{- if $i18nKey -}}
+    {{- $displayTitle = i18n $i18nKey -}}
+{{- else if $title -}}
+    {{- $displayTitle = $title -}}
+{{- else -}}
+    {{- $displayTitle = i18n "other_info" -}}
+{{- end -}}
+
+<div class="section">
+    <h2>{{ $displayTitle }}</h2>
+    <div class="skills">
+        {{ $content }}
+    </div>
+</div>

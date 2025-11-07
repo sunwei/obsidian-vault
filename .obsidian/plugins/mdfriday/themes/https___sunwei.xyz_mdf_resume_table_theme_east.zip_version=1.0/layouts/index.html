@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "zh-CN" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}" >
+    <title>{{ .Site.Home.Params.author.name | default .Site.Title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimSun", Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+            border: 1px solid #d9e1ef;
+        }
+
+        .main-table td {
+            border: 1px solid #d9e1ef;
+            padding: 8px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .main-table .label {
+            background-color: #e8f4fd;
+            font-weight: bold;
+            width: 80px;
+            text-align: center;
+            color: #2c5aa0;
+        }
+
+        .main-table .value {
+            background-color: white;
+            width: 120px;
+        }
+
+        .avatar-cell {
+            {{ if .Site.Home.Params.author.avatar }}
+            background: url('{{ .Site.Home.Params.author.avatar }}') no-repeat center/cover;
+            {{ else }}
+            background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') no-repeat center/cover;
+            {{ end }}
+            text-align: center;
+            vertical-align: middle;
+            width: 95px;
+            height: 150px;
+            position: relative;
+            border: 1px solid #ddd;
+            color: transparent;
+            font-size: 0;
+        }
+
+        /* 打印样式 - 确保头像在打印时也能显示 */
+        @media print {
+            .avatar-cell {
+                {{ if .Site.Home.Params.author.avatar }}
+                background: url('{{ .Site.Home.Params.author.avatar }}') no-repeat center/cover !important;
+                {{ else }}
+                background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') no-repeat center/cover !important;
+                {{ end }}
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        .section-header {
+            background-color: #e8f4fd;
+            font-weight: bold;
+            text-align: center;
+            color: #2c5aa0;
+            width: 80px;
+        }
+
+        .section-content {
+            background-color: white;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .date-range {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .company-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .company-name {
+            font-weight: bold;
+        }
+
+        .position {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .section-content ul {
+            margin-left: 0;
+        }
+
+        .section-content ul li {
+            margin-bottom: 5px;
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .skill-item {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-name {
+            display: inline-block;
+            width: 80px;
+            text-align: left;
+        }
+
+        .skill-bar {
+            display: inline-block;
+            width: 100px;
+            height: 8px;
+            background-color: #e0e0e0;
+            margin: 0 10px;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .skill-bar.excellent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 90%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .skill-bar.good::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 75%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .skill-bar.fair::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .skill-bar.basic::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 45%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .skill-bar.beginner::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .certificate-content {
+            line-height: 1.6;
+        }
+
+        .certificate-content ul li {
+            margin-bottom: 5px;
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <!-- 整体表格 -->
+        <table class="main-table">
+            {{ partial "personal-info.html" . }}
+            {{ .Content }}
+        </table>
+    </div>
+
+    {{ if .Site.Params.branding }}
+    {{ partial "mdf-brand" . }}
+    {{ end }}
+</body>
+</html>
+</html>

@@ -1,0 +1,57 @@
+<header class="header" role="banner">
+    <div class="container header__inner">
+        <a href="{{ .Site.Home.RelPermalink }}" class="header__brand" rel="home">
+            {{- if .Site.Home.Params.author.avatar -}}
+            <img alt="{{ .Site.Home.Params.author.name }}"
+                 class="header__avatar"
+                 height="48" width="48"
+                 src="{{ .Site.Home.Params.author.avatar | relURL }}"
+            >
+            {{- else if .Site.Home.Params.organization.logo -}}
+            <img alt="{{ .Site.Home.Params.organization.name }}"
+                class="header__avatar"
+                height="48" width="48"
+                src="{{ .Site.Home.Params.organization.logo | relURL }}"
+            >
+            {{- end -}}
+            <span class="header__name">
+                <span>{{ .Site.Title }}</span>
+            </span>
+        </a>
+        <div class="header__nav">
+            <nav class="js-nav nav" role="navigation" tabindex="-1">
+                <button class="iconbtn js-nav-toggle nav__togglebtn" aria-controls="nav-menu" aria-expanded="false">
+                    <span class="sr-only">toggle menu</span>
+                    <span class="menuicon">
+                        <span class="menuicon__bar"></span>
+                        <span class="menuicon__bar"></span>
+                        <span class="menuicon__bar"></span>
+                        <span class="menuicon__bar"></span>
+                    </span>
+                </button>
+                <div class="nav__content">
+                    <ul class="js-nav-menu nav__menu" id="nav-menu">
+                        {{- $currentPage := . -}}
+                        {{- range .Site.Home.Params.menu.nav -}}
+                        {{- $isHome := eq .url "" -}}
+                        {{- $isActive := or
+                        (and $isHome $currentPage.IsHome)
+                        (and (not $isHome) (in $currentPage.RelPermalink .url))
+                        -}}
+                        <li class="nav__item{{ if $isActive }} nav__item--active{{ end }}">
+                            <a href="{{ .url | relLangURL }}"
+                               class="nav__link"
+                               {{ if $isActive }}aria-current="page"{{ end }}>
+                                {{ .title }}
+                            </a>
+                        </li>
+                        {{- end -}}
+                    </ul>
+                </div>
+                <div class="nav__bg">
+                    <div class="nav__bg__circle"></div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

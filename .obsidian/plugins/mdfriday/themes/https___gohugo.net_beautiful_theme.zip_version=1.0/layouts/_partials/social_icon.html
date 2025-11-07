@@ -1,0 +1,86 @@
+{{- $platformId := .PlatformId -}}
+{{- $iconClass := "" -}}
+
+{{- if eq $platformId "email" -}}
+  {{- $iconClass = "fas fa-envelope" -}}
+{{- else if eq $platformId "facebook" -}}
+  {{- $iconClass = "fab fa-facebook" -}}
+{{- else if eq $platformId "github" -}}
+  {{- $iconClass = "fab fa-github" -}}
+{{- else if eq $platformId "gitlab" -}}
+  {{- $iconClass = "fab fa-gitlab" -}}
+{{- else if eq $platformId "bitbucket" -}}
+  {{- $iconClass = "fab fa-bitbucket" -}}
+{{- else if eq $platformId "twitter" -}}
+  {{- $iconClass = "fab fa-x-twitter" -}}
+{{- else if eq $platformId "slack" -}}
+  {{- $iconClass = "fab fa-slack" -}}
+{{- else if eq $platformId "reddit" -}}
+  {{- $iconClass = "fab fa-reddit-alien" -}}
+{{- else if eq $platformId "linkedin" -}}
+  {{- $iconClass = "fab fa-linkedin" -}}
+{{- else if eq $platformId "xing" -}}
+  {{- $iconClass = "fab fa-xing" -}}
+{{- else if eq $platformId "stackoverflow" -}}
+  {{- $iconClass = "fab fa-stack-overflow" -}}
+{{- else if eq $platformId "snapchat" -}}
+  {{- $iconClass = "fab fa-snapchat-ghost" -}}
+{{- else if eq $platformId "instagram" -}}
+  {{- $iconClass = "fab fa-instagram" -}}
+{{- else if eq $platformId "youtube" -}}
+  {{- $iconClass = "fab fa-youtube" -}}
+{{- else if eq $platformId "soundcloud" -}}
+  {{- $iconClass = "fab fa-soundcloud" -}}
+{{- else if eq $platformId "spotify" -}}
+  {{- $iconClass = "fab fa-spotify" -}}
+{{- else if eq $platformId "bandcamp" -}}
+  {{- $iconClass = "fab fa-bandcamp" -}}
+{{- else if eq $platformId "itchio" -}}
+  {{- $iconClass = "fas fa-gamepad" -}}
+{{- else if eq $platformId "keybase" -}}
+  {{- $iconClass = "fab fa-keybase" -}}
+{{- else if eq $platformId "vk" -}}
+  {{- $iconClass = "fab fa-vk" -}}
+{{- else if eq $platformId "paypal" -}}
+  {{- $iconClass = "fab fa-paypal" -}}
+{{- else if eq $platformId "telegram" -}}
+  {{- $iconClass = "fab fa-telegram" -}}
+{{- else if eq $platformId "500px" -}}
+  {{- $iconClass = "fab fa-500px" -}}
+{{- else if eq $platformId "codepen" -}}
+  {{- $iconClass = "fab fa-codepen" -}}
+{{- else if eq $platformId "kaggle" -}}
+  {{- $iconClass = "fab fa-kaggle" -}}
+{{- else if eq $platformId "mastodon" -}}
+  {{- $iconClass = "fab fa-mastodon" -}}
+{{- else if eq $platformId "weibo" -}}
+  {{- $iconClass = "fab fa-weibo" -}}
+{{- else if eq $platformId "medium" -}}
+  {{- $iconClass = "fab fa-medium" -}}
+{{- else if eq $platformId "discord" -}}
+  {{- $iconClass = "fab fa-discord" -}}
+{{- else if eq $platformId "strava" -}}
+  {{- $iconClass = "fab fa-strava" -}}
+{{- else if eq $platformId "steam" -}}
+  {{- $iconClass = "fab fa-steam" -}}
+{{- else if eq $platformId "quora" -}}
+  {{- $iconClass = "fab fa-quora" -}}
+{{- else if eq $platformId "amazonwishlist" -}}
+  {{- $iconClass = "fab fa-amazon" -}}
+{{- else if eq $platformId "slideshare" -}}
+  {{- $iconClass = "fab fa-slideshare" -}}
+{{- else if eq $platformId "angellist" -}}
+  {{- $iconClass = "fab fa-angellist" -}}
+{{- else if eq $platformId "about" -}}
+  {{- $iconClass = "fas fa-at" -}}
+{{- else if eq $platformId "lastfm" -}}
+  {{- $iconClass = "fab fa-lastfm" -}}
+{{- else if eq $platformId "bluesky" -}}
+  {{- $iconClass = "fab fa-bluesky" -}}
+{{- else if eq $platformId "goodreads" -}}
+  {{- $iconClass = "fab fa-goodreads" -}}
+{{- else -}}
+  {{- $iconClass = "fas fa-link" -}}
+{{- end -}}
+
+{{- return $iconClass -}}

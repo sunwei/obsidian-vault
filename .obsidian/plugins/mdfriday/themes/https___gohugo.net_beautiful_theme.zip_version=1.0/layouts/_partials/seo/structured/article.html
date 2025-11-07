@@ -1,0 +1,28 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "{{ if .Params.author -}}{{ .Params.author }}{{- else if .Site.Author.Name -}}{{ .Site.Author.Name }}{{- end }}"
+  },
+  "headline": "{{ .Title }}",
+  "description" : "{{ if .Description }}{{ .Description | plainify }}{{ else }}{{if .IsPage}}{{ .Summary | plainify  }}{{ end }}{{ end }}",
+  "inLanguage" : "{{ .Site.Language.Lang }}",
+  "wordCount": {{ .WordCount }},
+  "datePublished" : "{{ .PublishDate }}",
+  "dateModified" : "{{ .Lastmod }}",
+  "image" : "{{ .Site.Params.logo | relURL }}",
+  "keywords" : [ "{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}" ],
+  "mainEntityOfPage" : "{{ .RelPermalink }}",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "{{ .Site.BaseURL }}",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "{{ .Site.Params.logo | relURL }}",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>

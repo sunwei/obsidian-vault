@@ -1,0 +1,40 @@
+<div class="portfolio__item">
+    {{- if .Params.featured_image -}}
+    <div class="portfolio__item-image">
+        <a href="{{ .RelPermalink }}">
+            <img src="{{ .Params.featured_image | relURL }}" 
+                 alt="{{ .Params.featured_image_alt | default .Title }}"
+                 loading="lazy">
+        </a>
+    </div>
+    {{- end -}}
+    <div class="portfolio__item-content">
+        <h3 class="portfolio__item-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h3>
+        {{- if .Params.technologies -}}
+        <div class="portfolio__item-tech">
+            {{- range .Params.technologies -}}
+            <span class="portfolio__item-tech-tag">{{ . }}</span>
+            {{- end -}}
+        </div>
+        {{- end -}}
+        <p class="portfolio__item-description">
+            {{ if .Params.excerpt }}{{ .Params.excerpt }}{{ else }}{{ .Summary }}{{ end }}
+        </p>
+        {{- if .Params.demo_url or .Params.source_url -}}
+        <div class="portfolio__item-links">
+            {{- if .Params.demo_url -}}
+            <a href="{{ .Params.demo_url }}" class="portfolio__item-link portfolio__item-link--demo" target="_blank" rel="noopener">
+                Demo
+            </a>
+            {{- end -}}
+            {{- if .Params.source_url -}}
+            <a href="{{ .Params.source_url }}" class="portfolio__item-link portfolio__item-link--source" target="_blank" rel="noopener">
+                Source
+            </a>
+            {{- end -}}
+        </div>
+        {{- end -}}
+    </div>
+</div>

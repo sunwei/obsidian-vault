@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {{ partial "layout/head" . -}}
+    {{ partial "layout/theme" . -}}
+
+    <!-- To insert markup before the closing head tag for all presentations,
+         create layouts/partials/reveal-hugo/head.html -->
+    {{- partial "reveal-hugo/head" . -}}
+    <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}" >
+  </head>
+  <body>
+    {{ if .Params.logo }}
+    <style>
+      #logo {
+        position: absolute;
+        top: 5%;
+        left: 4%;
+        width: 15%;
+      }
+    </style>
+    <img id="logo" src="{{ .Params.logo | relURL }}" alt="logo" >
+    {{ end }}
+    <div class="reveal">
+      <div class="slides">
+        {{- block "main" . -}}{{- end -}}
+      </div>
+      <!-- To insert markup at the end of the .reveal tag for all presentations,
+           create layouts/partials/reveal-hugo/end.html -->
+      {{- partial "reveal-hugo/end" . -}}
+    </div>
+    {{- partial "layout/javascript" . }}
+    <!-- To insert markup before the closing body tag for all presentations,
+         create layouts/partials/reveal-hugo/body.html -->
+    {{- partial "reveal-hugo/body" . }}
+  </body>
+<style>
+  .copy-code-button {
+    display: none;
+  }
+</style>
+
+  {{ partial "google_analytics" . }}
+  {{ if .Site.Params.branding }}
+  {{ partial "mdf-brand" . }}
+  {{ end }}
+</html>

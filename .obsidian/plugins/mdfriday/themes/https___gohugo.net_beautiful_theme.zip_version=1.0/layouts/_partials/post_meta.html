@@ -1,0 +1,20 @@
+<span class="post-meta">
+  <i class="fas fa-calendar"></i>&nbsp;{{ i18n "postedOnDate"}} {{ .LocalDate }}
+  |&nbsp;<i class="fas fa-clock"></i>&nbsp;{{ .ReadingTime }}&nbsp;{{ i18n "readTime" }}
+  |&nbsp;<i class="fas fa-book"></i>&nbsp;{{ .WordCount }}&nbsp;{{ i18n "words" }}
+
+
+  {{ if .Params.author }}
+    {{ if reflect.IsSlice .Params.author }}
+      {{ range .Params.author }}
+        &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;{{ . | safeHTML }}
+      {{ end }}
+    {{ else }}
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;{{ .Params.author | safeHTML }}
+    {{ end }}
+  {{ else }}
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;{{ .Site.Author.Name | safeHTML }}
+  {{ end }}
+
+</span>
+

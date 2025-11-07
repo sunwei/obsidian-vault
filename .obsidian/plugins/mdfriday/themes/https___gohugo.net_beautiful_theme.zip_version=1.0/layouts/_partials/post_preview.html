@@ -1,0 +1,41 @@
+<article class="post-preview">
+    <a href="{{ .RelPermalink }}">
+        <h2 class="post-title">{{ .Title }}</h2>
+        {{ if .Params.subtitle }}
+        <h3 class="post-subtitle">
+            {{ .Params.subtitle }}
+        </h3>
+        {{ end }}
+        {{ if .Params.image }}
+        <img src="{{ .Params.image }}" alt="{{ .Title }}" class="img-title" />
+        {{ end }}
+        {{ if .Params.video }}
+        <video loop autoplay muted playsinline class="img-title">
+            <source src="{{ .Params.video }}">
+        </video>
+        {{ end }}
+    </a>
+
+    <p class="post-meta">
+        {{ partial "post_meta.html" . }}
+    </p>
+    <div class="post-entry">
+        {{ if or (.Truncated) (.Params.summary) }}
+        {{ .Summary }}
+        <a href="{{ .RelPermalink }}" class="post-read-more">[{{ i18n "readMore" }}]</a>
+        {{ else }}
+        {{ .Content }}
+        {{ end }}
+    </div>
+
+    {{ range $taxonomy, $_ := .Site.Taxonomies.Values }}
+    {{ with $terms := $.GetTerms $taxonomy }}
+    <div class="blog-tags">
+        {{ range $n, $term := $terms }}{{ if $n }}, {{ end }}
+        <a href="{{ $term.RelPermalink }}">{{ $term.Title }}</a>
+        {{- end }}
+    </div>
+    {{ end }}
+    {{ end }}
+
+</article>

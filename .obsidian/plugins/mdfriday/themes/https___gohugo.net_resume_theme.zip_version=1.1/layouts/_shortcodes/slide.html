@@ -1,0 +1,9 @@
+{{- $noPrefix := slice "id" "class" -}}
+<section data-noprocess data-shortcode-slide
+         {{- range $key, $value := .Params -}}
+         {{- $attrName := cond (in $noPrefix $key) $key (printf "data-%s" $key) }}
+{{ printf " %s=\"%s\"" $attrName $value }}
+{{- end -}}>
+{{ .Inner }}
+</section>
+

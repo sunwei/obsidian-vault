@@ -1,0 +1,29 @@
+{{- $title := .Get "title" | default "Never miss an article" -}}
+{{- $intro := .Get "intro" | default "People on the list will be notified first when new posts are published. I'll send emails about once a month and you can unsubscribe at any time." -}}
+{{- $action := .Get "action" | default "https://dev.us18.list-manage.com/subscribe/post" -}}
+{{- $method := .Get "method" | default "POST" -}}
+{{- $email_placeholder := .Get "placeholder" | default "Your email" -}}
+{{- $button_text := .Get "button_text" | default "Subscribe" -}}
+{{- $redirect := .Get "redirect" | default "thanks.html" -}}
+
+<div class="signup__front">
+    <h2 class="signup__title">{{ $title }}</h2>
+    <div class="signup__desc">{{ $intro | safeHTML }}</div>
+    <div class="signup__form">
+        <form action="{{ $action }}" class="form form--signup" method="{{ $method }}">
+            <div class="form__body">
+                <div class="form__fields">
+                    <p class="form__field">
+                        <label class="form__label" for="semail">Email Address</label>
+                        <input type="email" id="semail" name="email" value="" class="form__input" placeholder="{{ $email_placeholder }}" required>
+                        <input type="hidden" name="_next" value="{{ $redirect }}">
+                        <input type="hidden" name="_subject" value="{{ $title }}">
+                    </p>
+                </div>
+            </div>
+            <div class="form__actions">
+                <button class="btn btn--primary" name="subscribe" type="submit">{{ $button_text }}</button>
+            </div>
+        </form>
+    </div>
+</div>

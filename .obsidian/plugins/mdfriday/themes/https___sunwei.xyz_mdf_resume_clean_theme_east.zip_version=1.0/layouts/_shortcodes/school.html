@@ -1,0 +1,13 @@
+{{- $period := .Get "period" -}}
+{{- $school := .Get "school" -}}
+{{- $degree := .Get "degree" -}}
+{{- $content := .Inner -}}
+
+<div class="edu-item">
+    <div>{{ $period }}</div>
+    <div>{{ $school }}</div>
+    <div>{{ $degree }}</div>
+</div>
+{{ if $content }}
+<p>{{ $content }}</p>
+{{ end }}

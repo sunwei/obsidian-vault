@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "SimSun", Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+            border: 1px solid #d9e1ef;
+        }
+
+        .main-table td {
+            border: 1px solid #d9e1ef;
+            padding: 8px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .main-table .label {
+            background-color: #e8f4fd;
+            font-weight: bold;
+            width: 80px;
+            text-align: center;
+            color: #2c5aa0;
+        }
+
+        .main-table .value {
+            background-color: white;
+            width: 120px;
+        }
+
+        .avatar-cell {
+            background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') no-repeat center/cover;
+            text-align: center;
+            vertical-align: middle;
+            width: 120px;
+            height: 120px;
+            position: relative;
+            border: 1px solid #ddd;
+            color: transparent; /* 隐藏文字 */
+            font-size: 0; /* 隐藏文字 */
+        }
+
+        /* 打印样式 - 确保头像在打印时也能显示 */
+        @media print {
+            .avatar-cell {
+                background: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png') no-repeat center/cover !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+
+        .section-header {
+            background-color: #e8f4fd;
+            font-weight: bold;
+            text-align: center;
+            color: #2c5aa0;
+            width: 80px;
+        }
+
+        .section-content {
+            background-color: white;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .date-range {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .company-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .company-name {
+            font-weight: bold;
+        }
+
+        .position {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .work-content {
+            margin-left: 0;
+        }
+
+        .work-content li {
+            margin-bottom: 5px;
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .skill-item {
+            margin-bottom: 8px;
+        }
+
+        .skill-bar {
+            display: inline-block;
+            width: 100px;
+            height: 8px;
+            background-color: #e0e0e0;
+            margin: 0 10px;
+            position: relative;
+            vertical-align: middle;
+        }
+
+        .skill-bar.excellent::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 85%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .skill-bar.good::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 70%;
+            height: 100%;
+            background-color: #4a90e2;
+        }
+
+        .certificate-content {
+            line-height: 1.6;
+        }
+
+        .certificate-content li {
+            margin-bottom: 5px;
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <h1 class="title">个人简历</h1>
+        
+        <!-- 整体表格 -->
+        <table class="main-table">
+            <!-- 个人信息部分 -->
+            <tr>
+                <td class="label">姓 名</td>
+                <td class="value">全民简历</td>
+                <td class="label">性 别</td>
+                <td class="value">男</td>
+                <td class="avatar-cell" rowspan="4">
+                    图片
+                </td>
+            </tr>
+            <tr>
+                <td class="label">年 龄</td>
+                <td class="value">34岁</td>
+                <td class="label">籍 贯</td>
+                <td class="value">上海</td>
+            </tr>
+            <tr>
+                <td class="label">工作年限</td>
+                <td class="value">6年经验</td>
+                <td class="label">联系电话</td>
+                <td class="value">15388888885</td>
+            </tr>
+            <tr>
+                <td class="label">联系邮箱</td>
+                <td class="value">qmjianli@qq.com</td>
+                <td class="label">求职岗位</td>
+                <td class="value">行政专员</td>
+            </tr>
+            
+            <!-- 教育背景部分 -->
+            <tr>
+                <td class="section-header" rowspan="1">教育背景</td>
+                <td class="section-content" colspan="4">
+                    <div class="date-range">2012-09 ~ 2016-07</div>
+                    <div class="company-info">
+                        <span class="company-name">全民简历师范大学</span>
+                        <span class="position">工商管理（本科）</span>
+                    </div>
+                    <div><strong>专业成绩：</strong>GPA 3.66/4 （专业前5%）</div>
+                    <div><strong>主修课程：</strong>基础会计学、货币银行学、统计学、经济法概论、财务会计学、管理学原理、组织行为学、市场营销学、国际贸易理论、国际贸易实务、人力资源开发与管理、财务管理学、企业经营战略概论、质量管理学、西方经济学等等。</div>
+                </td>
+            </tr>
+            
+            <!-- 工作经验部分 -->
+            <tr>
+                <td class="section-header" rowspan="2">工作经验</td>
+                <td class="section-content" colspan="4">
+                    <div class="date-range">2018-09 ~ 至今</div>
+                    <div class="company-info">
+                        <span class="company-name">全民简历科技有限公司</span>
+                        <span class="position">行政专员</span>
+                    </div>
+                    <ul class="work-content">
+                        <li>拟定某本部的行政人事管理和日常事务，协助总监做好各部门之间的综合协调，落实公司规章制度，沟通内外联系，保证上情下达和下情上报，负责对会议文件决定的事项进行催办、查办和督办，负责全公司组织架构和人员编制的统计上报修订。</li>
+                        <li>编制公司人事管理制度，规避各类人事风险。</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td class="section-content" colspan="4">
+                    <div class="date-range">2016-09 ~ 2018-08</div>
+                    <div class="company-info">
+                        <span class="company-name">上海洋葱网络科技有限公司</span>
+                        <span class="position">行政专员</span>
+                    </div>
+                    <ul class="work-content">
+                        <li>负责中心简单财务管理，资产管理；</li>
+                        <li>负责公司总部的来访客户接待工作，负责引导和介绍公司的分公司情况；</li>
+                        <li>负责中心的行政事务，公司班车管理，负责建立员工档案及前台管理；</li>
+                        <li>负责招聘工作，确保公司储备发展人才储备及培养；</li>
+                        <li>督导公司各项行政、人事制度、员工福利、生日以及公司各种会议活动的执行；</li>
+                        <li>负责招聘工作，制定公司的人力资源发展计划，确保人才梯队发展和人才储备及培养。</li>
+                    </ul>
+                </td>
+            </tr>
+            
+            <!-- 技能特长部分 -->
+            <tr>
+                <td class="section-header" rowspan="2">技能特长</td>
+                <td class="section-content" colspan="4">
+                    <div><strong>语言能力：</strong>大学英语6级证书，荣获全国大学生英语竞赛一等奖，能够熟练的进行交流、读写。</div>
+                    <div><strong>计算机：</strong>计算机二级证书，熟练操作windows平台上的各类应用软件，如Word、Excel、网队能力：具有良好的团队组织与协调能力和项目管理与协调经验。</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="section-content" colspan="4">
+                    <div class="skill-item">
+                        <span>计算机</span>
+                        <span class="skill-bar excellent"></span>
+                        <span>精通</span>
+                    </div>
+                    <div class="skill-item">
+                        <span>英语</span>
+                        <span class="skill-bar good"></span>
+                        <span>良好</span>
+                    </div>
+                </td>
+            </tr>
+            
+            <!-- 荣誉证书部分 -->
+            <tr>
+                <td class="section-header">荣誉证书</td>
+                <td class="section-content certificate-content" colspan="4">
+                    <ul>
+                        <li>英语四级，听说读写能力良好，能够流利的用英语进行日常交流，能够速读英文文档并书写；</li>
+                        <li>通过全国计算机二级考试，熟练运用office等常用的办公软件。</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

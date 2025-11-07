@@ -1,0 +1,8 @@
+{{- $title := .Get "title" | default "I make websites." -}}
+
+<div class="fade-in hero">
+    <div class="hero__inner">
+        <h1 class="hero__title">{{ $title }}</h1>
+        {{ .Inner }}
+    </div>
+</div>

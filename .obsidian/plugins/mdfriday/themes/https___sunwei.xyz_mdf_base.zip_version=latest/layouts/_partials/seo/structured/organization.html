@@ -1,0 +1,13 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "{{ .Site.Organization.Name }}",
+  "url": "{{ .Site.BaseURL }}",
+  {{ with .Site.Organization.Description }} "description": "{{ . }}",{{ end }}
+  {{ with .Site.Organization.Vision }} "vision": "{{ . }}",{{ end }}
+  {{ with .Site.Organization.Logo }} "logo": "{{ . }}",{{ end }}
+  {{ with .Site.Organization.Address }} "address": "{{ . }}",{{ end }}
+  {{ with .Site.Organization.Email }} "email": "{{ . }}",{{ end }}
+}
+</script>

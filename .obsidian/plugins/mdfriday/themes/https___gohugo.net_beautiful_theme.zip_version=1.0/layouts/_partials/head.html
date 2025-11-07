@@ -1,0 +1,35 @@
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- Site Title, Description, Author, and Favicon -->
+{{ partial "mdf-head/html-head-favicon" . }}
+<title>{{ partial "mdf-head/html-head-title" . }}</title>
+<meta name="description" content="{{ .Description }}">
+<meta name="author" content="{{ .Site.Author.Name }}"/>
+
+{{- partial "seo/main.html" . }}  
+{{- partial "social/main.html" . }}
+
+{{- with .Site.Params.favicon }}
+  <link href='{{ . | relURL }}' rel='icon' type='image/x-icon'/>
+{{- end -}}
+
+  <link rel="alternate" href="{{ "index.xml" | relURL }}" type="application/rss+xml" title="{{ .Site.Title }}">
+
+  <link rel="stylesheet" href="{{ "css/katex.min.css" | relURL }}" />
+  <link rel="stylesheet" href="{{ "fontawesome/css/all.css" | relURL }}" />
+  <link rel="stylesheet" href="{{ "css/bootstrap.min.css" | relURL }}" />
+
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}" />
+
+  <link rel="stylesheet" href="{{ "css/fonts.css" | relURL }}" />
+
+  <link rel="stylesheet" href="{{ "css/highlight.min.css" | relURL }}" />
+  <link rel="stylesheet" href="{{ "css/codeblock.css" | relURL }}" />
+
+  <link rel="stylesheet" href="{{ "css/photoswipe.min.css" | relURL }}" />
+  <link rel="stylesheet" href="{{ "css/photoswipe.default-skin.min.css" | relURL }}" />
+
+{{- partial "head_custom.html" . }}
+

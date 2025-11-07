@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<meta content="MDFriday" name="generator">
+
+<title>Max Böck</title>
+<link href="/assets/fonts/noe-display-medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/styles/themes.css" rel="stylesheet">
+<link href="/assets/styles/main.cnN1gdHB.css" rel="stylesheet">
+
+<meta content="Max Böck is a professional front-end developer based in Vienna, Austria." name="description">
+
+<meta content="Max Böck" property="og:title">
+<meta content="Max Böck is a professional front-end developer based in Vienna, Austria." property="og:description">
+<meta content="https://mxb.dev/" property="og:url">
+<meta content="https://mxb.dev/assets/images/avatar2.jpg" property="og:image">
+<meta content="Max Böck" name="author">
+<meta content="Max Böck" property="og:site_name">
+<meta content="en_US" property="og:locale">
+<meta content="@mxbck@front-end.social" name="fediverse:creator">
+
+<link href="https://mxb.dev/" rel="canonical">
+
+<div class="hfeed layout" role="document">
+    <header class="header" role="banner">
+        <div class="container header__inner">
+            <a href="/" class="header__brand" rel="home">
+                <img alt=""
+                     class="header__avatar"
+                     height="48" width="48"
+                     src="data:image/jpeg;base64,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"
+                >
+                <span class="header__name"><span>Max Böck</span>
+                    <span class="header__verification" aria-hidden="true">
+                </span></span></a>
+            <div class="header__nav">
+                <nav class="js-nav nav" role="navigation" tabindex="-1">
+                    <button class="iconbtn js-nav-toggle nav__togglebtn" aria-controls="nav-menu" aria-expanded="false">
+                        <span class="sr-only">toggle menu</span>
+                        <span class="menuicon">
+                            <span class="menuicon__bar"></span>
+                            <span class="menuicon__bar"></span>
+                            <span class="menuicon__bar"></span>
+                            <span class="menuicon__bar"></span>
+                        </span>
+                    </button>
+                    <div class="nav__content">
+                        <ul class="js-nav-menu nav__menu" id="nav-menu">
+                            <li class="nav__item nav__item--active">
+                                <a href="#main" class="nav__link" aria-current="page">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="nav__item">
+                                <a href="/blog/" class="nav__link">
+                                    Writing
+                                </a>
+                            </li>
+                            <li class="nav__item">
+                                <a href="/notes/" class="nav__link">
+                                    Notes
+                                </a>
+                            </li>
+                            <li class="nav__item">
+                                <a href="/about/" class="nav__link">
+                                    About
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nav__bg">
+                        <div class="nav__bg__circle"></div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="container main" id="main" role="main" tabindex="-1">
+        <div class="page page--blog">
+            <header class="page__header"><h1 class="page__title">Writing</h1></header>
+            <div class="page__content">
+                <ol class="postlist" reversed start="52">
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title">
+                        <a href="/blog/faster-horses/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Faster
+                        Horses</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2025-01-19T00:00:00">19 Jan 2025</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">technology</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">About Henry Ford, AI search results and building better
+                            horses for your users.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/year-in-review-2024/" class="u-url postlist__link" rel="bookmark">A year in
+                        review: 2024</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2024-12-31T00:00:00">31 Dec 2024</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">2024 was in many ways a very challenging year for me, but
+                            it was also one of the most significant.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/buildless/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Going
+                        Buildless</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2024-09-08T00:00:00">08 Sep 2024</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Can we do modern web development without a build step?
+                            How can we solve common build problems in HTML, CSS and Javascript using just the platform?
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/live-cms-previews-with-sanity-and-eleventy/" class="u-url postlist__link"
+                            rel="bookmark">Live CMS Previews with Sanity and Eleventy</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2024-08-28T00:00:00">28 Aug 2024</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">How to set up on-demand building in Eleventy to allow
+                            live content previews with Sanity CMS.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/eleventy-v3-update/" class="u-url postlist__link" rel="bookmark">Upgrading to
+                        Eleventy v3</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2024-06-01T00:00:00">01 Jun 2024</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I took some time this week to upgrade my site to the
+                            newest version of Eleventy. Here's what I learned.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/old-dogs-new-css-tricks/" class="u-url postlist__link" rel="bookmark">Old Dogs,
+                        new CSS Tricks</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2024-05-26T00:00:00">26 May 2024</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A lot of new CSS features have shipped in the last years,
+                            but actual usage is still low. One of the biggest barriers: we need to re-wire our own
+                            brains.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/year-in-review-2023/" class="u-url postlist__link" rel="bookmark">A year in
+                        review: 2023</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2023-12-31T00:00:00">31 Dec 2023</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">You know how these work: I'll tell you about the year
+                            I've had. Maybe you'll get a couple of good links out of it.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/seven-reasons-why-i-dont-write/" class="u-url postlist__link" rel="bookmark">7
+                        Reasons why I don't write</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2023-01-30T00:00:00">30 Jan 2023</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">I didn't write a lot last year, even though I wanted to.
+                            Here are the things I tell myself that keep me from writing, and why they are probably
+                            bullshit.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-indieweb-for-everyone/" class="u-url postlist__link" rel="bookmark">The
+                        IndieWeb for Everyone</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2022-11-12T00:00:00">12 Nov 2022</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">indieweb</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">Many people are looking for alternatives to Twitter. Can
+                            the IndieWeb step up? How can we build better social media for people without technical
+                            knowledge?
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/make-free-stuff/" class="u-url postlist__link" rel="bookmark">Make Free
+                        Stuff</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2022-01-25T00:00:00">25 Jan 2022</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">On web3, Wordle and the radical concept of building
+                            things for free.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/media-queries-in-times-of-container-queries/" class="u-url postlist__link"
+                            rel="bookmark">Media Queries in Times of @container</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-06-11T00:00:00">11 Jun 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">With container queries now on the horizon - will we need
+                            media queries at all?
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/container-queries-web-components/" class="u-url postlist__link" rel="bookmark">Container
+                        Queries in Web Components</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-05-15T00:00:00">15 May 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Container Queries are one of the most anticipated new
+                            features in CSS. I recently got a chance to play with them a bit and came up with this demo.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/eleventy-asset-pipeline/" class="u-url postlist__link" rel="bookmark">Asset
+                        Pipelines in Eleventy</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-04-26T00:00:00">26 Apr 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">While some SSGs have a standardized way of handling
+                            assets, Eleventy does not. That's a good thing! Here are a few possible approaches you can
+                            take.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/medium-share-highlight-eleventy/" class="u-url postlist__link" rel="bookmark">Medium-Style
+                        Share Highlights in Eleventy</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-04-13T00:00:00">13 Apr 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I built an Eleventy plugin to do Medium-style text
+                            highlights that can be shared. It uses a webcomponent, custom properties and the Web Share
+                            API.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/space-jam/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Space
+                        Jam</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-04-04T00:00:00">04 Apr 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I'm running a speed test on the new Space Jam site: the
+                            1996 version on dial-up VS. the 2021 version on a 3G connection. Who will win?
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/webmention-analytics/" class="u-url postlist__link" rel="bookmark">Webmention
+                        Analytics</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-02-07T00:00:00">07 Feb 2021</time>
+                            <span aria-hidden="true">⋅</span> <span
+                                class="p-category postlist__tags">code, design</span></div>
+                        <p class="p-summary postlist__excerpt">I built a tool to analyze incoming webmentions. This new
+                            side project generates monthly reports to see how and where my content is mentioned.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/persistent-build-folders-netlify/" class="u-url postlist__link" rel="bookmark">Making
+                        Persistent Build Folders in Netlify</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2021-01-05T00:00:00">05 Jan 2021</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I recently learned how to make persistent cache folders
+                            that stick around between builds on Netlify, and I'm using it to store webmention data.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/year-in-review-2020/" class="u-url postlist__link" rel="bookmark">A year in
+                        review: 2020</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-12-19T00:00:00">19 Dec 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">I don't think I have to tell anyone why this year sucked.
+                            I still want to continue the end-of-the-year blogpost tradition, but focus on the good
+                            things that happened instead.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-whimsical-web/" class="u-url postlist__link" rel="bookmark">Whimsical
+                        Website Club</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-06-30T00:00:00">30 Jun 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">design</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">The web needs to take itself less seriously. It's barely
+                            out of its twenties and suddenly it's all like I can't make fansites for hippos anymore, I
+                            have businesses to run.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-return-of-the-90s-web/" class="u-url postlist__link" rel="bookmark">The
+                        Return of the 90s Web</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-06-18T00:00:00">18 Jun 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Are we ready to revisit some of the ideas of the early
+                            web again? There are trends that suggest we might just have come full circle - and I like
+                            it.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/human-code/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Human
+                        Code</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-06-05T00:00:00">05 Jun 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">Some problems can’t be solved with technology. You can’t
+                            code away systemic racism, and you can’t design your way out of a human rights crisis.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/color-theme-switcher/" class="u-url postlist__link" rel="bookmark">Color Theme
+                        Switcher</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-04-30T00:00:00">30 Apr 2020</time>
+                            <span aria-hidden="true">⋅</span> <span
+                                class="p-category postlist__tags">code, design</span></div>
+                        <p class="p-summary postlist__excerpt">Let users customize your website with their favorite
+                            color scheme! Your site has a dark mode? Mine has ten different themes now, and they're
+                            named after Mario Kart 64 race tracks.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/eleventy-resume-builder/" class="u-url postlist__link" rel="bookmark">Eleventy
+                        Résumé Builder</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-04-18T00:00:00">18 Apr 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A free template to generate semantic, accessible &
+                            resilient résumés for the web and print.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/emergency-website-kit/" class="u-url postlist__link" rel="bookmark">The
+                        Emergency Website Kit</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-03-22T00:00:00">22 Mar 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">In cases of emergency, many organizations need a quick
+                            way to publish critical information. But existing (CMS) websites are often unable to handle
+                            sudden spikes in traffic.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/making-a-gigposter/" class="u-url postlist__link" rel="bookmark">Making a
+                        Gigposter</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2020-02-20T00:00:00">20 Feb 2020</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">design</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">How to create a custom print design for a Rage against
+                            the Machine show using Illustrator, Photoshop and zero drawing skills.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/year-in-review-2019/" class="u-url postlist__link" rel="bookmark">A year in
+                        review: 2019</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-12-31T00:00:00">31 Dec 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">As the final hours of 2019 are winding down, I want to
+                            take a moment and look back at everything that happened this year - because it was a busy
+                            one.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/webclerks-conf-2019/" class="u-url postlist__link" rel="bookmark">Webclerks
+                        Conference</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-11-28T00:00:00">28 Nov 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">It has been three days now since I stood on stage at
+                            Urania Vienna, hearing Manuel close our very first conference. I'm still not really sure how
+                            we pulled that off.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/roads/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Roads</a>
+                    </h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-10-20T00:00:00">20 Oct 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">There's a small town that needs a new road. The old road
+                            is pretty worn and full of potholes, so it's time for a change.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/indieweb-link-sharing/" class="u-url postlist__link" rel="bookmark">IndieWeb
+                        Link Sharing</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-08-11T00:00:00">11 Aug 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A pain point of the IndieWeb is that it's sometimes not
+                            as convenient to share content as it is on the common social media platforms. Let's improve
+                            that.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/good-enough/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Good
+                        Enough</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-06-11T00:00:00">11 Jun 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">writing</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">Feeling like something isn't ready yet can keep many good
+                            ideas from going public. I'm trying out a new strategy to combat "publishing anxiety".
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-css-mindset/" class="u-url postlist__link" rel="bookmark">The CSS
+                        Mindset</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-06-05T00:00:00">05 Jun 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">CSS can be difficult to grasp if you think about it in
+                            terms of a "traditional" programming language. There is a certain mindset involved that
+                            helps to understand why it works the way it does.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/webring-kit/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">A Webring
+                        Kit</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-04-14T00:00:00">14 Apr 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">After Tatiana Mac proposed to bring webrings back, I
+                            hacked something new together over the weekend: A starter kit for hosting your own webring!
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/on-simplicity/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">On
+                        Simplicity</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-01-31T00:00:00">31 Jan 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">We assume that complex problems always require complex
+                            solutions. But sometimes the smarter way to build things is to try and take some pieces
+                            away, rather than add more to it.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/using-webmentions-on-static-sites/" class="u-url postlist__link" rel="bookmark">Using
+                        Webmentions in Eleventy</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-01-10T00:00:00">10 Jan 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">How to pull interactions from social media platforms like
+                            Twitter back to your own site, using Webmentions, webmention.io and Bridgy.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/syndicating-content-to-twitter-with-netlify-functions/"
+                            class="u-url postlist__link" rel="bookmark">Syndicating Content to Twitter</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2019-01-06T00:00:00">06 Jan 2019</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">How to automatically publish content from a static site
+                            on Twitter, using Eleventy and Netlify's lambda functions.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/hurricane-web/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">The
+                        Hurricane Web</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2018-09-16T00:00:00">16 Sep 2018</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">As Hurricane Florence makes its way across the US
+                            southeast coast, many people are stuck in areas with severe flooding. These people rely on
+                            outside information, yet have limited bandwidth and power.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/connection-aware-components/" class="u-url postlist__link" rel="bookmark">Connection-Aware
+                        Components</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2018-07-02T00:00:00">02 Jul 2018</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">The Network Information API provides insight into a
+                            user's network condition. Combining it with React might enable us to build sites that can
+                            respond to different connection speeds.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/layouts-of-tomorrow/" class="u-url postlist__link" rel="bookmark">The Layouts of
+                        Tomorrow</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2018-06-14T00:00:00">14 Jun 2018</time>
+                            <span aria-hidden="true">⋅</span> <span
+                                class="p-category postlist__tags">code, design</span></div>
+                        <p class="p-summary postlist__excerpt">I went over to dribbble in search of fresh webdesign
+                            ideas - how hard is it to build a non-standard layout, given the modern CSS tools we have
+                            today? An experiment on CodePen.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/semantic-jsx/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Semantic
+                        JSX</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2018-06-02T00:00:00">02 Jun 2018</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">The React JSX Syntax offers a layer of abstraction that's
+                            very useful for component-based systems - but it's easy to forget that everything you write
+                            ultimately compiles down to HTML.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/css-grid-admin-dashboard/" class="u-url postlist__link" rel="bookmark">CSS Grid
+                        Admin Dashboard</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2018-04-28T00:00:00">28 Apr 2018</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A closer look at how CSS grid layout can be used in
+                            production today, including fallback styles for flexbox.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/css-skeleton-screens/" class="u-url postlist__link" rel="bookmark">Building
+                        Skeleton Screens with CSS</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-08-30T00:00:00">30 Aug 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Designing loading states on the web is often overlooked
+                            or dismissed as an afterthought. Building an experience that works with slow connections is
+                            not only a developer's challenge...
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/offline-forms/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Offline-Friendly
+                        Forms</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-08-23T00:00:00">23 Aug 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Forms on the web don't usually play nice with bad
+                            connections. If you try to submit a form while offline, you'll most likely just lose your
+                            input. Here's how we might fix that.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/youre-offline/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">You're
+                        Offline</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-07-12T00:00:00">12 Jul 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A truly responsive website should adapt to all kinds of
+                            situations. Besides different viewport sizes, there are other factors to consider. A change
+                            in connectivity is one of them.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/how-to-turn-your-website-into-a-pwa/" class="u-url postlist__link"
+                            rel="bookmark">How to turn your website into a PWA</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-07-07T00:00:00">07 Jul 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">A Progressive Web App, or PWA, uses modern web
+                            capabilities to deliver an app-like user experience. Any website can be a PWA - here's how
+                            to do it.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/bottle-slider-wiggle-effect/" class="u-url postlist__link" rel="bookmark">Bottle
+                        Slider Wiggle Effect</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-03-08T00:00:00">08 Mar 2017</time>
+                            <span aria-hidden="true">⋅</span> <span
+                                class="p-category postlist__tags">code, design</span></div>
+                        <p class="p-summary postlist__excerpt">I built this product slider as part of a wine shop I was
+                            working on in 2015, and since it's also featured in a case study here on my site, I had a
+                            couple of people asking me how the animation was done.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/prototyping-app-with-static-html/" class="u-url postlist__link" rel="bookmark">Prototyping
+                        an App in Static HTML</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-02-06T00:00:00">06 Feb 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I recently worked on a larger new web app. The product
+                            was in its early stages, so one of the first big tasks was to come up with a prototype for
+                            the UI design.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/three-goals-for-2017/" class="u-url postlist__link" rel="bookmark">Three Goals
+                        for 2017</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-01-25T00:00:00">25 Jan 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">At the beginning of 2017, I did some thinking about where
+                            I wanted things to go for me.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-relaunch-post/" class="u-url postlist__link" rel="bookmark">The Relaunch
+                        Post</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2017-01-16T00:00:00">16 Jan 2017</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">Two weeks into 2017, I used some spare time to relaunch
+                            this website. I do this as a way for me to try new things and catch up on latest techniques.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/frontend-developer-interview-answers/" class="u-url postlist__link"
+                            rel="bookmark">Frontend Developer Interview Answers</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2015-04-25T00:00:00">25 Apr 2015</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">code</span></div>
+                        <p class="p-summary postlist__excerpt">I recently came across the H5BP’s Frontend Developer
+                            Interview Questions. It’s a collection of questions related to building websites, meant for
+                            employers to vet potential candidates for a job.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/the-lost-art-of-the-gigposter/" class="u-url postlist__link" rel="bookmark">The
+                        Lost Art of the Gigposter</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2015-01-03T00:00:00">03 Jan 2015</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">design</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">I'm a big fan of good looking music posters. I used to do
+                            them myself back when I was in school, and my living room still features some of my
+                            favourite designs.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a
+                            href="/blog/music-to-work-to/" class="u-url postlist__link" rel="bookmark">Music to work
+                        to</a></h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2014-12-14T00:00:00">14 Dec 2014</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">I don't like to work in silence. Especially when I'm
+                            doing something that needs concentration, I keep my best focus with the right background
+                            music.
+                    <li class="h-entry postlist__item"><h2 class="p-name postlist__title"><a href="/blog/travelling/"
+                                                                                             class="u-url postlist__link"
+                                                                                             rel="bookmark">Travelling</a>
+                    </h2>
+                        <div class="postlist__meta">
+                            <time class="dt-published postlist__date" datetime="2012-10-17T00:00:00">17 Oct 2012</time>
+                            <span aria-hidden="true">⋅</span> <span class="p-category postlist__tags">general</span>
+                        </div>
+                        <p class="p-summary postlist__excerpt">For the last couple of years, I've been fortunate enough
+                            to travel to quite a few beautiful places on this planet. Here are some of them.
+                </ol>
+            </div>
+        </div>
+    </main>
+    <footer class="footer h-card" role="contentinfo">
+        <div class="container footer__inner">
+            <p class="footer__item"><strong>©2025</strong>
+                all right reserved!
+            </p>
+            <p class="footer__item footer__item--right">
+                <a
+                        href="https://github.com/maxboeck/mxb/tree/master/./src/pages/index.njk" class="footer__icon"
+                        title="Edit this page on Github"><span class="sr-only">Edit this page on Github</span>
+                    <svg class="icon icon--github" height="24" role="img" width="24" aria-hidden="true">
+                        <use xlink:href="/assets/icons/icons.sprite.svg#svg-github"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                </a>
+                <a href="/feed.xml" class="footer__icon" title="RSS Feed"><span class="sr-only">RSS Feed</span>
+                    <svg class="icon icon--feed" height="24" role="img" width="24" aria-hidden="true">
+                        <use xlink:href="/assets/icons/icons.sprite.svg#svg-feed"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                </a>
+            </p>
+        </div>
+    </footer>
+</div>
+<script type="module" src="/assets/scripts/main.nQbPc1c0.js"></script>

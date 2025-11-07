@@ -1,0 +1,13 @@
+{{- $content := .Inner -}}
+{{- $parts := split $content "<!-- SKILL_BARS -->" -}}
+{{- $description := index $parts 0 -}}
+{{- $skillBars := index $parts 1 -}}
+
+<!-- 技能特长部分 -->
+<tr>
+    <td class="section-header" rowspan="2">{{ i18n "skills" }}</td>
+    <td class="section-content" colspan="4">{{ $description }}</td>
+</tr>
+<tr>
+    <td class="section-content" colspan="4">{{ $skillBars }}</td>
+</tr>

@@ -1,0 +1,14 @@
+{{- $period := .Get "period" -}}
+{{- $company := .Get "company" -}}
+{{- $position := .Get "position" -}}
+{{- $content := .Inner -}}
+
+<div class="exp-item">
+    <div>{{ $period }}　{{ $company }}</div>
+    <div>{{ $position }}</div>
+</div>
+{{ if $content }}
+<ul>
+    {{ $content }}
+</ul>
+{{ end }}

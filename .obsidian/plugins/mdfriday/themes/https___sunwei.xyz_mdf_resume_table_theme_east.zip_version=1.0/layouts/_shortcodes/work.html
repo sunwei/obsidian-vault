@@ -1,0 +1,18 @@
+{{- $period := .Get "period" -}}
+{{- $company := .Get "company" -}}
+{{- $position := .Get "position" -}}
+{{- $content := .Inner -}}
+{{- $isFirst := .Get "first" -}}
+
+{{ if not $isFirst }}
+</tr>
+<tr>
+{{ end }}
+<td class="section-content" colspan="4">
+    <div class="date-range">{{ $period }}</div>
+    <div class="company-info">
+        <span class="company-name">{{ $company }}</span>
+        <span class="position">{{ $position }}</span>
+    </div>
+    {{ $content }}
+</td>

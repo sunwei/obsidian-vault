@@ -59,6 +59,7 @@ var require_type = __commonJS({
     var ConfigError = class extends Error {
       constructor(message, code) {
         super(message);
+        __publicField(this, "code");
         this.code = code;
         this.name = "ConfigError";
       }
@@ -80,13 +81,23 @@ var require_config = __commonJS({
     exports2.Config = void 0;
     exports2.newConfig = newConfig;
     var Config = class {
-      constructor(configSourceFs, provider, root, dir, module3, service, language, taxonomy) {
+      constructor(configSourceFs, provider, root, dir, module3, service, social, language, taxonomy) {
+        __publicField(this, "configSourceFs");
+        __publicField(this, "provider");
+        __publicField(this, "root");
+        __publicField(this, "dir");
+        __publicField(this, "module");
+        __publicField(this, "service");
+        __publicField(this, "social");
+        __publicField(this, "language");
+        __publicField(this, "taxonomy");
         this.configSourceFs = configSourceFs;
         this.provider = provider;
         this.root = root;
         this.dir = dir;
         this.module = module3;
         this.service = service;
+        this.social = social;
         this.language = language;
         this.taxonomy = taxonomy;
       }
@@ -111,6 +122,9 @@ var require_config = __commonJS({
       getService() {
         return this.service;
       }
+      getSocial() {
+        return this.social;
+      }
       getLanguage() {
         return this.language;
       }
@@ -132,8 +146,8 @@ var require_config = __commonJS({
       }
     };
     exports2.Config = Config;
-    function newConfig(configSourceFs, provider, root, dir, module3, service, language, taxonomy) {
-      return new Config(configSourceFs, provider, root, dir, module3, service, language, taxonomy);
+    function newConfig(configSourceFs, provider, root, dir, module3, service, social, language, taxonomy) {
+      return new Config(configSourceFs, provider, root, dir, module3, service, social, language, taxonomy);
     }
   }
 });
@@ -174,7 +188,7 @@ var require_root = __commonJS({
     };
     function decodeRootConfig(data) {
       return {
-        baseURL: data.baseURL || exports2.DefaultRootConfig.baseURL,
+        baseURL: data.baseurl || exports2.DefaultRootConfig.baseURL,
         title: data.title || exports2.DefaultRootConfig.title,
         theme: data.theme || exports2.DefaultRootConfig.theme,
         timeout: data.timeout || exports2.DefaultRootConfig.timeout,
@@ -214,6 +228,8 @@ var require_root2 = __commonJS({
     var root_1 = require_root();
     var Root = class {
       constructor(rootConfig, rootParams = {}) {
+        __publicField(this, "rootConfig");
+        __publicField(this, "rootParams");
         this.rootConfig = rootConfig;
         this.rootParams = rootParams;
       }
@@ -326,6 +342,7 @@ var require_module2 = __commonJS({
     var module_1 = require_module();
     var Module = class {
       constructor(moduleConfig) {
+        __publicField(this, "moduleConfig");
         this.moduleConfig = moduleConfig;
       }
       importPaths() {
@@ -425,6 +442,7 @@ var require_service2 = __commonJS({
     var service_1 = require_service();
     var Service = class {
       constructor(serviceConfig) {
+        __publicField(this, "serviceConfig");
         this.serviceConfig = serviceConfig;
       }
       isGoogleAnalyticsEnabled() {
@@ -767,6 +785,9 @@ var require_language2 = __commonJS({
     var language_1 = require_language();
     var Language = class {
       constructor(configs) {
+        __publicField(this, "defaultLang");
+        __publicField(this, "configs");
+        __publicField(this, "indices");
         this.configs = configs;
         this.defaultLang = this.calculateDefaultLanguage();
         this.indices = [];
@@ -927,6 +948,9 @@ var require_taxonomy2 = __commonJS({
     var taxonomy_1 = require_taxonomy();
     var Taxonomy = class {
       constructor(taxonomies) {
+        __publicField(this, "taxonomies");
+        __publicField(this, "views");
+        __publicField(this, "viewsByTreeKey");
         this.taxonomies = taxonomies;
         this.views = [];
         this.viewsByTreeKey = {};
@@ -983,6 +1007,293 @@ var require_taxonomy2 = __commonJS({
   }
 });
 
+// node_modules/@mdfriday/foundry/dist/internal/domain/config/vo/social.js
+var require_social = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/config/vo/social.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.DefaultSocialConfig = exports2.DefaultSocialPlatformTemplates = void 0;
+    exports2.decodeSocialConfig = decodeSocialConfig;
+    exports2.getSocialPlatformTemplate = getSocialPlatformTemplate;
+    exports2.getAvailableSocialPlatforms = getAvailableSocialPlatforms;
+    exports2.DefaultSocialPlatformTemplates = [
+      {
+        id: "email",
+        title: "Email me"
+      },
+      {
+        id: "facebook",
+        title: "Facebook"
+      },
+      {
+        id: "github",
+        title: "GitHub"
+      },
+      {
+        id: "gitlab",
+        title: "GitLab"
+      },
+      {
+        id: "bitbucket",
+        title: "Bitbucket"
+      },
+      {
+        id: "twitter",
+        title: "Twitter"
+      },
+      {
+        id: "slack",
+        title: "Slack"
+      },
+      {
+        id: "reddit",
+        title: "Reddit"
+      },
+      {
+        id: "linkedin",
+        title: "LinkedIn"
+      },
+      {
+        id: "xing",
+        title: "Xing"
+      },
+      {
+        id: "stackoverflow",
+        title: "StackOverflow"
+      },
+      {
+        id: "snapchat",
+        title: "Snapchat"
+      },
+      {
+        id: "instagram",
+        title: "Instagram"
+      },
+      {
+        id: "youtube",
+        title: "Youtube"
+      },
+      {
+        id: "soundcloud",
+        title: "SoundCloud"
+      },
+      {
+        id: "spotify",
+        title: "Spotify"
+      },
+      {
+        id: "bandcamp",
+        title: "Bandcamp"
+      },
+      {
+        id: "itchio",
+        title: "Itch.io"
+      },
+      {
+        id: "keybase",
+        title: "Keybase"
+      },
+      {
+        id: "vk",
+        title: "VK"
+      },
+      {
+        id: "paypal",
+        title: "PayPal"
+      },
+      {
+        id: "telegram",
+        title: "Telegram"
+      },
+      {
+        id: "500px",
+        title: "500px"
+      },
+      {
+        id: "codepen",
+        title: "CodePen"
+      },
+      {
+        id: "kaggle",
+        title: "kaggle"
+      },
+      {
+        id: "mastodon",
+        title: "Mastodon"
+      },
+      {
+        id: "weibo",
+        title: "Weibo"
+      },
+      {
+        id: "medium",
+        title: "Medium"
+      },
+      {
+        id: "discord",
+        title: "Discord"
+      },
+      {
+        id: "strava",
+        title: "Strava"
+      },
+      {
+        id: "steam",
+        title: "Steam"
+      },
+      {
+        id: "quora",
+        title: "Quora"
+      },
+      {
+        id: "amazonwishlist",
+        title: "Amazon Wishlist"
+      },
+      {
+        id: "slideshare",
+        title: "Slideshare"
+      },
+      {
+        id: "angellist",
+        title: "AngelList"
+      },
+      {
+        id: "about",
+        title: "About"
+      },
+      {
+        id: "lastfm",
+        title: "Last.fm"
+      },
+      {
+        id: "bluesky",
+        title: "Bluesky"
+      },
+      {
+        id: "goodreads",
+        title: "Goodreads"
+      }
+    ];
+    exports2.DefaultSocialConfig = {
+      userConfig: {},
+      platformTemplates: exports2.DefaultSocialPlatformTemplates
+    };
+    function decodeSocialConfig(social) {
+      const config = {
+        userConfig: {},
+        platformTemplates: [...exports2.DefaultSocialPlatformTemplates]
+      };
+      if (social && typeof social === "object") {
+        for (const [platform, settings] of Object.entries(social)) {
+          if (settings && typeof settings === "object") {
+            const socialSettings = settings;
+            if (socialSettings.link) {
+              config.userConfig[platform] = {
+                link: socialSettings.link
+              };
+            }
+          }
+        }
+      }
+      return config;
+    }
+    function getSocialPlatformTemplate(id) {
+      return exports2.DefaultSocialPlatformTemplates.find((template) => template.id === id);
+    }
+    function getAvailableSocialPlatforms() {
+      return exports2.DefaultSocialPlatformTemplates.map((template) => template.id);
+    }
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/config/entity/social.js
+var require_social2 = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/config/entity/social.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Social = void 0;
+    exports2.newSocial = newSocial;
+    var social_1 = require_social();
+    var Social = class {
+      constructor(socialConfig) {
+        __publicField(this, "socialConfig");
+        this.socialConfig = socialConfig;
+      }
+      getUserConfig() {
+        return this.socialConfig.userConfig;
+      }
+      getPlatformTemplates() {
+        return this.socialConfig.platformTemplates;
+      }
+      getPlatformTemplate(platformId) {
+        return (0, social_1.getSocialPlatformTemplate)(platformId);
+      }
+      isPlatformConfigured(platformId) {
+        return platformId in this.socialConfig.userConfig;
+      }
+      getConfiguredPlatforms() {
+        return Object.keys(this.socialConfig.userConfig);
+      }
+      getProcessedSocialLinks() {
+        const links = [];
+        for (const [platformId, userConfig] of Object.entries(this.socialConfig.userConfig)) {
+          const template = this.getPlatformTemplate(platformId);
+          if (!template) {
+            links.push({
+              id: platformId,
+              title: platformId.charAt(0).toUpperCase() + platformId.slice(1),
+              url: userConfig.link
+            });
+            continue;
+          }
+          links.push({
+            id: platformId,
+            title: template.title,
+            url: userConfig.link
+          });
+        }
+        return links;
+      }
+      getSocialLink(platformId) {
+        const userConfig = this.socialConfig.userConfig[platformId];
+        if (!userConfig) {
+          return void 0;
+        }
+        const template = this.getPlatformTemplate(platformId);
+        if (!template) {
+          return {
+            id: platformId,
+            title: platformId.charAt(0).toUpperCase() + platformId.slice(1),
+            url: userConfig.link
+          };
+        }
+        return {
+          id: platformId,
+          title: template.title,
+          url: userConfig.link
+        };
+      }
+      hasSocialLinks() {
+        return Object.keys(this.socialConfig.userConfig).length > 0;
+      }
+      getSocialLinkCount() {
+        return Object.keys(this.socialConfig.userConfig).length;
+      }
+      getAvailablePlatforms() {
+        return this.socialConfig.platformTemplates.map((template) => template.id);
+      }
+      getSocialConfig() {
+        return this.socialConfig;
+      }
+    };
+    exports2.Social = Social;
+    function newSocial(data) {
+      const socialConfig = (0, social_1.decodeSocialConfig)(data);
+      return new Social(socialConfig);
+    }
+  }
+});
+
 // node_modules/@mdfriday/foundry/dist/internal/domain/config/entity/dir.js
 var require_dir = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/config/entity/dir.js"(exports2) {
@@ -998,6 +1309,9 @@ var require_dir = __commonJS({
     exports2.DEFAULT_PUBLISH_DIR = "public";
     var Dir = class {
       constructor(workingDir, themesDir, publishDir = exports2.DEFAULT_PUBLISH_DIR) {
+        __publicField(this, "workingDir");
+        __publicField(this, "themesDir");
+        __publicField(this, "publishDir");
         this.workingDir = workingDir;
         this.themesDir = themesDir;
         this.publishDir = publishDir;
@@ -1032,6 +1346,8 @@ var require_provider = __commonJS({
     exports2.newDefaultProvider = newDefaultProvider;
     var DefaultConfigProvider = class {
       constructor(params = {}) {
+        __publicField(this, "root");
+        __publicField(this, "keyCache");
         this.root = this.prepareParams(params);
         this.keyCache = /* @__PURE__ */ new Map();
       }
@@ -1265,6 +1581,9 @@ var require_loader = __commonJS({
     var NO_CONFIG_FILE_ERR_INFO = "Unable to locate config file or config directory.";
     var ConfigLoader = class {
       constructor(sourceDescriptor, baseDirs) {
+        __publicField(this, "cfg");
+        __publicField(this, "sourceDescriptor");
+        __publicField(this, "baseDirs");
         this.cfg = (0, provider_1.newDefaultProvider)();
         this.sourceDescriptor = sourceDescriptor;
         this.baseDirs = baseDirs;
@@ -1406,6 +1725,8 @@ var require_sourcedescriptor = __commonJS({
     exports2.newSourceDescriptor = newSourceDescriptor;
     var ConfigSourceDescriptor = class {
       constructor(fs5, filename) {
+        __publicField(this, "fileSystem");
+        __publicField(this, "configFilename");
         this.fileSystem = fs5;
         this.configFilename = filename;
       }
@@ -1477,6 +1798,7 @@ var require_config2 = __commonJS({
     var root_1 = require_root2();
     var module_1 = require_module2();
     var service_1 = require_service2();
+    var social_1 = require_social2();
     var language_1 = require_language2();
     var taxonomy_1 = require_taxonomy2();
     var loader_1 = require_loader();
@@ -1501,7 +1823,7 @@ var require_config2 = __commonJS({
         }
         const absPublishDir = path6.resolve(provider.get("publishDir") || dir_1.DEFAULT_PUBLISH_DIR);
         await fs5.mkdirAll(absPublishDir, 511);
-        return (0, config_1.newConfig)(fs5, provider, (0, root_1.newRoot)(provider.get(""), provider.getParams("params")), (0, dir_1.newDir)(baseDirs.workingDir, baseDirs.modulesDir, absPublishDir), (0, module_1.newModule)(provider.get("module") || {}), (0, service_1.newService)(provider.get("services")), (0, language_1.newLanguage)(provider.get("languages")), provider.isSet("taxonomies") ? (0, taxonomy_1.newTaxonomy)(provider.get("taxonomies")) : (0, taxonomy_1.newTaxonomy)(provider.get("")));
+        return (0, config_1.newConfig)(fs5, provider, (0, root_1.newRoot)(provider.get(""), provider.getParams("params")), (0, dir_1.newDir)(baseDirs.workingDir, baseDirs.modulesDir, absPublishDir), (0, module_1.newModule)(provider.get("module") || {}), (0, service_1.newService)(provider.get("services")), (0, social_1.newSocial)(provider.get("social")), (0, language_1.newLanguage)(provider.get("languages")), provider.isSet("taxonomies") ? (0, taxonomy_1.newTaxonomy)(provider.get("taxonomies")) : (0, taxonomy_1.newTaxonomy)(provider.get("")));
       } finally {
         loader.deleteMergeStrategies();
       }
@@ -1547,7 +1869,7 @@ var require_config3 = __commonJS({
           __createBinding(exports3, m, p);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.loadConfigWithParams = exports2.newTaxonomy = exports2.Taxonomy = exports2.newLanguage = exports2.Language = exports2.newService = exports2.Service = exports2.newModule = exports2.Module = exports2.newRoot = exports2.Root = exports2.newConfig = exports2.Config = void 0;
+    exports2.loadConfigWithParams = exports2.newSocial = exports2.Social = exports2.newTaxonomy = exports2.Taxonomy = exports2.newLanguage = exports2.Language = exports2.newService = exports2.Service = exports2.newModule = exports2.Module = exports2.newRoot = exports2.Root = exports2.newConfig = exports2.Config = void 0;
     __exportStar(require_type(), exports2);
     var config_1 = require_config();
     Object.defineProperty(exports2, "Config", { enumerable: true, get: function() {
@@ -1591,11 +1913,19 @@ var require_config3 = __commonJS({
     Object.defineProperty(exports2, "newTaxonomy", { enumerable: true, get: function() {
       return taxonomy_1.newTaxonomy;
     } });
+    var social_1 = require_social2();
+    Object.defineProperty(exports2, "Social", { enumerable: true, get: function() {
+      return social_1.Social;
+    } });
+    Object.defineProperty(exports2, "newSocial", { enumerable: true, get: function() {
+      return social_1.newSocial;
+    } });
     __exportStar(require_root(), exports2);
     __exportStar(require_module(), exports2);
     __exportStar(require_service(), exports2);
     __exportStar(require_language(), exports2);
     __exportStar(require_taxonomy(), exports2);
+    __exportStar(require_social(), exports2);
     var config_2 = require_config2();
     Object.defineProperty(exports2, "loadConfigWithParams", { enumerable: true, get: function() {
       return config_2.loadConfigWithParams;
@@ -1636,6 +1966,7 @@ var require_type2 = __commonJS({
     var ModuleError = class extends Error {
       constructor(message, code) {
         super(message);
+        __publicField(this, "code");
         this.code = code;
         this.name = "ModuleError";
       }
@@ -1704,6 +2035,9 @@ var require_mount = __commonJS({
     var path6 = __importStar(require("path"));
     var Mount = class {
       constructor(sourcePath, targetPath, language = "") {
+        __publicField(this, "sourcePath");
+        __publicField(this, "targetPath");
+        __publicField(this, "language");
         this.sourcePath = sourcePath;
         this.targetPath = targetPath;
         this.language = language;
@@ -1836,6 +2170,8 @@ var require_logger = __commonJS({
     var types_1 = require_types();
     var Logger = class {
       constructor(config) {
+        __publicField(this, "config");
+        __publicField(this, "fields");
         this.config = {
           enableCaller: true,
           jsonFormat: true,
@@ -1971,6 +2307,7 @@ var require_http = __commonJS({
     exports2.NewHTTPErrorLogger = NewHTTPErrorLogger;
     var HTTPErrorLogger = class {
       constructor(logger) {
+        __publicField(this, "logger");
         this.logger = logger;
       }
       write(message) {
@@ -2021,8 +2358,10 @@ var require_manager = __commonJS({
     exports2.setGlobalJsonFormat = setGlobalJsonFormat;
     var logger_1 = require_logger();
     var types_1 = require_types();
-    var LoggerManager = class {
+    var _LoggerManager = class {
       constructor() {
+        __publicField(this, "globalConfig");
+        __publicField(this, "loggers");
         this.globalConfig = {
           level: types_1.LogLevel.ERROR,
           enableCaller: true,
@@ -2031,10 +2370,10 @@ var require_manager = __commonJS({
         this.loggers = /* @__PURE__ */ new Map();
       }
       static getInstance() {
-        if (!LoggerManager.instance) {
-          LoggerManager.instance = new LoggerManager();
+        if (!_LoggerManager.instance) {
+          _LoggerManager.instance = new _LoggerManager();
         }
-        return LoggerManager.instance;
+        return _LoggerManager.instance;
       }
       setGlobalConfig(config) {
         this.globalConfig = { ...this.globalConfig, ...config };
@@ -2079,6 +2418,8 @@ var require_manager = __commonJS({
         this.setGlobalConfig({ jsonFormat: enabled });
       }
     };
+    var LoggerManager = _LoggerManager;
+    __publicField(LoggerManager, "instance");
     exports2.LoggerManager = LoggerManager;
     var globalLoggerManager = LoggerManager.getInstance();
     exports2.globalLoggerManager = globalLoggerManager;
@@ -2232,7 +2573,7 @@ var require_httpclient = __commonJS({
       };
     }();
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.FetchHttpClient = exports2.NodeHttpClient = void 0;
+    exports2.NodeHttpClient = void 0;
     exports2.newHttpClient = newHttpClient;
     var type_1 = require_type2();
     var path6 = __importStar(require("path"));
@@ -2242,13 +2583,16 @@ var require_httpclient = __commonJS({
     var log = (0, log_1.getDomainLogger)("module", { component: "httpclient" });
     var NodeHttpClient = class {
       constructor(fs5, timeout = 3e4, headers = {}) {
+        __publicField(this, "fs");
+        __publicField(this, "timeout");
+        __publicField(this, "headers");
+        __publicField(this, "defaultTimeout", 3e4);
+        __publicField(this, "defaultHeaders", {
+          "User-Agent": "MDFriday-CLI/1.0.0"
+        });
         this.fs = fs5;
         this.timeout = timeout;
         this.headers = headers;
-        this.defaultTimeout = 3e4;
-        this.defaultHeaders = {
-          "User-Agent": "MDFriday-CLI/1.0.0"
-        };
       }
       async download(downloadUrl, targetPath, options) {
         return new Promise((resolve, reject) => {
@@ -2357,10 +2701,10 @@ var require_httpclient = __commonJS({
           }
         });
       }
-      async get(requestUrl5, options) {
+      async get(requestUrl6, options) {
         return new Promise((resolve, reject) => {
           try {
-            const parsedUrl = new URL(requestUrl5);
+            const parsedUrl = new URL(requestUrl6);
             const isHttps = parsedUrl.protocol === "https:";
             const httpModule = isHttps ? https : http;
             const requestHeaders = {
@@ -2414,126 +2758,10 @@ var require_httpclient = __commonJS({
       }
     };
     exports2.NodeHttpClient = NodeHttpClient;
-    var FetchHttpClient = class {
-      constructor(fs5, timeout = 3e4, headers = {}) {
-        this.fs = fs5;
-        this.timeout = timeout;
-        this.headers = headers;
-        this.defaultTimeout = 3e4;
-        this.defaultHeaders = {
-          "User-Agent": "AuPro-CLI/1.0.0"
-        };
+    function newHttpClient(fs5, timeout, headers, customClient) {
+      if (customClient) {
+        return customClient;
       }
-      async download(url, targetPath, options) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            controller.abort();
-          }, options?.timeout || this.timeout);
-          const headers = {
-            ...this.defaultHeaders,
-            ...this.headers,
-            ...options?.headers
-          };
-          const response = await fetch(url, {
-            headers,
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (!response.ok) {
-            throw new type_1.ModuleError(`HTTP ${response.status}: ${response.statusText}`, "HTTP_ERROR");
-          }
-          const total = parseInt(response.headers.get("content-length") || "0", 10);
-          const reader = response.body?.getReader();
-          if (!reader) {
-            throw new type_1.ModuleError("Unable to read response body", "RESPONSE_ERROR");
-          }
-          const targetDir = path6.dirname(targetPath);
-          await this.fs.mkdirAll(targetDir, 493);
-          const file = await this.fs.create(targetPath);
-          try {
-            let loaded = 0;
-            const chunks = [];
-            while (true) {
-              const { done, value: value2 } = await reader.read();
-              if (done)
-                break;
-              chunks.push(value2);
-              loaded += value2.length;
-              if (options?.onProgress && total > 0) {
-                const percentage = Math.round(loaded / total * 100);
-                const progress = {
-                  loaded,
-                  total,
-                  percentage
-                };
-                try {
-                  options.onProgress(progress);
-                } catch (progressError) {
-                  log.warn(`Progress callback error: ${progressError}`);
-                }
-              }
-            }
-            const totalSize = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
-            const buffer = new Uint8Array(totalSize);
-            let offset = 0;
-            for (const chunk of chunks) {
-              buffer.set(chunk, offset);
-              offset += chunk.length;
-            }
-            await file.write(buffer);
-            await file.sync();
-          } finally {
-            await file.close();
-          }
-        } catch (error) {
-          if (error instanceof type_1.ModuleError) {
-            throw error;
-          }
-          const message = error instanceof Error ? error.message : String(error);
-          throw new type_1.ModuleError(`Download failed: ${message}`, "DOWNLOAD_FAILED");
-        }
-      }
-      async get(url, options) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            controller.abort();
-          }, options?.timeout || this.timeout);
-          const headers = {
-            ...this.defaultHeaders,
-            ...this.headers,
-            ...options?.headers
-          };
-          const response = await fetch(url, {
-            headers,
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          const data = await response.arrayBuffer();
-          const responseHeaders = {};
-          response.headers.forEach((value2, key) => {
-            responseHeaders[key] = value2;
-          });
-          return {
-            data,
-            headers: responseHeaders,
-            status: response.status
-          };
-        } catch (error) {
-          const message = error instanceof Error ? error.message : String(error);
-          throw new type_1.ModuleError(`GET request failed: ${message}`, "REQUEST_FAILED");
-        }
-      }
-      setHeaders(headers) {
-        this.headers = { ...this.headers, ...headers };
-      }
-      setTimeout(timeout) {
-        this.timeout = timeout;
-      }
-    };
-    exports2.FetchHttpClient = FetchHttpClient;
-    function newHttpClient(fs5, timeout, headers) {
       return new NodeHttpClient(fs5, timeout, headers);
     }
   }
@@ -5297,6 +5525,7 @@ var require_zipextractor = __commonJS({
     var log = (0, log_1.getDomainLogger)("module", { component: "zipextractor" });
     var JsZipExtractor = class {
       constructor(fs5) {
+        __publicField(this, "fs");
         this.fs = fs5;
       }
       async extract(zipPath, targetDir) {
@@ -5385,6 +5614,7 @@ var require_zipextractor = __commonJS({
     exports2.JsZipExtractor = JsZipExtractor;
     var WebZipExtractor = class {
       constructor(fs5) {
+        __publicField(this, "fs");
         this.fs = fs5;
       }
       async extract(zipPath, targetDir) {
@@ -5407,7 +5637,7 @@ var require_zipextractor = __commonJS({
     exports2.WebZipExtractor = WebZipExtractor;
     var MockZipExtractor = class {
       constructor() {
-        this.mockContents = /* @__PURE__ */ new Map();
+        __publicField(this, "mockContents", /* @__PURE__ */ new Map());
       }
       setMockContents(zipPath, contents) {
         this.mockContents.set(zipPath, contents);
@@ -5501,6 +5731,8 @@ var require_cache = __commonJS({
     var log = (0, log_1.getDomainLogger)("module", { component: "cache" });
     var FsModuleCache = class {
       constructor(fs5, cacheDir = "./module/cache") {
+        __publicField(this, "fs");
+        __publicField(this, "cacheDir");
         this.fs = fs5;
         this.cacheDir = cacheDir;
       }
@@ -5624,7 +5856,7 @@ var require_cache = __commonJS({
     exports2.FsModuleCache = FsModuleCache;
     var MemoryModuleCache = class {
       constructor() {
-        this.cache = /* @__PURE__ */ new Map();
+        __publicField(this, "cache", /* @__PURE__ */ new Map());
       }
       async get(modulePath) {
         const metadata = this.cache.get(modulePath);
@@ -5716,8 +5948,14 @@ var require_module3 = __commonJS({
     var path6 = __importStar(require("path"));
     var Module = class {
       constructor(fs5, absoluteDir, modulePath, parent = null, isProject = false) {
+        __publicField(this, "fs");
+        __publicField(this, "absoluteDir");
+        __publicField(this, "modulePath");
+        __publicField(this, "parentModule");
+        __publicField(this, "mountDirs");
+        __publicField(this, "metadata");
+        __publicField(this, "isProject", false);
         this.fs = fs5;
-        this.isProject = false;
         this.absoluteDir = absoluteDir;
         this.modulePath = modulePath;
         this.parentModule = parent;
@@ -5817,6 +6055,7 @@ var require_module3 = __commonJS({
     exports2.Module = Module;
     var ProjectModule = class {
       constructor(module3) {
+        __publicField(this, "module");
         this.module = module3;
       }
       getModule() {
@@ -5897,6 +6136,7 @@ var require_lang2 = __commonJS({
     var path_1 = __importDefault(require("path"));
     var Lang = class {
       constructor(modules) {
+        __publicField(this, "sourceLangMap");
         this.sourceLangMap = /* @__PURE__ */ new Map();
         for (const module3 of modules) {
           for (const mount of module3.mounts()) {
@@ -5927,6 +6167,7 @@ var require_themes = __commonJS({
     exports2.Themes = void 0;
     var Themes = class {
       constructor(themes) {
+        __publicField(this, "themes");
         this.themes = themes;
       }
       static fromJson(json) {
@@ -6076,7 +6317,7 @@ ${codeblock}`, options);
         ptr++;
       return banComments || c !== "#" ? ptr : skipVoid(str, skipComment(str, ptr), banNewLines);
     }
-    function skipUntil(str, ptr, sep2, end, banNewLines = false) {
+    function skipUntil(str, ptr, sep3, end, banNewLines = false) {
       if (!end) {
         ptr = indexOfNewline(str, ptr);
         return ptr < 0 ? str.length : ptr;
@@ -6085,7 +6326,7 @@ ${codeblock}`, options);
         let c = str[i];
         if (c === "#") {
           i = indexOfNewline(str, i);
-        } else if (c === sep2) {
+        } else if (c === sep3) {
           return i + 1;
         } else if (c === end || banNewLines && (c === "\n" || c === "\r" && str[i + 1] === "\n")) {
           return i;
@@ -6882,13 +7123,19 @@ var require_module4 = __commonJS({
     var log = (0, log_1.getDomainLogger)("module", { component: "modules" });
     var Modules = class {
       constructor(info, httpClient, zipExtractor, moduleCache) {
+        __publicField(this, "info");
+        __publicField(this, "httpClient");
+        __publicField(this, "zipExtractor");
+        __publicField(this, "moduleCache");
+        __publicField(this, "projectModule");
+        __publicField(this, "modules", []);
+        __publicField(this, "downloadedModules", /* @__PURE__ */ new Set());
+        __publicField(this, "lang");
+        __publicField(this, "themes", null);
         this.info = info;
         this.httpClient = httpClient;
         this.zipExtractor = zipExtractor;
         this.moduleCache = moduleCache;
-        this.modules = [];
-        this.downloadedModules = /* @__PURE__ */ new Set();
-        this.themes = null;
         this.projectModule = (0, module_1.newProjectModule)(this.info);
         this.lang = (0, lang_1.newLang)(this.all());
       }
@@ -6967,16 +7214,22 @@ var require_module4 = __commonJS({
       }
       async downloadModule(moduleImport, onProgress) {
         try {
+          let effectiveVersion = moduleImport.version;
+          if (moduleImport.version === "latest") {
+            const resolvedPath = await this.resolveLatestVersion(moduleImport.path);
+            const { version } = this.parseVersionFromImportPath(resolvedPath);
+            effectiveVersion = version;
+          }
           const cachedMetadata = await this.moduleCache.get(moduleImport.path);
-          if (cachedMetadata && cachedMetadata.downloadStatus === type_1.DownloadStatus.COMPLETED && this.isCacheValidForVersion(cachedMetadata.version, moduleImport.version)) {
+          if (cachedMetadata && cachedMetadata.downloadStatus === type_1.DownloadStatus.COMPLETED && this.isCacheValidForVersion(cachedMetadata.version, effectiveVersion)) {
             const module3 = await this.createModuleFromCache(moduleImport, cachedMetadata);
             if (await module3.exists()) {
               log.info(`Using cached module ${moduleImport.path} version ${cachedMetadata.version}`);
               return module3;
             }
           }
-          if (cachedMetadata && cachedMetadata.downloadStatus === type_1.DownloadStatus.COMPLETED && !this.isCacheValidForVersion(cachedMetadata.version, moduleImport.version)) {
-            log.info(`Cache version mismatch for ${moduleImport.path}: cached=${cachedMetadata.version}, requested=${moduleImport.version || "latest"}`);
+          if (cachedMetadata && cachedMetadata.downloadStatus === type_1.DownloadStatus.COMPLETED && !this.isCacheValidForVersion(cachedMetadata.version, effectiveVersion)) {
+            log.info(`Cache version mismatch for ${moduleImport.path}: cached=${cachedMetadata.version}, requested=${effectiveVersion || "latest"}`);
           }
           const moduleDir = this.getModuleDir(moduleImport.path);
           const zipPath = path6.join(moduleDir, "module.zip");
@@ -7083,8 +7336,6 @@ var require_module4 = __commonJS({
       }
       isCacheValidForVersion(cachedVersion, requestedVersion) {
         if (!requestedVersion)
-          return true;
-        if (requestedVersion === "latest")
           return true;
         return cachedVersion === requestedVersion;
       }
@@ -7221,7 +7472,8 @@ var require_module5 = __commonJS({
     var log = (0, log_1.getDomainLogger)("module", { component: "factory" });
     async function createModules(info) {
       try {
-        const httpClient = (0, httpclient_1.newHttpClient)(info.osFs());
+        const customClient = info.httpClient?.();
+        const httpClient = (0, httpclient_1.newHttpClient)(info.osFs(), void 0, void 0, customClient);
         const zipExtractor = (0, zipextractor_1.newZipExtractor)(info.osFs());
         const moduleCache = (0, cache_1.newModuleCache)(info.osFs(), info.moduleCacheDir());
         const modules = (0, module_1.newModules)(info, httpClient, zipExtractor, moduleCache);
@@ -7235,7 +7487,8 @@ var require_module5 = __commonJS({
     }
     async function createModulesWithProgress(info, onProgress) {
       try {
-        const httpClient = (0, httpclient_1.newHttpClient)(info.osFs());
+        const customClient = info.httpClient?.();
+        const httpClient = (0, httpclient_1.newHttpClient)(info.osFs(), void 0, void 0, customClient);
         const zipExtractor = (0, zipextractor_1.newZipExtractor)(info.osFs());
         const moduleCache = (0, cache_1.newModuleCache)(info.osFs(), info.moduleCacheDir());
         const modules = (0, module_1.newModules)(info, httpClient, zipExtractor, moduleCache);
@@ -7275,7 +7528,7 @@ var require_module6 = __commonJS({
           __createBinding(exports3, m, p);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.newModules = exports2.EModules = exports2.newProjectModule = exports2.newModule = exports2.ProjectModule = exports2.VoModule = exports2.newMemoryModuleCache = exports2.newModuleCache = exports2.MemoryModuleCache = exports2.FsModuleCache = exports2.newMockZipExtractor = exports2.newZipExtractor = exports2.MockZipExtractor = exports2.WebZipExtractor = exports2.JsZipExtractor = exports2.newHttpClient = exports2.FetchHttpClient = exports2.createDefaultMounts = exports2.newMountFromConfig = exports2.newMount = exports2.Mount = exports2.PACKAGE_JSON_FILENAME = exports2.ComponentFolders = exports2.ComponentFolderPrompts = exports2.ComponentFolderWorkflows = exports2.DownloadStatus = exports2.ErrMountFailed = exports2.ErrInvalidZipFile = exports2.ErrDownloadFailed = exports2.ErrModuleNotFound = exports2.ModuleError = void 0;
+    exports2.newModules = exports2.EModules = exports2.newProjectModule = exports2.newModule = exports2.ProjectModule = exports2.VoModule = exports2.newMemoryModuleCache = exports2.newModuleCache = exports2.MemoryModuleCache = exports2.FsModuleCache = exports2.newMockZipExtractor = exports2.newZipExtractor = exports2.MockZipExtractor = exports2.WebZipExtractor = exports2.JsZipExtractor = exports2.newHttpClient = exports2.createDefaultMounts = exports2.newMountFromConfig = exports2.newMount = exports2.Mount = exports2.PACKAGE_JSON_FILENAME = exports2.ComponentFolders = exports2.ComponentFolderPrompts = exports2.ComponentFolderWorkflows = exports2.DownloadStatus = exports2.ErrMountFailed = exports2.ErrInvalidZipFile = exports2.ErrDownloadFailed = exports2.ErrModuleNotFound = exports2.ModuleError = void 0;
     __exportStar(require_type2(), exports2);
     var type_1 = require_type2();
     Object.defineProperty(exports2, "ModuleError", { enumerable: true, get: function() {
@@ -7322,9 +7575,6 @@ var require_module6 = __commonJS({
       return mount_1.createDefaultMounts;
     } });
     var httpclient_1 = require_httpclient();
-    Object.defineProperty(exports2, "FetchHttpClient", { enumerable: true, get: function() {
-      return httpclient_1.FetchHttpClient;
-    } });
     Object.defineProperty(exports2, "newHttpClient", { enumerable: true, get: function() {
       return httpclient_1.newHttpClient;
     } });
@@ -7390,6 +7640,7 @@ var require_type3 = __commonJS({
     var FsError = class extends Error {
       constructor(message, code) {
         super(message);
+        __publicField(this, "code");
         this.code = code;
         this.name = "FsError";
       }
@@ -7434,6 +7685,9 @@ var require_originfs = __commonJS({
     exports2.OriginFs = void 0;
     var OriginFs = class {
       constructor(source, origin, publishDir) {
+        __publicField(this, "source");
+        __publicField(this, "origin");
+        __publicField(this, "publishDir");
         this.source = source;
         this.origin = origin;
         this.publishDir = publishDir;
@@ -7452,1124 +7706,6 @@ var require_originfs = __commonJS({
   }
 });
 
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/type.js
-var require_type4 = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/type.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PATH_CONSTANTS = exports2.PathValidationError = exports2.PathParseError = exports2.PathError = exports2.PathType = void 0;
-    var PathType;
-    (function(PathType2) {
-      PathType2[PathType2["File"] = 0] = "File";
-      PathType2[PathType2["ContentResource"] = 1] = "ContentResource";
-      PathType2[PathType2["ContentSingle"] = 2] = "ContentSingle";
-      PathType2[PathType2["Leaf"] = 3] = "Leaf";
-      PathType2[PathType2["Branch"] = 4] = "Branch";
-    })(PathType || (exports2.PathType = PathType = {}));
-    var PathError = class extends Error {
-      constructor(message, path6) {
-        super(message);
-        this.path = path6;
-        this.name = "PathError";
-      }
-    };
-    exports2.PathError = PathError;
-    var PathParseError = class extends PathError {
-      constructor(message, path6) {
-        super(message, path6);
-        this.name = "PathParseError";
-      }
-    };
-    exports2.PathParseError = PathParseError;
-    var PathValidationError = class extends PathError {
-      constructor(message, path6, validationErrors) {
-        super(message, path6);
-        this.validationErrors = validationErrors;
-        this.name = "PathValidationError";
-      }
-    };
-    exports2.PathValidationError = PathValidationError;
-    exports2.PATH_CONSTANTS = {
-      CONTENT_EXTENSIONS: [".md", ".markdown", ".mdown", ".mkd", ".mkdn", ".html", ".htm", ".xml"],
-      HTML_EXTENSIONS: [".html", ".htm"],
-      INDEX_NAMES: ["index", "_index"],
-      PATH_SEPARATOR: "/",
-      EXTENSION_SEPARATOR: ".",
-      LANGUAGE_SEPARATOR: ".",
-      SYSTEM_PATH_SEPARATOR: (() => {
-        try {
-          return require("path").sep;
-        } catch {
-          return "/";
-        }
-      })(),
-      COMPONENT_FOLDER_CONTENT: "content",
-      COMPONENT_FOLDER_STATIC: "static",
-      COMPONENT_FOLDER_LAYOUTS: "layouts",
-      COMPONENT_FOLDER_ARCHETYPES: "archetypes",
-      COMPONENT_FOLDER_DATA: "data",
-      COMPONENT_FOLDER_ASSETS: "assets",
-      COMPONENT_FOLDER_I18N: "i18n",
-      normalizePath: (path6) => {
-        return path6.replace(/\\/g, "/");
-      }
-    };
-  }
-});
-
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathcomponents.js
-var require_pathcomponents = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathcomponents.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PathComponentsUtils = exports2.PathComponentsFactory = exports2.LowHighImpl = exports2.PathPositionsImpl = exports2.PathComponentsImpl = void 0;
-    var type_1 = require_type4();
-    var PathComponentsImpl = class {
-      constructor(original, normalized, positions, identifiers, bundleType, disabled = false, component) {
-        this.original = original;
-        this.normalized = normalized;
-        this.positions = positions;
-        this.identifiers = identifiers;
-        this.bundleType = bundleType;
-        this.disabled = disabled;
-        this.component = component;
-      }
-      withBundleType(bundleType) {
-        return new PathComponentsImpl(this.original, this.normalized, this.positions, this.identifiers, bundleType, this.disabled);
-      }
-      withDisabled(disabled) {
-        return new PathComponentsImpl(this.original, this.normalized, this.positions, this.identifiers, this.bundleType, disabled);
-      }
-      hasIdentifiers() {
-        return this.identifiers.length > 0;
-      }
-      firstIdentifier() {
-        return this.identifiers.length > 0 ? this.identifiers[0] : null;
-      }
-      lastIdentifier() {
-        return this.identifiers.length > 0 ? this.identifiers[this.identifiers.length - 1] : null;
-      }
-      getIdentifier(index) {
-        return index >= 0 && index < this.identifiers.length ? this.identifiers[index] : null;
-      }
-      isContentComponent(component) {
-        return component === "content" || component === "archetypes";
-      }
-      clone() {
-        return new PathComponentsImpl(this.original, this.normalized, { ...this.positions }, [...this.identifiers], this.bundleType, this.disabled, this.component);
-      }
-      toString() {
-        return `PathComponents{original="${this.original}", normalized="${this.normalized}", bundleType=${type_1.PathType[this.bundleType]}, identifiers=${this.identifiers.length}}`;
-      }
-    };
-    exports2.PathComponentsImpl = PathComponentsImpl;
-    var PathPositionsImpl = class {
-      constructor(containerLow = -1, containerHigh = -1, sectionHigh = -1, identifierLanguage = -1) {
-        this.containerLow = containerLow;
-        this.containerHigh = containerHigh;
-        this.sectionHigh = sectionHigh;
-        this.identifierLanguage = identifierLanguage;
-      }
-      reset() {
-        this.containerLow = -1;
-        this.containerHigh = -1;
-        this.sectionHigh = -1;
-        this.identifierLanguage = -1;
-      }
-      hasContainer() {
-        return this.containerLow !== -1 && this.containerHigh !== -1;
-      }
-      hasSection() {
-        return this.sectionHigh > 0;
-      }
-      hasLanguageIdentifier() {
-        return this.identifierLanguage !== -1;
-      }
-      clone() {
-        return new PathPositionsImpl(this.containerLow, this.containerHigh, this.sectionHigh, this.identifierLanguage);
-      }
-    };
-    exports2.PathPositionsImpl = PathPositionsImpl;
-    var LowHighImpl = class {
-      constructor(low, high) {
-        this.low = low;
-        this.high = high;
-        if (low > high) {
-          throw new Error(`Invalid range: low (${low}) must be <= high (${high})`);
-        }
-      }
-      length() {
-        return this.high - this.low;
-      }
-      isEmpty() {
-        return this.low === this.high;
-      }
-      contains(position) {
-        return position >= this.low && position < this.high;
-      }
-      substring(str) {
-        return str.substring(this.low, this.high);
-      }
-      toString() {
-        return `[${this.low}, ${this.high})`;
-      }
-    };
-    exports2.LowHighImpl = LowHighImpl;
-    var PathComponentsFactory = class {
-      static createEmpty(original = "", bundleType = type_1.PathType.File) {
-        return new PathComponentsImpl(original, original, new PathPositionsImpl(), [], bundleType, false);
-      }
-      static create(original, normalized, bundleType = type_1.PathType.File) {
-        return new PathComponentsImpl(original, normalized || original, new PathPositionsImpl(), [], bundleType, false);
-      }
-      static createFull(original, normalized, positions, identifiers, bundleType, disabled = false) {
-        return new PathComponentsImpl(original, normalized, positions, identifiers, bundleType, disabled);
-      }
-    };
-    exports2.PathComponentsFactory = PathComponentsFactory;
-    var PathComponentsUtils = class {
-      static extractString(str, range) {
-        return str.substring(range.low, range.high);
-      }
-      static extractStrings(str, ranges) {
-        return ranges.map((range) => str.substring(range.low, range.high));
-      }
-      static findIdentifierIndex(identifiers, position) {
-        for (let i = 0; i < identifiers.length; i++) {
-          const range = identifiers[i];
-          if (position >= range.low && position < range.high) {
-            return i;
-          }
-        }
-        return -1;
-      }
-      static merge(base, override) {
-        return new PathComponentsImpl(override.original ?? base.original, override.normalized ?? base.normalized, override.positions ?? base.positions, override.identifiers ?? base.identifiers, override.bundleType ?? base.bundleType, override.disabled ?? base.disabled);
-      }
-    };
-    exports2.PathComponentsUtils = PathComponentsUtils;
-  }
-});
-
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/entity/path.js
-var require_path = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/entity/path.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PathUtils = exports2.Path = void 0;
-    var type_1 = require_type4();
-    var pathcomponents_1 = require_pathcomponents();
-    var Path = class {
-      constructor(components) {
-        this.components = components;
-        this.shouldTrimLeadingSlash = false;
-      }
-      component() {
-        if (this.components.component) {
-          return this.components.component;
-        }
-        const path6 = this.components.normalized;
-        const parts = path6.split("/").filter((p) => p.length > 0);
-        if (parts.length === 0) {
-          return "content";
-        }
-        const firstPart = parts[0];
-        const componentMap = {
-          "static": "static",
-          "layouts": "layouts",
-          "themes": "themes",
-          "archetypes": "archetypes",
-          "data": "data",
-          "i18n": "i18n",
-          "assets": "assets"
-        };
-        return componentMap[firstPart] || "content";
-      }
-      path() {
-        return this.norm(this.components.normalized);
-      }
-      name() {
-        if (this.components.positions.containerHigh > 0) {
-          return this.components.normalized.substring(this.components.positions.containerHigh);
-        }
-        return this.components.normalized;
-      }
-      nameNoExt() {
-        const firstId = this.components.firstIdentifier();
-        if (firstId) {
-          return this.components.normalized.substring(this.components.positions.containerHigh, firstId.low - 1);
-        }
-        return this.components.normalized.substring(this.components.positions.containerHigh);
-      }
-      nameNoLang() {
-        if (this.components.identifiers.length >= 2) {
-          const lastId = this.components.identifiers[this.components.identifiers.length - 1];
-          const secondToLastId = this.components.identifiers[this.components.identifiers.length - 2];
-          const langStr = this.components.normalized.substring(secondToLastId.low, secondToLastId.high);
-          const knownLangCodes = ["en", "fr", "es", "de", "zh", "ja", "ko", "pt", "it", "ru", "ar"];
-          if (knownLangCodes.includes(langStr)) {
-            const nameStart = this.components.positions.containerHigh;
-            const beforeLang = this.components.normalized.substring(nameStart, secondToLastId.low - 1);
-            const afterLang = this.components.normalized.substring(lastId.low - 1);
-            return beforeLang + afterLang;
-          }
-        }
-        return this.name();
-      }
-      dir() {
-        let d = "";
-        if (this.components.positions.containerHigh > 0) {
-          d = this.components.normalized.substring(0, this.components.positions.containerHigh - 1);
-        }
-        if (d === "") {
-          d = "/";
-        }
-        return this.norm(d);
-      }
-      ext() {
-        if (this.components.identifiers.length === 0) {
-          return "";
-        }
-        const lastIdentifier = this.components.identifiers[this.components.identifiers.length - 1];
-        const extStr = this.components.normalized.substring(lastIdentifier.low, lastIdentifier.high);
-        return extStr ? "." + extStr : "";
-      }
-      lang() {
-        if (this.components.identifiers.length >= 2) {
-          const secondToLastId = this.components.identifiers[this.components.identifiers.length - 2];
-          const langStr = this.components.normalized.substring(secondToLastId.low, secondToLastId.high);
-          const knownLangCodes = ["en", "fr", "es", "de", "zh", "ja", "ko", "pt", "it", "ru", "ar"];
-          if (knownLangCodes.includes(langStr)) {
-            return "." + langStr;
-          }
-        }
-        return "";
-      }
-      section() {
-        if (this.components.positions.sectionHigh <= 0) {
-          return "";
-        }
-        const sectionPath = this.components.normalized.substring(1, this.components.positions.sectionHigh);
-        if (sectionPath === "_index.md" || sectionPath === "index.md" || sectionPath.endsWith("/_index.md") || sectionPath.endsWith("/index.md")) {
-          return "";
-        }
-        return this.norm(sectionPath);
-      }
-      sections() {
-        const dirPath = this.dir();
-        if (dirPath === "/" || dirPath === "") {
-          return [];
-        }
-        const cleanPath = dirPath.startsWith("/") ? dirPath.substring(1) : dirPath;
-        const sections = [];
-        const pathParts = cleanPath.split("/").filter((part) => part.length > 0);
-        let currentPath = "";
-        for (const part of pathParts) {
-          if (currentPath === "") {
-            currentPath = part;
-          } else {
-            currentPath += "/" + part;
-          }
-          sections.push(this.norm(currentPath));
-        }
-        return sections;
-      }
-      container() {
-        if (this.components.positions.containerLow === -1) {
-          return "";
-        }
-        return this.norm(this.components.normalized.substring(this.components.positions.containerLow, this.components.positions.containerHigh - 1));
-      }
-      containerDir() {
-        if (this.isLeafBundle()) {
-          return this.dir();
-        } else if (this.isBranchBundle()) {
-          return this.dir();
-        } else {
-          return this.dir();
-        }
-      }
-      base() {
-        if (this.isBranchBundle() && this.components.normalized === "/_index.md") {
-          return "/";
-        } else if (this.isLeafBundle()) {
-          return this.baseInternal(false, true);
-        } else if (this.isContent() && !this.isBundle()) {
-          return this.pathNoIdentifier();
-        } else if (!this.isContent()) {
-          return this.path();
-        } else if (this.isBundle()) {
-          return this.baseInternal(false, true);
-        }
-        return this.baseInternal(!this.isContentPage(), this.isBundle());
-      }
-      baseNoLeadingSlash() {
-        return this.base().substring(1);
-      }
-      baseNameNoIdentifier() {
-        if (this.isBundle()) {
-          return this.container();
-        }
-        return this.nameNoIdentifier();
-      }
-      nameNoIdentifier() {
-        if (this.components.identifiers.length === 0) {
-          return this.name();
-        }
-        const firstIdentifier = this.components.identifiers[0];
-        const nameStart = this.components.positions.containerHigh;
-        return this.components.normalized.substring(nameStart, firstIdentifier.low - 1);
-      }
-      pathNoLang() {
-        return this.baseInternal(true, false);
-      }
-      pathNoIdentifier() {
-        if (this.components.identifiers.length === 0) {
-          return this.path();
-        }
-        const firstIdentifier = this.components.identifiers[0];
-        const pathBeforeIdentifiers = this.components.normalized.substring(0, firstIdentifier.low - 1);
-        return this.norm(pathBeforeIdentifiers);
-      }
-      pathRel(owner) {
-        let ob = owner.base();
-        if (!ob.endsWith("/")) {
-          ob += "/";
-        }
-        return this.path().replace(new RegExp("^" + this.escapeRegExp(ob)), "");
-      }
-      baseRel(owner) {
-        let ob = owner.base();
-        if (ob === "/") {
-          ob = "";
-        }
-        return this.base().substring(ob.length + 1);
-      }
-      trimLeadingSlash() {
-        const clonedComponents = this.components.clone();
-        const newPath = new Path(clonedComponents);
-        newPath.setShouldTrimLeadingSlash(true);
-        return newPath;
-      }
-      identifier(index) {
-        const totalIdentifiers = this.components.identifiers.length;
-        if (totalIdentifiers === 0 || index < 0 || index >= totalIdentifiers) {
-          return "";
-        }
-        let actualIndex;
-        if (totalIdentifiers === 1) {
-          actualIndex = 0;
-        } else {
-          if (index === 0) {
-            actualIndex = totalIdentifiers - 1;
-          } else {
-            actualIndex = totalIdentifiers - 1 - index;
-          }
-        }
-        const identifierStr = this.identifierAsString(actualIndex);
-        return identifierStr ? "." + identifierStr : "";
-      }
-      identifiers() {
-        const result = [];
-        const totalIdentifiers = this.components.identifiers.length;
-        for (let i = 0; i < totalIdentifiers; i++) {
-          const identifier = this.identifier(i);
-          if (identifier) {
-            result.push(identifier);
-          }
-        }
-        return result;
-      }
-      bundleType() {
-        return this.components.bundleType;
-      }
-      isContent() {
-        return this.bundleType() >= type_1.PathType.ContentResource;
-      }
-      isBundle() {
-        return this.bundleType() > type_1.PathType.Leaf;
-      }
-      isBranchBundle() {
-        return this.bundleType() === type_1.PathType.Branch;
-      }
-      isLeafBundle() {
-        return this.bundleType() === type_1.PathType.Leaf;
-      }
-      isHTML() {
-        const ext = this.ext().toLowerCase();
-        return type_1.PATH_CONSTANTS.HTML_EXTENSIONS.some((htmlExt) => htmlExt === ext);
-      }
-      disabled() {
-        return this.components.disabled;
-      }
-      forBundleType(type) {
-        const newComponents = this.components.withBundleType(type);
-        return new Path(newComponents);
-      }
-      unnormalized() {
-        if (!this._unnormalized) {
-          if (this.components.original === this.components.normalized) {
-            this._unnormalized = this;
-          } else {
-            const unnormalizedComponents = new pathcomponents_1.PathComponentsImpl(this.components.original, this.components.original, this.components.positions, this.components.identifiers, this.components.bundleType, this.components.disabled);
-            this._unnormalized = new Path(unnormalizedComponents);
-          }
-        }
-        return this._unnormalized;
-      }
-      setShouldTrimLeadingSlash(value2) {
-        this.shouldTrimLeadingSlash = value2;
-      }
-      norm(s) {
-        if (this.shouldTrimLeadingSlash) {
-          return s.startsWith("/") ? s.substring(1) : s;
-        }
-        return s;
-      }
-      isContentPage() {
-        return this.bundleType() >= type_1.PathType.ContentSingle;
-      }
-      baseInternal(preserveExt, isBundle) {
-        if (this.components.identifiers.length === 0) {
-          return this.norm(this.components.normalized);
-        }
-        if (preserveExt && this.components.identifiers.length === 1) {
-          return this.norm(this.components.normalized);
-        }
-        const lastId = this.components.identifiers[this.components.identifiers.length - 1];
-        let high = lastId.low - 1;
-        if (isBundle) {
-          high = this.components.positions.containerHigh - 1;
-        }
-        if (high === 0) {
-          high++;
-        }
-        if (!preserveExt) {
-          return this.norm(this.components.normalized.substring(0, high));
-        }
-        const firstId = this.components.identifiers[0];
-        return this.norm(this.components.normalized.substring(0, high) + this.components.normalized.substring(firstId.low - 1, firstId.high));
-      }
-      identifierAsString(i) {
-        const index = this.identifierIndex(i);
-        if (index === -1) {
-          return "";
-        }
-        const id = this.components.identifiers[index];
-        return this.components.normalized.substring(id.low, id.high);
-      }
-      identifierIndex(i) {
-        if (i < 0 || i >= this.components.identifiers.length) {
-          return -1;
-        }
-        return i;
-      }
-      escapeRegExp(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      }
-      toString() {
-        return `Path{path="${this.path()}", component="${this.component()}", bundleType=${type_1.PathType[this.bundleType()]}}`;
-      }
-      equals(other) {
-        return this.path() === other.path() && this.component() === other.component() && this.bundleType() === other.bundleType();
-      }
-      hashCode() {
-        return `${this.component()}:${this.path()}:${this.bundleType()}`;
-      }
-    };
-    exports2.Path = Path;
-    var PathUtils = class {
-      static fromString(component, path6) {
-        const components = new pathcomponents_1.PathComponentsImpl(path6, path6, { containerLow: -1, containerHigh: -1, sectionHigh: -1, identifierLanguage: -1 }, [], type_1.PathType.File, false);
-        return new Path(components);
-      }
-      static hasExtension(path6, extension) {
-        const pathExt = path6.ext();
-        const targetExt = extension.startsWith(".") ? extension : "." + extension;
-        return pathExt.toLowerCase() === targetExt.toLowerCase();
-      }
-      static isUnder(child, parent) {
-        const childPath = child.path();
-        let parentPath;
-        if (parent.isBranchBundle()) {
-          parentPath = parent.dir();
-        } else {
-          parentPath = parent.path();
-        }
-        const normalizedParent = parentPath === "/" ? "/" : parentPath + "/";
-        return childPath !== parentPath && childPath.startsWith(normalizedParent);
-      }
-      static relativeTo(from, to) {
-        return to.pathRel(from);
-      }
-      static compare(a, b) {
-        const pathCmp = a.path().localeCompare(b.path());
-        if (pathCmp !== 0)
-          return pathCmp;
-        const componentCmp = a.component().localeCompare(b.component());
-        if (componentCmp !== 0)
-          return componentCmp;
-        return a.bundleType() - b.bundleType();
-      }
-    };
-    exports2.PathUtils = PathUtils;
-  }
-});
-
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathparser.js
-var require_pathparser = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathparser.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PathParserUtils = exports2.ConfigurablePathNormalizer = exports2.DefaultFileExtensionChecker = exports2.BasicPathNormalizer = exports2.PathParsingNormalizer = exports2.PathProcessorImpl = void 0;
-    var type_1 = require_type4();
-    var pathcomponents_1 = require_pathcomponents();
-    var path_1 = require_path();
-    var PathProcessorImpl = class {
-      constructor(normalizer, extChecker) {
-        this.normalizer = normalizer || new PathParsingNormalizer();
-        this.extChecker = extChecker || new DefaultFileExtensionChecker();
-      }
-      parse(component, path6) {
-        let normalizedPath = path6;
-        if (!normalizedPath || normalizedPath === "") {
-          normalizedPath = "/";
-        }
-        const normalized = this.normalizer.normalize(normalizedPath);
-        const pathComponents = this.createPathComponents(component, normalized, path6);
-        return new path_1.Path(pathComponents);
-      }
-      parseIdentity(component, path6) {
-        const parsed = this.parse(component, path6);
-        return {
-          identifierBase: () => parsed.base()
-        };
-      }
-      parseBaseAndBaseNameNoIdentifier(component, path6) {
-        const parsed = this.parse(component, path6);
-        return [parsed.base(), parsed.baseNameNoIdentifier()];
-      }
-      createPathComponents(component, normalizedPath, originalPath) {
-        let actualComponent = component;
-        let actualPath = normalizedPath;
-        if (normalizedPath.startsWith("/")) {
-          const parts = normalizedPath.split("/").filter((p) => p.length > 0);
-          if (parts.length > 0) {
-            const firstPart = parts[0];
-            const knownComponents = ["static", "layouts", "themes", "archetypes", "data", "i18n", "assets"];
-            if (knownComponents.includes(firstPart) && component === "content") {
-              actualComponent = firstPart;
-            }
-            const staticDirs = ["images", "assets", "static", "css", "js", "fonts"];
-            if (staticDirs.includes(firstPart) && component === "content") {
-              actualComponent = "static";
-            }
-          }
-        }
-        const lastSlash = actualPath.lastIndexOf("/");
-        const filename = lastSlash >= 0 ? actualPath.substring(lastSlash + 1) : actualPath;
-        const directory = lastSlash >= 0 ? actualPath.substring(0, lastSlash) : "";
-        let bundleType = this.detectBundleType(filename, actualComponent);
-        const positions = this.calculatePathPositions(actualPath);
-        const identifiers = this.extractIdentifiers(actualPath, filename);
-        return new pathcomponents_1.PathComponentsImpl(originalPath, actualPath, positions, identifiers, bundleType, false, actualComponent);
-      }
-      detectBundleType(filename, component) {
-        if (component !== "content" && component !== "archetypes") {
-          return type_1.PathType.File;
-        }
-        const parts = filename.split(".");
-        let baseName = parts[0];
-        if (baseName === "index" && this.isContentFile(filename)) {
-          return type_1.PathType.Leaf;
-        } else if (baseName === "_index" && this.isContentFile(filename)) {
-          return type_1.PathType.Branch;
-        } else if (this.isContentFile(filename)) {
-          return type_1.PathType.ContentSingle;
-        } else {
-          return type_1.PathType.File;
-        }
-      }
-      isContentFile(filename) {
-        const ext = this.getFileExtension(filename);
-        return ["md", "html", "markdown", "mdown", "mkd", "mkdn", "htm"].includes(ext.toLowerCase());
-      }
-      getFileExtension(filename) {
-        const lastDot = filename.lastIndexOf(".");
-        if (lastDot > 0 && lastDot < filename.length - 1) {
-          return filename.substring(lastDot + 1);
-        }
-        return "";
-      }
-      calculatePathPositions(normalizedPath) {
-        let sectionHigh = -1;
-        let containerLow = -1;
-        let containerHigh = -1;
-        let slashCount = 0;
-        for (let i = normalizedPath.length - 1; i >= 0; i--) {
-          const c = normalizedPath[i];
-          if (c === "/") {
-            slashCount++;
-            if (containerHigh === -1) {
-              containerHigh = i + 1;
-            } else if (containerLow === -1) {
-              containerLow = i + 1;
-            }
-            if (i > 0) {
-              sectionHigh = i;
-            }
-          }
-        }
-        return new pathcomponents_1.PathPositionsImpl(containerLow, containerHigh, sectionHigh, -1);
-      }
-      extractIdentifiers(normalizedPath, filename) {
-        const identifiers = [];
-        const basePath = normalizedPath.substring(0, normalizedPath.length - filename.length);
-        const basePathLength = basePath.length;
-        const parts = filename.split(".");
-        if (parts.length <= 1) {
-          return identifiers;
-        }
-        let currentPos = basePathLength + parts[0].length;
-        for (let i = 1; i < parts.length; i++) {
-          const part = parts[i];
-          const dotPos = currentPos;
-          const partStart = dotPos + 1;
-          const partEnd = partStart + part.length;
-          identifiers.push(new pathcomponents_1.LowHighImpl(partStart, partEnd));
-          currentPos = partEnd;
-        }
-        return identifiers;
-      }
-    };
-    exports2.PathProcessorImpl = PathProcessorImpl;
-    var PathParsingNormalizer = class {
-      constructor(toLowerCase = true, replaceSpaces = true) {
-        this.toLowerCase = toLowerCase;
-        this.replaceSpaces = replaceSpaces;
-      }
-      normalize(path6) {
-        let result = path6;
-        result = result.replace(/\\/g, "/");
-        if (this.toLowerCase) {
-          result = result.toLowerCase();
-        }
-        if (this.replaceSpaces) {
-          result = result.replace(/\s/g, "-");
-        }
-        return result;
-      }
-    };
-    exports2.PathParsingNormalizer = PathParsingNormalizer;
-    var BasicPathNormalizer = class {
-      constructor(toLowerCase = true, replaceSpaces = true) {
-        this.toLowerCase = toLowerCase;
-        this.replaceSpaces = replaceSpaces;
-      }
-      normalize(path6) {
-        let result = path6;
-        result = result.replace(/\\/g, "/");
-        if (this.toLowerCase) {
-          result = result.toLowerCase();
-        }
-        if (this.replaceSpaces) {
-          result = result.replace(/\s+/g, "-");
-        }
-        return result;
-      }
-    };
-    exports2.BasicPathNormalizer = BasicPathNormalizer;
-    var DefaultFileExtensionChecker = class {
-      isContentExt(ext) {
-        const contentExts = type_1.PATH_CONSTANTS.CONTENT_EXTENSIONS;
-        return contentExts.includes(ext.toLowerCase());
-      }
-      isHTML(ext) {
-        const htmlExts = type_1.PATH_CONSTANTS.HTML_EXTENSIONS;
-        return htmlExts.includes(ext.toLowerCase());
-      }
-      hasExt(path6) {
-        for (let i = path6.length - 1; i >= 0; i--) {
-          if (path6[i] === ".") {
-            return true;
-          }
-          if (path6[i] === "/") {
-            return false;
-          }
-        }
-        return false;
-      }
-    };
-    exports2.DefaultFileExtensionChecker = DefaultFileExtensionChecker;
-    var ConfigurablePathNormalizer = class {
-      constructor(config) {
-        this.rules = [];
-        if (config?.normalizer) {
-          this.rules.push(config.normalizer);
-        } else {
-          if (config?.normalize !== false) {
-            this.rules.push((path6) => path6.toLowerCase());
-          }
-          if (config?.replaceSpaces !== false) {
-            this.rules.push((path6) => path6.replace(/\s+/g, "-"));
-          }
-        }
-      }
-      normalize(path6) {
-        return this.rules.reduce((result, rule) => rule(result), path6);
-      }
-      addRule(rule) {
-        this.rules.push(rule);
-      }
-      clearRules() {
-        this.rules = [];
-      }
-    };
-    exports2.ConfigurablePathNormalizer = ConfigurablePathNormalizer;
-    var PathParserUtils = class {
-      static parseBasic(path6) {
-        const lastSlash = path6.lastIndexOf("/");
-        const dir = lastSlash >= 0 ? path6.substring(0, lastSlash) : "";
-        const name = lastSlash >= 0 ? path6.substring(lastSlash + 1) : path6;
-        const lastDot = name.lastIndexOf(".");
-        const ext = lastDot >= 0 ? name.substring(lastDot) : "";
-        const nameWithoutExt = lastDot >= 0 ? name.substring(0, lastDot) : name;
-        return { dir, name, ext, nameWithoutExt };
-      }
-      static join(...segments) {
-        return segments.filter((segment) => segment.length > 0).map((segment) => segment.replace(/^\/+|\/+$/g, "")).join("/").replace(/\/+/g, "/");
-      }
-      static normalizeBasic(path6) {
-        const normalizer = new BasicPathNormalizer();
-        return normalizer.normalize(path6);
-      }
-      static isBundle(path6) {
-        const basic = PathParserUtils.parseBasic(path6);
-        const indexNames = type_1.PATH_CONSTANTS.INDEX_NAMES;
-        return indexNames.includes(basic.nameWithoutExt);
-      }
-      static extractSection(path6) {
-        const normalized = path6.startsWith("/") ? path6.substring(1) : path6;
-        const firstSlash = normalized.indexOf("/");
-        return firstSlash >= 0 ? normalized.substring(0, firstSlash) : normalized;
-      }
-      static removeExtension(path6) {
-        const lastDot = path6.lastIndexOf(".");
-        const lastSlash = path6.lastIndexOf("/");
-        if (lastDot > lastSlash) {
-          return path6.substring(0, lastDot);
-        }
-        return path6;
-      }
-      static hasExtension(path6) {
-        const checker = new DefaultFileExtensionChecker();
-        return checker.hasExt(path6);
-      }
-    };
-    exports2.PathParserUtils = PathParserUtils;
-  }
-});
-
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/factory/pathfactory.js
-var require_pathfactory = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/factory/pathfactory.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PathFactoryUtils = exports2.PathBuilder = exports2.SimplePathPool = exports2.DefaultPathFactory = exports2.PathFactoryImpl = void 0;
-    var pathparser_1 = require_pathparser();
-    var pathcomponents_1 = require_pathcomponents();
-    var path_1 = require_path();
-    var PathFactoryImpl = class {
-      constructor(config, pool) {
-        const normalizer = config?.normalizer ? { normalize: config.normalizer } : new pathparser_1.BasicPathNormalizer(config?.normalize !== false, config?.replaceSpaces !== false);
-        const extChecker = new pathparser_1.DefaultFileExtensionChecker();
-        this.processor = new pathparser_1.PathProcessorImpl(normalizer, extChecker);
-        if (pool) {
-          this.pool = pool;
-        }
-      }
-      create(component, path6, config) {
-        if (this.pool) {
-          const pooledPath = this.pool.get();
-        }
-        return this.processor.parse(component, path6);
-      }
-      createFromComponents(components) {
-        return new path_1.Path(components);
-      }
-      createMany(component, paths, config) {
-        return paths.map((path6) => this.create(component, path6, config));
-      }
-      createWithConfig(component, path6, normalizeConfig) {
-        const config = {};
-        if (normalizeConfig?.toLowerCase !== void 0) {
-          config.normalize = normalizeConfig.toLowerCase;
-        }
-        if (normalizeConfig?.replaceSpaces !== void 0) {
-          config.replaceSpaces = normalizeConfig.replaceSpaces;
-        }
-        if (normalizeConfig?.customNormalizer !== void 0) {
-          config.normalizer = normalizeConfig.customNormalizer;
-        }
-        return this.create(component, path6, config);
-      }
-    };
-    exports2.PathFactoryImpl = PathFactoryImpl;
-    var DefaultPathFactory = class extends PathFactoryImpl {
-      constructor() {
-        super({
-          normalize: true,
-          replaceSpaces: true
-        });
-      }
-    };
-    exports2.DefaultPathFactory = DefaultPathFactory;
-    var SimplePathPool = class {
-      constructor(maxSize = 100) {
-        this.pool = [];
-        this.maxSize = maxSize;
-      }
-      get() {
-        if (this.pool.length > 0) {
-          return this.pool.pop();
-        }
-        const components = pathcomponents_1.PathComponentsFactory.createEmpty();
-        return new path_1.Path(components);
-      }
-      put(path6) {
-        if (this.pool.length < this.maxSize) {
-          this.pool.push(path6);
-        }
-      }
-      clear() {
-        this.pool = [];
-      }
-      size() {
-        return this.pool.length;
-      }
-    };
-    exports2.SimplePathPool = SimplePathPool;
-    var PathBuilder = class {
-      constructor(factory) {
-        this.component = "";
-        this.path = "";
-        this.config = {};
-        this.factory = factory || new DefaultPathFactory();
-      }
-      withComponent(component) {
-        this.component = component;
-        return this;
-      }
-      withPath(path6) {
-        this.path = path6;
-        return this;
-      }
-      withNormalization(normalize2) {
-        this.config.normalize = normalize2;
-        return this;
-      }
-      withSpaceReplacement(replaceSpaces) {
-        this.config.replaceSpaces = replaceSpaces;
-        return this;
-      }
-      withNormalizer(normalizer) {
-        this.config.normalizer = normalizer;
-        return this;
-      }
-      build() {
-        if (!this.component || !this.path) {
-          throw new Error("Component and path must be set");
-        }
-        return this.factory.create(this.component, this.path, this.config);
-      }
-      reset() {
-        this.component = "";
-        this.path = "";
-        this.config = {};
-        return this;
-      }
-    };
-    exports2.PathBuilder = PathBuilder;
-    var PathFactoryUtils = class {
-      static createContentPath(path6) {
-        return PathFactoryUtils.defaultFactory.create("content", path6);
-      }
-      static createStaticPath(path6) {
-        return PathFactoryUtils.defaultFactory.create("static", path6);
-      }
-      static createLayoutPath(path6) {
-        return PathFactoryUtils.defaultFactory.create("layouts", path6);
-      }
-      static createArchetypePath(path6) {
-        return PathFactoryUtils.defaultFactory.create("archetypes", path6);
-      }
-      static createDataPath(path6) {
-        return PathFactoryUtils.defaultFactory.create("data", path6);
-      }
-      static createThemePath(path6) {
-        return PathFactoryUtils.defaultFactory.create("themes", path6);
-      }
-      static createFromConfig(config) {
-        const factoryConfig = {};
-        if (config.normalize !== void 0) {
-          factoryConfig.normalize = config.normalize;
-        }
-        if (config.replaceSpaces !== void 0) {
-          factoryConfig.replaceSpaces = config.replaceSpaces;
-        }
-        const factory = new PathFactoryImpl(factoryConfig);
-        return config.paths.map((path6) => factory.create(config.component, path6));
-      }
-      static builder() {
-        return new PathBuilder();
-      }
-      static createWithPool(component, path6, pool) {
-        const factory = new PathFactoryImpl(void 0, pool);
-        return factory.create(component, path6);
-      }
-    };
-    exports2.PathFactoryUtils = PathFactoryUtils;
-    PathFactoryUtils.defaultFactory = new DefaultPathFactory();
-  }
-});
-
-// node_modules/@mdfriday/foundry/dist/internal/domain/paths/index.js
-var require_paths = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/index.js"(exports2) {
-    "use strict";
-    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
-      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() {
-          return m[k];
-        } };
-      }
-      Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
-      for (var p in m)
-        if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
-          __createBinding(exports3, m, p);
-    };
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.PathDomain = exports2.PathValidationError = exports2.PathParseError = exports2.PathError = exports2.PATH_CONSTANTS = exports2.PathType = exports2.PathFactoryUtils = exports2.PathBuilder = exports2.SimplePathPool = exports2.DefaultPathFactory = exports2.PathFactoryImpl = exports2.PathUtils = exports2.Path = exports2.PathParserUtils = exports2.ConfigurablePathNormalizer = exports2.DefaultFileExtensionChecker = exports2.PathParsingNormalizer = exports2.BasicPathNormalizer = exports2.PathProcessorImpl = exports2.PathComponentsUtils = exports2.PathComponentsFactory = exports2.LowHighImpl = exports2.PathPositionsImpl = exports2.PathComponentsImpl = void 0;
-    __exportStar(require_type4(), exports2);
-    var pathcomponents_1 = require_pathcomponents();
-    Object.defineProperty(exports2, "PathComponentsImpl", { enumerable: true, get: function() {
-      return pathcomponents_1.PathComponentsImpl;
-    } });
-    Object.defineProperty(exports2, "PathPositionsImpl", { enumerable: true, get: function() {
-      return pathcomponents_1.PathPositionsImpl;
-    } });
-    Object.defineProperty(exports2, "LowHighImpl", { enumerable: true, get: function() {
-      return pathcomponents_1.LowHighImpl;
-    } });
-    Object.defineProperty(exports2, "PathComponentsFactory", { enumerable: true, get: function() {
-      return pathcomponents_1.PathComponentsFactory;
-    } });
-    Object.defineProperty(exports2, "PathComponentsUtils", { enumerable: true, get: function() {
-      return pathcomponents_1.PathComponentsUtils;
-    } });
-    var pathparser_1 = require_pathparser();
-    Object.defineProperty(exports2, "PathProcessorImpl", { enumerable: true, get: function() {
-      return pathparser_1.PathProcessorImpl;
-    } });
-    Object.defineProperty(exports2, "BasicPathNormalizer", { enumerable: true, get: function() {
-      return pathparser_1.BasicPathNormalizer;
-    } });
-    Object.defineProperty(exports2, "PathParsingNormalizer", { enumerable: true, get: function() {
-      return pathparser_1.PathParsingNormalizer;
-    } });
-    Object.defineProperty(exports2, "DefaultFileExtensionChecker", { enumerable: true, get: function() {
-      return pathparser_1.DefaultFileExtensionChecker;
-    } });
-    Object.defineProperty(exports2, "ConfigurablePathNormalizer", { enumerable: true, get: function() {
-      return pathparser_1.ConfigurablePathNormalizer;
-    } });
-    Object.defineProperty(exports2, "PathParserUtils", { enumerable: true, get: function() {
-      return pathparser_1.PathParserUtils;
-    } });
-    var path_1 = require_path();
-    Object.defineProperty(exports2, "Path", { enumerable: true, get: function() {
-      return path_1.Path;
-    } });
-    Object.defineProperty(exports2, "PathUtils", { enumerable: true, get: function() {
-      return path_1.PathUtils;
-    } });
-    var pathfactory_1 = require_pathfactory();
-    Object.defineProperty(exports2, "PathFactoryImpl", { enumerable: true, get: function() {
-      return pathfactory_1.PathFactoryImpl;
-    } });
-    Object.defineProperty(exports2, "DefaultPathFactory", { enumerable: true, get: function() {
-      return pathfactory_1.DefaultPathFactory;
-    } });
-    Object.defineProperty(exports2, "SimplePathPool", { enumerable: true, get: function() {
-      return pathfactory_1.SimplePathPool;
-    } });
-    Object.defineProperty(exports2, "PathBuilder", { enumerable: true, get: function() {
-      return pathfactory_1.PathBuilder;
-    } });
-    Object.defineProperty(exports2, "PathFactoryUtils", { enumerable: true, get: function() {
-      return pathfactory_1.PathFactoryUtils;
-    } });
-    var type_1 = require_type4();
-    Object.defineProperty(exports2, "PathType", { enumerable: true, get: function() {
-      return type_1.PathType;
-    } });
-    var type_2 = require_type4();
-    Object.defineProperty(exports2, "PATH_CONSTANTS", { enumerable: true, get: function() {
-      return type_2.PATH_CONSTANTS;
-    } });
-    var type_3 = require_type4();
-    Object.defineProperty(exports2, "PathError", { enumerable: true, get: function() {
-      return type_3.PathError;
-    } });
-    Object.defineProperty(exports2, "PathParseError", { enumerable: true, get: function() {
-      return type_3.PathParseError;
-    } });
-    Object.defineProperty(exports2, "PathValidationError", { enumerable: true, get: function() {
-      return type_3.PathValidationError;
-    } });
-    var pathfactory_2 = require_pathfactory();
-    var pathparser_2 = require_pathparser();
-    var path_2 = require_path();
-    var pathparser_3 = require_pathparser();
-    var pathfactory_3 = require_pathfactory();
-    var pathfactory_4 = require_pathfactory();
-    var pathparser_4 = require_pathparser();
-    exports2.PathDomain = {
-      createContentPath: pathfactory_2.PathFactoryUtils.createContentPath,
-      createStaticPath: pathfactory_2.PathFactoryUtils.createStaticPath,
-      createLayoutPath: pathfactory_2.PathFactoryUtils.createLayoutPath,
-      createArchetypePath: pathfactory_2.PathFactoryUtils.createArchetypePath,
-      createDataPath: pathfactory_2.PathFactoryUtils.createDataPath,
-      createThemePath: pathfactory_2.PathFactoryUtils.createThemePath,
-      builder: pathfactory_2.PathFactoryUtils.builder,
-      parseBasic: pathparser_2.PathParserUtils.parseBasic,
-      join: pathparser_2.PathParserUtils.join,
-      normalizeBasic: pathparser_2.PathParserUtils.normalizeBasic,
-      isBundle: pathparser_2.PathParserUtils.isBundle,
-      extractSection: pathparser_2.PathParserUtils.extractSection,
-      removeExtension: pathparser_2.PathParserUtils.removeExtension,
-      checkExtension: pathparser_2.PathParserUtils.hasExtension,
-      hasSpecificExtension: path_2.PathUtils.hasExtension,
-      isUnder: path_2.PathUtils.isUnder,
-      relativeTo: path_2.PathUtils.relativeTo,
-      compare: path_2.PathUtils.compare,
-      createProcessor: () => new pathparser_3.PathProcessorImpl(),
-      createFactory: () => new pathfactory_3.DefaultPathFactory(),
-      createPool: (maxSize) => new pathfactory_4.SimplePathPool(maxSize),
-      createNormalizer: (config) => new pathparser_4.BasicPathNormalizer(config?.toLowerCase, config?.replaceSpaces)
-    };
-  }
-});
-
 // node_modules/@mdfriday/foundry/dist/internal/domain/fs/vo/filemeta.js
 var require_filemeta = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/fs/vo/filemeta.js"(exports2) {
@@ -8577,9 +7713,14 @@ var require_filemeta = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FileMeta = void 0;
     exports2.newFileMeta = newFileMeta;
-    var paths_1 = require_paths();
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("fs", { component: "filemeta" });
     var FileMeta = class {
       constructor(filename = "", openFunc = null) {
+        __publicField(this, "filename");
+        __publicField(this, "componentRoot");
+        __publicField(this, "componentDir");
+        __publicField(this, "openFunc");
         this.filename = filename;
         this.componentRoot = "";
         this.componentDir = "";
@@ -8597,8 +7738,8 @@ var require_filemeta = __commonJS({
           throw new Error(`filename ${this.filename} has no root ${this.componentRoot}`);
         }
         let relativePath = this.filename.substring(rootIndex + this.componentRoot.length);
-        if (!relativePath.startsWith(paths_1.PATH_CONSTANTS.SYSTEM_PATH_SEPARATOR)) {
-          relativePath = paths_1.PATH_CONSTANTS.SYSTEM_PATH_SEPARATOR + relativePath;
+        if (!relativePath.startsWith("/")) {
+          relativePath = "/" + relativePath;
         }
         return relativePath;
       }
@@ -8661,6 +7802,8 @@ var require_fileinfo = __commonJS({
     var filemeta_1 = require_filemeta();
     var FileInfo = class {
       constructor(fileInfo, fileMeta) {
+        __publicField(this, "fileInfo");
+        __publicField(this, "_fileMeta");
         this.fileInfo = fileInfo;
         this._fileMeta = fileMeta;
       }
@@ -8791,6 +7934,10 @@ var require_file = __commonJS({
     var path6 = __importStar(require("path"));
     var File = class {
       constructor(file, fileMeta, fs5, isDir = false) {
+        __publicField(this, "file");
+        __publicField(this, "fileMeta");
+        __publicField(this, "fs");
+        __publicField(this, "_isDir");
         this.file = file;
         this.fileMeta = fileMeta;
         this.fs = fs5;
@@ -8933,6 +8080,8 @@ var require_dir2 = __commonJS({
     var DirFile = class extends file_1.File {
       constructor(file, virtualOpener = null, filter = null) {
         super(file.isNop() ? null : file, file.meta(), file.fs, true);
+        __publicField(this, "virtualOpener");
+        __publicField(this, "filter");
         this.virtualOpener = virtualOpener;
         this.filter = filter;
       }
@@ -9042,6 +8191,8 @@ var require_basefs = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "basefs" });
     var BaseFs = class {
       constructor(fs5, roots) {
+        __publicField(this, "fs");
+        __publicField(this, "roots");
         this.fs = fs5;
         this.roots = roots;
       }
@@ -9061,8 +8212,15 @@ var require_basefs = __commonJS({
         }
         return path6.join(root, name);
       }
+      isSameRootedPath(name) {
+        const root = this.roots[0];
+        return name.startsWith(path6.join(root, path6.sep)) || name === root;
+      }
       async stat(name) {
         const absPath = this.toAbsolutePath(name);
+        if (!this.isSameRootedPath(absPath)) {
+          throw new Error(`path ${name} is outside of the BaseFs root`);
+        }
         try {
           const fi = await this.fs.stat(absPath);
           if (fi.isDir()) {
@@ -9229,7 +8387,11 @@ var require_walkway = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "walkway" });
     var Walkway = class {
       constructor(fs5, cb) {
-        this.walked = false;
+        __publicField(this, "fs");
+        __publicField(this, "root");
+        __publicField(this, "cb");
+        __publicField(this, "cfg");
+        __publicField(this, "walked", false);
         if (!fs5) {
           throw new Error("fs must be set");
         }
@@ -9367,6 +8529,8 @@ var require_static_copier = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "static-copier" });
     var StaticCopier = class {
       constructor(froms, to) {
+        __publicField(this, "fromFss");
+        __publicField(this, "toFs");
         this.fromFss = froms;
         this.toFs = to;
       }
@@ -9501,14 +8665,18 @@ var require_incremental_file_collector = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "incremental-file-collector" });
     async function collectFileMetaInfos(paths, fss) {
       const result = /* @__PURE__ */ new Map();
+      let found = false;
       for (const path6 of paths) {
-        try {
-          for (const fs5 of fss) {
+        for (const fs5 of fss) {
+          try {
             const fileMetaInfo = await createFileMetaInfo(path6, fs5);
             result.set(path6, fileMetaInfo);
+            found = true;
+            if (found)
+              break;
+          } catch (error) {
+            log.error(`Failed to create FileMetaInfo for ${path6} with fs=${fs5}:`, error);
           }
-        } catch (error) {
-          log.error(`Failed to create FileMetaInfo for ${path6}:`, error);
         }
       }
       return result;
@@ -9539,6 +8707,16 @@ var require_fs = __commonJS({
     var fs_1 = require_fs3();
     var Fs = class {
       constructor(originFs, prompts, workflows, content, layouts, statics, assets, i18n, work) {
+        __publicField(this, "originFs");
+        __publicField(this, "prompts");
+        __publicField(this, "workflows");
+        __publicField(this, "content");
+        __publicField(this, "layouts");
+        __publicField(this, "statics");
+        __publicField(this, "assets");
+        __publicField(this, "i18n");
+        __publicField(this, "work");
+        __publicField(this, "service");
         this.originFs = originFs;
         this.prompts = prompts;
         this.workflows = workflows;
@@ -9651,6 +8829,9 @@ var require_overlayoptions = __commonJS({
     exports2.defaultDirMerger = defaultDirMerger;
     var OverlayOptions = class {
       constructor(options) {
+        __publicField(this, "fss");
+        __publicField(this, "firstWritable");
+        __publicField(this, "dirsMerger");
         this.fss = [...options.fss];
         this.firstWritable = options.firstWritable ?? false;
         this.dirsMerger = options.dirsMerger ?? exports2.defaultDirMerger;
@@ -9735,6 +8916,15 @@ var require_overlaydir = __commonJS({
     var overlayoptions_1 = require_overlayoptions();
     var OverlayDir = class {
       constructor(options = {}) {
+        __publicField(this, "_name");
+        __publicField(this, "fss");
+        __publicField(this, "dirOpeners");
+        __publicField(this, "info");
+        __publicField(this, "merge");
+        __publicField(this, "err");
+        __publicField(this, "offset");
+        __publicField(this, "fis");
+        __publicField(this, "closed");
         this._name = options.name || "";
         this.fss = options.fss ? [...options.fss] : [];
         this.dirOpeners = options.dirOpeners ? [...options.dirOpeners] : [];
@@ -9866,7 +9056,7 @@ var require_overlaydir = __commonJS({
     exports2.OverlayDir = OverlayDir;
     var DirPool = class {
       constructor() {
-        this.pool = [];
+        __publicField(this, "pool", []);
       }
       get() {
         if (this.pool.length > 0) {
@@ -9928,6 +9118,9 @@ var require_overlayfs = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "overlayfs" });
     var OverlayFs = class {
       constructor(options) {
+        __publicField(this, "fss");
+        __publicField(this, "mergeDirs");
+        __publicField(this, "firstWritable");
         this.fss = [...options.fss];
         this.mergeDirs = options.dirsMerger;
         this.firstWritable = options.firstWritable;
@@ -10143,6 +9336,9 @@ var require_filevitural = __commonJS({
     var fileinfo_1 = require_fileinfo();
     var VirtualFileInfo = class {
       constructor(name, content = "This is a virtual file.") {
+        __publicField(this, "_name");
+        __publicField(this, "_content");
+        __publicField(this, "_modTime");
         this._name = name;
         this._content = content;
         this._modTime = new Date();
@@ -10171,7 +9367,9 @@ var require_filevitural = __commonJS({
     };
     var VirtualFile = class {
       constructor(fileName, fileContent) {
-        this._fileInfo = null;
+        __publicField(this, "_fileName");
+        __publicField(this, "_fileContent");
+        __publicField(this, "_fileInfo", null);
         this._fileName = fileName;
         this._fileContent = fileContent;
       }
@@ -10419,6 +9617,9 @@ var require_filesystemscollector = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "filesystemscollector" });
     var RootMapping = class {
       constructor(from, to, toBase = "") {
+        __publicField(this, "from");
+        __publicField(this, "to");
+        __publicField(this, "toBase");
         this.from = from;
         this.to = to;
         this.toBase = toBase;
@@ -10430,6 +9631,14 @@ var require_filesystemscollector = __commonJS({
     exports2.RootMapping = RootMapping;
     var FilesystemsCollector = class {
       constructor(sourceProject) {
+        __publicField(this, "sourceProject");
+        __publicField(this, "overlayMountsPrompt");
+        __publicField(this, "overlayMountsWorkflow");
+        __publicField(this, "overlayMountsContent");
+        __publicField(this, "overlayMountsLayouts");
+        __publicField(this, "overlayMountsStatics");
+        __publicField(this, "overlayMountsAssets");
+        __publicField(this, "overlayMountsI18n");
         this.sourceProject = sourceProject;
         this.overlayMountsPrompt = (0, overlayfs_factory_1.createReadOnlyOverlayFs)([]);
         this.overlayMountsWorkflow = (0, overlayfs_factory_1.createReadOnlyOverlayFs)([]);
@@ -10592,6 +9801,8 @@ var require_osfs = __commonJS({
     var log = (0, log_1.getDomainLogger)("fs", { component: "osfs" });
     var OsFileInfo = class {
       constructor(stats, _name) {
+        __publicField(this, "stats");
+        __publicField(this, "_name");
         this.stats = stats;
         this._name = _name;
       }
@@ -10617,11 +9828,13 @@ var require_osfs = __commonJS({
     exports2.OsFileInfo = OsFileInfo;
     var OsFile = class {
       constructor(filePath, flags = "r") {
+        __publicField(this, "filePath");
+        __publicField(this, "flags");
+        __publicField(this, "handle", null);
+        __publicField(this, "closed", false);
+        __publicField(this, "position", 0);
         this.filePath = filePath;
         this.flags = flags;
-        this.handle = null;
-        this.closed = false;
-        this.position = 0;
       }
       async ensureOpen() {
         if (!this.handle && !this.closed) {
@@ -11040,7 +10253,7 @@ var require_fs3 = __commonJS({
 });
 
 // node_modules/@mdfriday/foundry/dist/internal/domain/content/type.js
-var require_type5 = __commonJS({
+var require_type4 = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/content/type.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -11061,7 +10274,7 @@ var require_type5 = __commonJS({
 });
 
 // node_modules/@mdfriday/foundry/dist/internal/domain/markdown/type.js
-var require_type6 = __commonJS({
+var require_type5 = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/markdown/type.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -11171,6 +10384,9 @@ var require_context = __commonJS({
     exports2.Context = exports2.RenderContextDataHolder = exports2.BufWriter = void 0;
     var BufWriter = class {
       constructor(initialCapacity = 1024) {
+        __publicField(this, "buffer");
+        __publicField(this, "position");
+        __publicField(this, "capacity");
         this.capacity = initialCapacity;
         this.buffer = new Uint8Array(this.capacity);
         this.position = 0;
@@ -11217,6 +10433,8 @@ var require_context = __commonJS({
     exports2.BufWriter = BufWriter;
     var RenderContextDataHolder = class {
       constructor(rctx, dctx) {
+        __publicField(this, "rctx");
+        __publicField(this, "dctx");
         this.rctx = rctx;
         this.dctx = dctx;
       }
@@ -11230,9 +10448,11 @@ var require_context = __commonJS({
     exports2.RenderContextDataHolder = RenderContextDataHolder;
     var Context = class {
       constructor(bufWriter, contextData) {
+        __publicField(this, "bufWriter");
+        __publicField(this, "contextData");
+        __publicField(this, "posStack", []);
         this.bufWriter = bufWriter;
         this.contextData = contextData;
-        this.posStack = [];
       }
       async write(data) {
         return this.bufWriter.write(data);
@@ -11275,6 +10495,7 @@ var require_tableofcontents = __commonJS({
     exports2.AutoIDGenerator = exports2.TOCBuilder = exports2.ParagraphImpl = exports2.LinkImpl = exports2.HeaderImpl = exports2.TableOfContentsImpl = void 0;
     var TableOfContentsImpl = class {
       constructor(fragments = []) {
+        __publicField(this, "fragments");
         this.fragments = fragments;
       }
       toHTML(startLevel, stopLevel, ordered) {
@@ -11329,6 +10550,11 @@ ${this.renderFragments(f.children, ordered)}    </${tag}>`;
     exports2.TableOfContentsImpl = TableOfContentsImpl;
     var HeaderImpl = class {
       constructor(_name, _level, _links = [], _paragraphs = [], _listParagraphs = []) {
+        __publicField(this, "_name");
+        __publicField(this, "_level");
+        __publicField(this, "_links");
+        __publicField(this, "_paragraphs");
+        __publicField(this, "_listParagraphs");
         this._name = _name;
         this._level = _level;
         this._links = _links;
@@ -11363,6 +10589,8 @@ ${this.renderFragments(f.children, ordered)}    </${tag}>`;
     exports2.HeaderImpl = HeaderImpl;
     var LinkImpl = class {
       constructor(_text, _url) {
+        __publicField(this, "_text");
+        __publicField(this, "_url");
         this._text = _text;
         this._url = _url;
       }
@@ -11376,6 +10604,7 @@ ${this.renderFragments(f.children, ordered)}    </${tag}>`;
     exports2.LinkImpl = LinkImpl;
     var ParagraphImpl = class {
       constructor(_text) {
+        __publicField(this, "_text");
         this._text = _text;
       }
       text() {
@@ -11385,8 +10614,8 @@ ${this.renderFragments(f.children, ordered)}    </${tag}>`;
     exports2.ParagraphImpl = ParagraphImpl;
     var TOCBuilder = class {
       constructor() {
-        this.fragments = [];
-        this.stack = [];
+        __publicField(this, "fragments", []);
+        __publicField(this, "stack", []);
       }
       addHeading(text3, level, id) {
         while (this.stack.length > 0 && this.stack[this.stack.length - 1].level >= level) {
@@ -11420,7 +10649,7 @@ ${this.renderFragments(f.children, ordered)}    </${tag}>`;
     exports2.TOCBuilder = TOCBuilder;
     var AutoIDGenerator2 = class {
       constructor() {
-        this.usedIds = /* @__PURE__ */ new Set();
+        __publicField(this, "usedIds", /* @__PURE__ */ new Set());
       }
       generateID(text3, type = "github") {
         let id;
@@ -11476,6 +10705,8 @@ var require_highlight = __commonJS({
     exports2.createExternalHighlighter = createExternalHighlighter;
     var HighlightResultImpl = class {
       constructor(wrappedContent, innerContent) {
+        __publicField(this, "wrappedContent");
+        __publicField(this, "innerContent");
         this.wrappedContent = wrappedContent;
         this.innerContent = innerContent;
       }
@@ -11489,6 +10720,7 @@ var require_highlight = __commonJS({
     exports2.HighlightResultImpl = HighlightResultImpl;
     var DefaultHighlighter = class {
       constructor(config) {
+        __publicField(this, "config");
         this.config = config;
       }
       async highlight(code, lang, opts) {
@@ -11550,6 +10782,8 @@ var require_highlight = __commonJS({
         guessSyntax: false,
         tabWidth: 4
       }) {
+        __publicField(this, "highlightFn");
+        __publicField(this, "config");
         this.highlightFn = highlightFn;
         this.config = config;
       }
@@ -11614,6 +10848,15 @@ var require_item = __commonJS({
     exports2.itemTypeToString = itemTypeToString;
     var Item = class {
       constructor() {
+        __publicField(this, "Type");
+        __publicField(this, "Err");
+        __publicField(this, "low");
+        __publicField(this, "high");
+        __publicField(this, "segments");
+        __publicField(this, "firstByte");
+        __publicField(this, "isString");
+        __publicField(this, "content");
+        __publicField(this, "bytes");
         this.Type = ItemType.tError;
         this.Err = null;
         this.low = 0;
@@ -11822,6 +11065,10 @@ var require_pagelexer = __commonJS({
     var inlineIdentifier = new TextEncoder().encode("inline ");
     var sectionHandlers = class {
       constructor(l) {
+        __publicField(this, "l");
+        __publicField(this, "skipAll");
+        __publicField(this, "handlers");
+        __publicField(this, "skipIndexes");
         this.l = l;
         this.skipAll = false;
         this.handlers = [];
@@ -11871,6 +11118,10 @@ var require_pagelexer = __commonJS({
     };
     var sectionHandler = class {
       constructor(l, skipFunc, lexFunc) {
+        __publicField(this, "l");
+        __publicField(this, "skipAll");
+        __publicField(this, "skipFunc");
+        __publicField(this, "lexFunc");
         this.l = l;
         this.skipAll = false;
         this.skipFunc = skipFunc;
@@ -11970,6 +11221,8 @@ var require_pagelexer = __commonJS({
     }
     var Iterator = class {
       constructor(items) {
+        __publicField(this, "items");
+        __publicField(this, "lastPos");
         this.items = items;
         this.lastPos = -1;
       }
@@ -12037,6 +11290,21 @@ var require_pagelexer = __commonJS({
     }
     var pageLexer = class {
       constructor(input, stateStart, cfg) {
+        __publicField(this, "input");
+        __publicField(this, "stateStart");
+        __publicField(this, "state");
+        __publicField(this, "pos");
+        __publicField(this, "start");
+        __publicField(this, "width");
+        __publicField(this, "sectionHandlers");
+        __publicField(this, "cfg");
+        __publicField(this, "summaryDivider");
+        __publicField(this, "summaryDividerChecked");
+        __publicField(this, "lexerShortcodeState");
+        __publicField(this, "items");
+        __publicField(this, "err");
+        __publicField(this, "inFrontMatter");
+        __publicField(this, "parenDepth");
         this.input = input;
         this.stateStart = stateStart;
         this.state = null;
@@ -12262,9 +11530,9 @@ var require_pagelexer = __commonJS({
       isUnicodeSpace(r) {
         return r === 32 || r === 9 || r === 10 || r === 12 || r === 13 || r === 133 || r === 160 || r === 8192 || r === 8193 || r === 8194 || r === 8195 || r === 8196 || r === 8197 || r === 8198 || r === 8199 || r === 8200 || r === 8201 || r === 8202 || r === 8232 || r === 8233 || r === 8239 || r === 8287 || r === 12288;
       }
-      index(sep2) {
+      index(sep3) {
         const input = this.input.slice(this.pos);
-        const sepLen = sep2.length;
+        const sepLen = sep3.length;
         const inputLen = input.length;
         if (sepLen > inputLen) {
           return -1;
@@ -12272,7 +11540,7 @@ var require_pagelexer = __commonJS({
         outer:
           for (let i = 0; i <= inputLen - sepLen; i++) {
             for (let j = 0; j < sepLen; j++) {
-              if (input[i + j] !== sep2[j]) {
+              if (input[i + j] !== sep3[j]) {
                 continue outer;
               }
             }
@@ -13150,8 +12418,10 @@ var require_parseinfo = __commonJS({
     var log = (0, log_1.getDomainLogger)("markdown", { component: "parseinfo" });
     var SourceParseInfo = class {
       constructor(source, handlers) {
-        this.posMainContent = -1;
-        this.itemsStep1 = [];
+        __publicField(this, "source");
+        __publicField(this, "posMainContent", -1);
+        __publicField(this, "itemsStep1", []);
+        __publicField(this, "handlers");
         this.source = source;
         this.handlers = handlers;
         this.validateHandlers();
@@ -13248,6 +12518,21 @@ var require_shortcode = __commonJS({
     var log = (0, log_1.getDomainLogger)("markdown", { component: "vo/shortcode" });
     var ShortcodeImpl = class {
       constructor(ordinal = 0, name = "", params = null, pos2 = 0, length = 0, inline = false, closed = false) {
+        __publicField(this, "name");
+        __publicField(this, "params");
+        __publicField(this, "pos");
+        __publicField(this, "length");
+        __publicField(this, "rawContent");
+        __publicField(this, "placeholder");
+        __publicField(this, "inline");
+        __publicField(this, "closed");
+        __publicField(this, "inner");
+        __publicField(this, "ordinal");
+        __publicField(this, "indentation");
+        __publicField(this, "doMarkup");
+        __publicField(this, "isClosing");
+        __publicField(this, "info");
+        __publicField(this, "templs");
         this.ordinal = ordinal;
         this.name = name;
         this.params = params;
@@ -13268,11 +12553,13 @@ var require_shortcode = __commonJS({
     exports2.ShortcodeImpl = ShortcodeImpl;
     var ShortcodeParser = class {
       constructor(source, pid = Date.now()) {
-        this.shortcodes = [];
-        this.nameSet = /* @__PURE__ */ new Set();
-        this.ordinal = 0;
-        this.openShortcodes = /* @__PURE__ */ new Map();
-        this.paramElements = 0;
+        __publicField(this, "shortcodes", []);
+        __publicField(this, "nameSet", /* @__PURE__ */ new Set());
+        __publicField(this, "source");
+        __publicField(this, "ordinal", 0);
+        __publicField(this, "pid");
+        __publicField(this, "openShortcodes", /* @__PURE__ */ new Map());
+        __publicField(this, "paramElements", 0);
         this.source = source;
         this.pid = pid;
       }
@@ -13487,13 +12774,20 @@ var require_shortcode = __commonJS({
 });
 
 // node_modules/@mdfriday/foundry/dist/pkg/media/type.js
-var require_type7 = __commonJS({
+var require_type6 = __commonJS({
   "node_modules/@mdfriday/foundry/dist/pkg/media/type.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.MediaType = void 0;
     var MediaType = class {
       constructor(init2) {
+        __publicField(this, "type");
+        __publicField(this, "mainType");
+        __publicField(this, "subType");
+        __publicField(this, "delimiter");
+        __publicField(this, "firstSuffix");
+        __publicField(this, "mimeSuffix");
+        __publicField(this, "suffixesCSV");
         this.type = init2.type;
         this.mainType = init2.mainType;
         this.subType = init2.subType;
@@ -13536,7 +12830,9 @@ var require_content = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Content = exports2.INTERNAL_SUMMARY_DIVIDER_PRE = exports2.INTERNAL_SUMMARY_DIVIDER_BASE = void 0;
-    var type_1 = require_type7();
+    var type_1 = require_type6();
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("markdown", { component: "content" });
     exports2.INTERNAL_SUMMARY_DIVIDER_BASE = "HUGOMORE42";
     exports2.INTERNAL_SUMMARY_DIVIDER_PRE = new TextEncoder().encode(`
 
@@ -13545,9 +12841,11 @@ ${exports2.INTERNAL_SUMMARY_DIVIDER_BASE}
 `);
     var Content = class {
       constructor(source, renderer) {
-        this.hasSummaryDivider = false;
-        this.summaryTruncated = false;
-        this.items = [];
+        __publicField(this, "hasSummaryDivider", false);
+        __publicField(this, "summaryTruncated", false);
+        __publicField(this, "rawSource");
+        __publicField(this, "items", []);
+        __publicField(this, "renderer");
         this.rawSource = source;
         this.renderer = renderer;
       }
@@ -13666,10 +12964,6 @@ ${exports2.INTERNAL_SUMMARY_DIVIDER_BASE}
       getReplacements() {
         return this.items.filter(this.isContentReplacement);
       }
-      isSummaryEmpty() {
-        const summary = this.getSummary();
-        return !summary || summary.trim() === "";
-      }
       extractSummary(input, mediaType) {
         const inputStr = new TextDecoder().decode(input);
         const res = this.extractSummaryFromHTML(mediaType, inputStr, 70, this.containsCJK(inputStr));
@@ -13743,8 +13037,14 @@ ${exports2.INTERNAL_SUMMARY_DIVIDER_BASE}
         }
         return encoder.encode(content);
       }
-      getSummary(maxLength) {
-        const content = this.pureContent();
+      cleanDividerPlaceholders(htmlContent) {
+        if (this.hasSummaryDivider) {
+          return htmlContent.replace(new RegExp(exports2.INTERNAL_SUMMARY_DIVIDER_BASE, "g"), "");
+        }
+        return htmlContent;
+      }
+      getDividedSummary(htmlContent) {
+        const content = htmlContent;
         if (this.hasSummaryDivider) {
           const dividerIndex = content.indexOf(exports2.INTERNAL_SUMMARY_DIVIDER_BASE);
           if (dividerIndex !== -1) {
@@ -13753,26 +13053,26 @@ ${exports2.INTERNAL_SUMMARY_DIVIDER_BASE}
         }
         return "";
       }
-      async getRenderedSummary(maxLength) {
-        let rawSummary = this.getSummary(maxLength);
-        if (this.isSummaryEmpty()) {
-          const pureContent = this.pureContentWithoutPlaceholder();
-          const encoder = new TextEncoder();
-          const contentBytes = encoder.encode(pureContent);
-          const defaultMediaType = new type_1.MediaType({
-            type: "text/html",
-            mainType: "text",
-            subType: "html",
-            delimiter: ".",
-            firstSuffix: { suffix: "html", fullSuffix: ".html" },
-            mimeSuffix: "",
-            suffixesCSV: "html"
-          });
-          const extracted = this.extractSummary(contentBytes, defaultMediaType);
-          rawSummary = extracted.summary;
-          if (extracted.truncated) {
-            rawSummary += "...";
-          }
+      async getRenderedSummary(htmlContent, maxLength) {
+        if (this.hasSummaryDivider && htmlContent) {
+          return this.getDividedSummary(htmlContent);
+        }
+        const pureContent = this.pureContentWithoutPlaceholder();
+        const encoder = new TextEncoder();
+        const contentBytes = encoder.encode(pureContent);
+        const defaultMediaType = new type_1.MediaType({
+          type: "text/html",
+          mainType: "text",
+          subType: "html",
+          delimiter: ".",
+          firstSuffix: { suffix: "html", fullSuffix: ".html" },
+          mimeSuffix: "",
+          suffixesCSV: "html"
+        });
+        const extracted = this.extractSummary(contentBytes, defaultMediaType);
+        let rawSummary = extracted.summary;
+        if (extracted.truncated) {
+          rawSummary += "...";
         }
         if (maxLength && rawSummary.length > maxLength) {
           rawSummary = rawSummary.substring(0, maxLength).trim() + "...";
@@ -13963,7 +13263,7 @@ var require_snippet = __commonJS({
 });
 
 // node_modules/js-yaml/lib/type.js
-var require_type8 = __commonJS({
+var require_type7 = __commonJS({
   "node_modules/js-yaml/lib/type.js"(exports2, module2) {
     "use strict";
     var YAMLException = require_exception();
@@ -14031,7 +13331,7 @@ var require_schema = __commonJS({
   "node_modules/js-yaml/lib/schema.js"(exports2, module2) {
     "use strict";
     var YAMLException = require_exception();
-    var Type = require_type8();
+    var Type = require_type7();
     function compileList(schema, name) {
       var result = [];
       schema[name].forEach(function(currentType) {
@@ -14121,7 +13421,7 @@ var require_schema = __commonJS({
 var require_str = __commonJS({
   "node_modules/js-yaml/lib/type/str.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     module2.exports = new Type("tag:yaml.org,2002:str", {
       kind: "scalar",
       construct: function(data) {
@@ -14135,7 +13435,7 @@ var require_str = __commonJS({
 var require_seq = __commonJS({
   "node_modules/js-yaml/lib/type/seq.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     module2.exports = new Type("tag:yaml.org,2002:seq", {
       kind: "sequence",
       construct: function(data) {
@@ -14149,7 +13449,7 @@ var require_seq = __commonJS({
 var require_map = __commonJS({
   "node_modules/js-yaml/lib/type/map.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     module2.exports = new Type("tag:yaml.org,2002:map", {
       kind: "mapping",
       construct: function(data) {
@@ -14178,7 +13478,7 @@ var require_failsafe = __commonJS({
 var require_null = __commonJS({
   "node_modules/js-yaml/lib/type/null.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     function resolveYamlNull(data) {
       if (data === null)
         return true;
@@ -14222,7 +13522,7 @@ var require_null = __commonJS({
 var require_bool = __commonJS({
   "node_modules/js-yaml/lib/type/bool.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     function resolveYamlBoolean(data) {
       if (data === null)
         return false;
@@ -14261,7 +13561,7 @@ var require_int = __commonJS({
   "node_modules/js-yaml/lib/type/int.js"(exports2, module2) {
     "use strict";
     var common = require_common();
-    var Type = require_type8();
+    var Type = require_type7();
     function isHexCode(c) {
       return 48 <= c && c <= 57 || 65 <= c && c <= 70 || 97 <= c && c <= 102;
     }
@@ -14399,7 +13699,7 @@ var require_float = __commonJS({
   "node_modules/js-yaml/lib/type/float.js"(exports2, module2) {
     "use strict";
     var common = require_common();
-    var Type = require_type8();
+    var Type = require_type7();
     var YAML_FLOAT_PATTERN = new RegExp("^(?:[-+]?(?:[0-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?|[-+]?\\.(?:inf|Inf|INF)|\\.(?:nan|NaN|NAN))$");
     function resolveYamlFloat(data) {
       if (data === null)
@@ -14500,7 +13800,7 @@ var require_core = __commonJS({
 var require_timestamp = __commonJS({
   "node_modules/js-yaml/lib/type/timestamp.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     var YAML_DATE_REGEXP = new RegExp("^([0-9][0-9][0-9][0-9])-([0-9][0-9])-([0-9][0-9])$");
     var YAML_TIMESTAMP_REGEXP = new RegExp("^([0-9][0-9][0-9][0-9])-([0-9][0-9]?)-([0-9][0-9]?)(?:[Tt]|[ \\t]+)([0-9][0-9]?):([0-9][0-9]):([0-9][0-9])(?:\\.([0-9]*))?(?:[ \\t]*(Z|([-+])([0-9][0-9]?)(?::([0-9][0-9]))?))?$");
     function resolveYamlTimestamp(data) {
@@ -14564,7 +13864,7 @@ var require_timestamp = __commonJS({
 var require_merge = __commonJS({
   "node_modules/js-yaml/lib/type/merge.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     function resolveYamlMerge(data) {
       return data === "<<" || data === null;
     }
@@ -14579,7 +13879,7 @@ var require_merge = __commonJS({
 var require_binary = __commonJS({
   "node_modules/js-yaml/lib/type/binary.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     var BASE64_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
     function resolveYamlBinary(data) {
       if (data === null)
@@ -14665,7 +13965,7 @@ var require_binary = __commonJS({
 var require_omap = __commonJS({
   "node_modules/js-yaml/lib/type/omap.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
     var _toString = Object.prototype.toString;
     function resolveYamlOmap(data) {
@@ -14709,7 +14009,7 @@ var require_omap = __commonJS({
 var require_pairs = __commonJS({
   "node_modules/js-yaml/lib/type/pairs.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     var _toString = Object.prototype.toString;
     function resolveYamlPairs(data) {
       if (data === null)
@@ -14751,7 +14051,7 @@ var require_pairs = __commonJS({
 var require_set = __commonJS({
   "node_modules/js-yaml/lib/type/set.js"(exports2, module2) {
     "use strict";
-    var Type = require_type8();
+    var Type = require_type7();
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
     function resolveYamlSet(data) {
       if (data === null)
@@ -16592,7 +15892,7 @@ var require_js_yaml = __commonJS({
         throw new Error("Function yaml." + from + " is removed in js-yaml 4. Use yaml." + to + " instead, which is now safe by default.");
       };
     }
-    module2.exports.Type = require_type8();
+    module2.exports.Type = require_type7();
     module2.exports.Schema = require_schema();
     module2.exports.FAILSAFE_SCHEMA = require_failsafe();
     module2.exports.JSON_SCHEMA = require_json();
@@ -16631,6 +15931,7 @@ var require_parserresult = __commonJS({
     exports2.ResultImpl = exports2.RenderingResultImpl = void 0;
     var RenderingResultImpl = class {
       constructor(buffer) {
+        __publicField(this, "buffer");
         this.buffer = buffer;
       }
       bytes() {
@@ -16644,6 +15945,8 @@ var require_parserresult = __commonJS({
     exports2.RenderingResultImpl = RenderingResultImpl;
     var ResultImpl = class {
       constructor(parsingResult, renderingResult) {
+        __publicField(this, "parsingResult");
+        __publicField(this, "renderingResult");
         this.parsingResult = parsingResult;
         this.renderingResult = renderingResult;
       }
@@ -16723,6 +16026,8 @@ var require_markdown = __commonJS({
     var log = (0, log_1.getDomainLogger)("markdown", { component: "MarkdownImpl" });
     var MarkdownImpl = class {
       constructor(renderer, highlighter) {
+        __publicField(this, "renderer");
+        __publicField(this, "highlighter");
         this.renderer = renderer;
         this.highlighter = highlighter;
       }
@@ -16752,11 +16057,12 @@ var require_markdown = __commonJS({
           toc: () => res.tableOfContents(),
           render: async (options) => {
             const htmlContent = await parseResult.content.renderedContentAsync(options.shortcodeRenderer);
-            const summary = await parseResult.content.getRenderedSummary(options.maxSummaryLength);
+            const summary = await parseResult.content.getRenderedSummary(htmlContent, options.maxSummaryLength);
             const wordCount = parseResult.content.getWordCount();
             const readingTime = parseResult.content.getReadingTime(options.wordsPerMinute);
+            const cleanedHtmlContent = parseResult.content.cleanDividerPlaceholders(htmlContent);
             const result = {
-              renderedContent: htmlContent,
+              renderedContent: cleanedHtmlContent,
               wordCount,
               readingTime
             };
@@ -16780,7 +16086,7 @@ var require_markdown = __commonJS({
           renderedContent = parseResult.content.pureContent();
         }
         const htmlContent = await this.renderer.render(renderedContent);
-        const summary = parseResult.content.getSummary(options.maxSummaryLength);
+        const summary = parseResult.content.getDividedSummary(htmlContent);
         const wordCount = parseResult.content.getWordCount();
         const readingTime = parseResult.content.getReadingTime(options.wordsPerMinute);
         const result = {
@@ -16845,7 +16151,7 @@ var require_markdown = __commonJS({
           frontMatter,
           content,
           shortcodes,
-          summary: content.getSummary(),
+          summary: await content.getRenderedSummary(),
           wordCount: content.getWordCount(),
           readingTime: content.getReadingTime()
         };
@@ -17002,7 +16308,7 @@ var require_markdown3 = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.posFromInput = exports2.parseBytes = void 0;
-    __exportStar(require_type6(), exports2);
+    __exportStar(require_type5(), exports2);
     __exportStar(require_config4(), exports2);
     __exportStar(require_context(), exports2);
     __exportStar(require_tableofcontents(), exports2);
@@ -17019,6 +16325,1156 @@ var require_markdown3 = __commonJS({
     __exportStar(require_content(), exports2);
     __exportStar(require_markdown(), exports2);
     __exportStar(require_markdown2(), exports2);
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/type.js
+var require_type8 = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/type.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PATH_CONSTANTS = exports2.PathValidationError = exports2.PathParseError = exports2.PathError = exports2.PathType = void 0;
+    var PathType;
+    (function(PathType2) {
+      PathType2[PathType2["File"] = 0] = "File";
+      PathType2[PathType2["ContentResource"] = 1] = "ContentResource";
+      PathType2[PathType2["ContentSingle"] = 2] = "ContentSingle";
+      PathType2[PathType2["Leaf"] = 3] = "Leaf";
+      PathType2[PathType2["Branch"] = 4] = "Branch";
+    })(PathType || (exports2.PathType = PathType = {}));
+    var PathError = class extends Error {
+      constructor(message, path6) {
+        super(message);
+        __publicField(this, "path");
+        this.path = path6;
+        this.name = "PathError";
+      }
+    };
+    exports2.PathError = PathError;
+    var PathParseError = class extends PathError {
+      constructor(message, path6) {
+        super(message, path6);
+        this.name = "PathParseError";
+      }
+    };
+    exports2.PathParseError = PathParseError;
+    var PathValidationError = class extends PathError {
+      constructor(message, path6, validationErrors) {
+        super(message, path6);
+        __publicField(this, "validationErrors");
+        this.validationErrors = validationErrors;
+        this.name = "PathValidationError";
+      }
+    };
+    exports2.PathValidationError = PathValidationError;
+    exports2.PATH_CONSTANTS = {
+      CONTENT_EXTENSIONS: [".md", ".markdown", ".mdown", ".mkd", ".mkdn", ".html", ".htm", ".xml"],
+      HTML_EXTENSIONS: [".html", ".htm"],
+      INDEX_NAMES: ["index", "_index"],
+      PATH_SEPARATOR: "/",
+      EXTENSION_SEPARATOR: ".",
+      LANGUAGE_SEPARATOR: ".",
+      SYSTEM_PATH_SEPARATOR: (() => {
+        try {
+          return require("path").sep;
+        } catch {
+          return "/";
+        }
+      })(),
+      COMPONENT_FOLDER_CONTENT: "content",
+      COMPONENT_FOLDER_STATIC: "static",
+      COMPONENT_FOLDER_LAYOUTS: "layouts",
+      COMPONENT_FOLDER_ARCHETYPES: "archetypes",
+      COMPONENT_FOLDER_DATA: "data",
+      COMPONENT_FOLDER_ASSETS: "assets",
+      COMPONENT_FOLDER_I18N: "i18n",
+      normalizePath: (path6) => {
+        let p = path6.replace(/\\/g, "/");
+        if (p.startsWith("//")) {
+          p = p.substring(1);
+        }
+        return p;
+      }
+    };
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathcomponents.js
+var require_pathcomponents = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathcomponents.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PathComponentsUtils = exports2.PathComponentsFactory = exports2.LowHighImpl = exports2.PathPositionsImpl = exports2.PathComponentsImpl = void 0;
+    var type_1 = require_type8();
+    var PathComponentsImpl = class {
+      constructor(original, normalized, positions, identifiers, bundleType, disabled = false, component) {
+        __publicField(this, "original");
+        __publicField(this, "normalized");
+        __publicField(this, "positions");
+        __publicField(this, "identifiers");
+        __publicField(this, "bundleType");
+        __publicField(this, "disabled");
+        __publicField(this, "component");
+        this.original = original;
+        this.normalized = normalized;
+        this.positions = positions;
+        this.identifiers = identifiers;
+        this.bundleType = bundleType;
+        this.disabled = disabled;
+        this.component = component;
+      }
+      withBundleType(bundleType) {
+        return new PathComponentsImpl(this.original, this.normalized, this.positions, this.identifiers, bundleType, this.disabled);
+      }
+      withDisabled(disabled) {
+        return new PathComponentsImpl(this.original, this.normalized, this.positions, this.identifiers, this.bundleType, disabled);
+      }
+      hasIdentifiers() {
+        return this.identifiers.length > 0;
+      }
+      firstIdentifier() {
+        return this.identifiers.length > 0 ? this.identifiers[0] : null;
+      }
+      lastIdentifier() {
+        return this.identifiers.length > 0 ? this.identifiers[this.identifiers.length - 1] : null;
+      }
+      getIdentifier(index) {
+        return index >= 0 && index < this.identifiers.length ? this.identifiers[index] : null;
+      }
+      isContentComponent(component) {
+        return component === "content" || component === "archetypes";
+      }
+      clone() {
+        return new PathComponentsImpl(this.original, this.normalized, { ...this.positions }, [...this.identifiers], this.bundleType, this.disabled, this.component);
+      }
+      toString() {
+        return `PathComponents{original="${this.original}", normalized="${this.normalized}", bundleType=${type_1.PathType[this.bundleType]}, identifiers=${this.identifiers.length}}`;
+      }
+    };
+    exports2.PathComponentsImpl = PathComponentsImpl;
+    var PathPositionsImpl = class {
+      constructor(containerLow = -1, containerHigh = -1, sectionHigh = -1, identifierLanguage = -1) {
+        __publicField(this, "containerLow");
+        __publicField(this, "containerHigh");
+        __publicField(this, "sectionHigh");
+        __publicField(this, "identifierLanguage");
+        this.containerLow = containerLow;
+        this.containerHigh = containerHigh;
+        this.sectionHigh = sectionHigh;
+        this.identifierLanguage = identifierLanguage;
+      }
+      reset() {
+        this.containerLow = -1;
+        this.containerHigh = -1;
+        this.sectionHigh = -1;
+        this.identifierLanguage = -1;
+      }
+      hasContainer() {
+        return this.containerLow !== -1 && this.containerHigh !== -1;
+      }
+      hasSection() {
+        return this.sectionHigh > 0;
+      }
+      hasLanguageIdentifier() {
+        return this.identifierLanguage !== -1;
+      }
+      clone() {
+        return new PathPositionsImpl(this.containerLow, this.containerHigh, this.sectionHigh, this.identifierLanguage);
+      }
+    };
+    exports2.PathPositionsImpl = PathPositionsImpl;
+    var LowHighImpl = class {
+      constructor(low, high) {
+        __publicField(this, "low");
+        __publicField(this, "high");
+        this.low = low;
+        this.high = high;
+        if (low > high) {
+          throw new Error(`Invalid range: low (${low}) must be <= high (${high})`);
+        }
+      }
+      length() {
+        return this.high - this.low;
+      }
+      isEmpty() {
+        return this.low === this.high;
+      }
+      contains(position) {
+        return position >= this.low && position < this.high;
+      }
+      substring(str) {
+        return str.substring(this.low, this.high);
+      }
+      toString() {
+        return `[${this.low}, ${this.high})`;
+      }
+    };
+    exports2.LowHighImpl = LowHighImpl;
+    var PathComponentsFactory = class {
+      static createEmpty(original = "", bundleType = type_1.PathType.File) {
+        return new PathComponentsImpl(original, original, new PathPositionsImpl(), [], bundleType, false);
+      }
+      static create(original, normalized, bundleType = type_1.PathType.File) {
+        return new PathComponentsImpl(original, normalized || original, new PathPositionsImpl(), [], bundleType, false);
+      }
+      static createFull(original, normalized, positions, identifiers, bundleType, disabled = false) {
+        return new PathComponentsImpl(original, normalized, positions, identifiers, bundleType, disabled);
+      }
+    };
+    exports2.PathComponentsFactory = PathComponentsFactory;
+    var PathComponentsUtils = class {
+      static extractString(str, range) {
+        return str.substring(range.low, range.high);
+      }
+      static extractStrings(str, ranges) {
+        return ranges.map((range) => str.substring(range.low, range.high));
+      }
+      static findIdentifierIndex(identifiers, position) {
+        for (let i = 0; i < identifiers.length; i++) {
+          const range = identifiers[i];
+          if (position >= range.low && position < range.high) {
+            return i;
+          }
+        }
+        return -1;
+      }
+      static merge(base, override) {
+        return new PathComponentsImpl(override.original ?? base.original, override.normalized ?? base.normalized, override.positions ?? base.positions, override.identifiers ?? base.identifiers, override.bundleType ?? base.bundleType, override.disabled ?? base.disabled);
+      }
+    };
+    exports2.PathComponentsUtils = PathComponentsUtils;
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/entity/path.js
+var require_path = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/entity/path.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PathUtils = exports2.Path = void 0;
+    var type_1 = require_type8();
+    var pathcomponents_1 = require_pathcomponents();
+    var Path = class {
+      constructor(components) {
+        __publicField(this, "components");
+        __publicField(this, "_unnormalized");
+        __publicField(this, "shouldTrimLeadingSlash", false);
+        this.components = components;
+      }
+      component() {
+        if (this.components.component) {
+          return this.components.component;
+        }
+        const path6 = this.components.normalized;
+        const parts = path6.split("/").filter((p) => p.length > 0);
+        if (parts.length === 0) {
+          return "content";
+        }
+        const firstPart = parts[0];
+        const componentMap = {
+          "static": "static",
+          "layouts": "layouts",
+          "themes": "themes",
+          "archetypes": "archetypes",
+          "data": "data",
+          "i18n": "i18n",
+          "assets": "assets"
+        };
+        return componentMap[firstPart] || "content";
+      }
+      path() {
+        return this.norm(this.components.normalized);
+      }
+      name() {
+        if (this.components.positions.containerHigh > 0) {
+          return this.components.normalized.substring(this.components.positions.containerHigh);
+        }
+        return this.components.normalized;
+      }
+      nameNoExt() {
+        const firstId = this.components.firstIdentifier();
+        if (firstId) {
+          return this.components.normalized.substring(this.components.positions.containerHigh, firstId.low - 1);
+        }
+        return this.components.normalized.substring(this.components.positions.containerHigh);
+      }
+      nameNoLang() {
+        if (this.components.identifiers.length >= 2) {
+          const lastId = this.components.identifiers[this.components.identifiers.length - 1];
+          const secondToLastId = this.components.identifiers[this.components.identifiers.length - 2];
+          const langStr = this.components.normalized.substring(secondToLastId.low, secondToLastId.high);
+          const knownLangCodes = ["en", "fr", "es", "de", "zh", "ja", "ko", "pt", "it", "ru", "ar"];
+          if (knownLangCodes.includes(langStr)) {
+            const nameStart = this.components.positions.containerHigh;
+            const beforeLang = this.components.normalized.substring(nameStart, secondToLastId.low - 1);
+            const afterLang = this.components.normalized.substring(lastId.low - 1);
+            return beforeLang + afterLang;
+          }
+        }
+        return this.name();
+      }
+      dir() {
+        let d = "";
+        if (this.components.positions.containerHigh > 0) {
+          d = this.components.normalized.substring(0, this.components.positions.containerHigh - 1);
+        }
+        if (d === "") {
+          d = "/";
+        }
+        return this.norm(d);
+      }
+      ext() {
+        if (this.components.identifiers.length === 0) {
+          return "";
+        }
+        const lastIdentifier = this.components.identifiers[this.components.identifiers.length - 1];
+        const extStr = this.components.normalized.substring(lastIdentifier.low, lastIdentifier.high);
+        return extStr ? "." + extStr : "";
+      }
+      lang() {
+        if (this.components.identifiers.length >= 2) {
+          const secondToLastId = this.components.identifiers[this.components.identifiers.length - 2];
+          const langStr = this.components.normalized.substring(secondToLastId.low, secondToLastId.high);
+          const knownLangCodes = ["en", "fr", "es", "de", "zh", "ja", "ko", "pt", "it", "ru", "ar"];
+          if (knownLangCodes.includes(langStr)) {
+            return "." + langStr;
+          }
+        }
+        return "";
+      }
+      section() {
+        if (this.components.positions.sectionHigh <= 0) {
+          return "";
+        }
+        const sectionPath = this.components.normalized.substring(1, this.components.positions.sectionHigh);
+        if (sectionPath === "_index.md" || sectionPath === "index.md" || sectionPath.endsWith("/_index.md") || sectionPath.endsWith("/index.md")) {
+          return "";
+        }
+        return this.norm(sectionPath);
+      }
+      sections() {
+        const dirPath = this.dir();
+        if (dirPath === "/" || dirPath === "") {
+          return [];
+        }
+        const cleanPath = dirPath.startsWith("/") ? dirPath.substring(1) : dirPath;
+        const sections = [];
+        const pathParts = cleanPath.split("/").filter((part) => part.length > 0);
+        let currentPath = "";
+        for (const part of pathParts) {
+          if (currentPath === "") {
+            currentPath = part;
+          } else {
+            currentPath += "/" + part;
+          }
+          sections.push(this.norm(currentPath));
+        }
+        return sections;
+      }
+      container() {
+        if (this.components.positions.containerLow === -1) {
+          return "";
+        }
+        return this.norm(this.components.normalized.substring(this.components.positions.containerLow, this.components.positions.containerHigh - 1));
+      }
+      containerDir() {
+        if (this.isLeafBundle()) {
+          return this.dir();
+        } else if (this.isBranchBundle()) {
+          return this.dir();
+        } else {
+          return this.dir();
+        }
+      }
+      base() {
+        if (this.isBranchBundle() && this.components.normalized === "/_index.md") {
+          return "/";
+        } else if (this.isLeafBundle()) {
+          return this.baseInternal(false, true);
+        } else if (this.isContent() && !this.isBundle()) {
+          return this.pathNoIdentifier();
+        } else if (!this.isContent()) {
+          return this.path();
+        } else if (this.isBundle()) {
+          return this.baseInternal(false, true);
+        }
+        return this.baseInternal(!this.isContentPage(), this.isBundle());
+      }
+      baseNoLeadingSlash() {
+        return this.base().substring(1);
+      }
+      baseNameNoIdentifier() {
+        if (this.isBundle()) {
+          return this.container();
+        }
+        return this.nameNoIdentifier();
+      }
+      nameNoIdentifier() {
+        if (this.components.identifiers.length === 0) {
+          return this.name();
+        }
+        const firstIdentifier = this.components.identifiers[0];
+        const nameStart = this.components.positions.containerHigh;
+        return this.components.normalized.substring(nameStart, firstIdentifier.low - 1);
+      }
+      pathNoLang() {
+        return this.baseInternal(true, false);
+      }
+      pathNoIdentifier() {
+        if (this.components.identifiers.length === 0) {
+          return this.path();
+        }
+        const firstIdentifier = this.components.identifiers[0];
+        const pathBeforeIdentifiers = this.components.normalized.substring(0, firstIdentifier.low - 1);
+        return this.norm(pathBeforeIdentifiers);
+      }
+      pathRel(owner) {
+        let ob = owner.base();
+        if (!ob.endsWith("/")) {
+          ob += "/";
+        }
+        return this.path().replace(new RegExp("^" + this.escapeRegExp(ob)), "");
+      }
+      baseRel(owner) {
+        let ob = owner.base();
+        if (ob === "/") {
+          ob = "";
+        }
+        return this.base().substring(ob.length + 1);
+      }
+      trimLeadingSlash() {
+        const clonedComponents = this.components.clone();
+        const newPath = new Path(clonedComponents);
+        newPath.setShouldTrimLeadingSlash(true);
+        return newPath;
+      }
+      identifier(index) {
+        const totalIdentifiers = this.components.identifiers.length;
+        if (totalIdentifiers === 0 || index < 0 || index >= totalIdentifiers) {
+          return "";
+        }
+        let actualIndex;
+        if (totalIdentifiers === 1) {
+          actualIndex = 0;
+        } else {
+          if (index === 0) {
+            actualIndex = totalIdentifiers - 1;
+          } else {
+            actualIndex = totalIdentifiers - 1 - index;
+          }
+        }
+        const identifierStr = this.identifierAsString(actualIndex);
+        return identifierStr ? "." + identifierStr : "";
+      }
+      identifiers() {
+        const result = [];
+        const totalIdentifiers = this.components.identifiers.length;
+        for (let i = 0; i < totalIdentifiers; i++) {
+          const identifier = this.identifier(i);
+          if (identifier) {
+            result.push(identifier);
+          }
+        }
+        return result;
+      }
+      bundleType() {
+        return this.components.bundleType;
+      }
+      isContent() {
+        return this.bundleType() >= type_1.PathType.ContentResource;
+      }
+      isBundle() {
+        return this.bundleType() > type_1.PathType.Leaf;
+      }
+      isBranchBundle() {
+        return this.bundleType() === type_1.PathType.Branch;
+      }
+      isLeafBundle() {
+        return this.bundleType() === type_1.PathType.Leaf;
+      }
+      isHTML() {
+        const ext = this.ext().toLowerCase();
+        return type_1.PATH_CONSTANTS.HTML_EXTENSIONS.some((htmlExt) => htmlExt === ext);
+      }
+      disabled() {
+        return this.components.disabled;
+      }
+      forBundleType(type) {
+        const newComponents = this.components.withBundleType(type);
+        return new Path(newComponents);
+      }
+      unnormalized() {
+        if (!this._unnormalized) {
+          if (this.components.original === this.components.normalized) {
+            this._unnormalized = this;
+          } else {
+            const unnormalizedComponents = new pathcomponents_1.PathComponentsImpl(this.components.original, this.components.original, this.components.positions, this.components.identifiers, this.components.bundleType, this.components.disabled);
+            this._unnormalized = new Path(unnormalizedComponents);
+          }
+        }
+        return this._unnormalized;
+      }
+      setShouldTrimLeadingSlash(value2) {
+        this.shouldTrimLeadingSlash = value2;
+      }
+      norm(s) {
+        if (this.shouldTrimLeadingSlash) {
+          return s.startsWith("/") ? s.substring(1) : s;
+        }
+        return s;
+      }
+      isContentPage() {
+        return this.bundleType() >= type_1.PathType.ContentSingle;
+      }
+      baseInternal(preserveExt, isBundle) {
+        if (this.components.identifiers.length === 0) {
+          return this.norm(this.components.normalized);
+        }
+        if (preserveExt && this.components.identifiers.length === 1) {
+          return this.norm(this.components.normalized);
+        }
+        const lastId = this.components.identifiers[this.components.identifiers.length - 1];
+        let high = lastId.low - 1;
+        if (isBundle) {
+          high = this.components.positions.containerHigh - 1;
+        }
+        if (high === 0) {
+          high++;
+        }
+        if (!preserveExt) {
+          return this.norm(this.components.normalized.substring(0, high));
+        }
+        const firstId = this.components.identifiers[0];
+        return this.norm(this.components.normalized.substring(0, high) + this.components.normalized.substring(firstId.low - 1, firstId.high));
+      }
+      identifierAsString(i) {
+        const index = this.identifierIndex(i);
+        if (index === -1) {
+          return "";
+        }
+        const id = this.components.identifiers[index];
+        return this.components.normalized.substring(id.low, id.high);
+      }
+      identifierIndex(i) {
+        if (i < 0 || i >= this.components.identifiers.length) {
+          return -1;
+        }
+        return i;
+      }
+      escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+      toString() {
+        return `Path{path="${this.path()}", component="${this.component()}", bundleType=${type_1.PathType[this.bundleType()]}}`;
+      }
+      equals(other) {
+        return this.path() === other.path() && this.component() === other.component() && this.bundleType() === other.bundleType();
+      }
+      hashCode() {
+        return `${this.component()}:${this.path()}:${this.bundleType()}`;
+      }
+    };
+    exports2.Path = Path;
+    var PathUtils = class {
+      static fromString(component, path6) {
+        const components = new pathcomponents_1.PathComponentsImpl(path6, path6, { containerLow: -1, containerHigh: -1, sectionHigh: -1, identifierLanguage: -1 }, [], type_1.PathType.File, false);
+        return new Path(components);
+      }
+      static hasExtension(path6, extension) {
+        const pathExt = path6.ext();
+        const targetExt = extension.startsWith(".") ? extension : "." + extension;
+        return pathExt.toLowerCase() === targetExt.toLowerCase();
+      }
+      static isUnder(child, parent) {
+        const childPath = child.path();
+        let parentPath;
+        if (parent.isBranchBundle()) {
+          parentPath = parent.dir();
+        } else {
+          parentPath = parent.path();
+        }
+        const normalizedParent = parentPath === "/" ? "/" : parentPath + "/";
+        return childPath !== parentPath && childPath.startsWith(normalizedParent);
+      }
+      static relativeTo(from, to) {
+        return to.pathRel(from);
+      }
+      static compare(a, b) {
+        const pathCmp = a.path().localeCompare(b.path());
+        if (pathCmp !== 0)
+          return pathCmp;
+        const componentCmp = a.component().localeCompare(b.component());
+        if (componentCmp !== 0)
+          return componentCmp;
+        return a.bundleType() - b.bundleType();
+      }
+    };
+    exports2.PathUtils = PathUtils;
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathparser.js
+var require_pathparser = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/vo/pathparser.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PathParserUtils = exports2.ConfigurablePathNormalizer = exports2.DefaultFileExtensionChecker = exports2.BasicPathNormalizer = exports2.PathParsingNormalizer = exports2.PathProcessorImpl = void 0;
+    var type_1 = require_type8();
+    var pathcomponents_1 = require_pathcomponents();
+    var path_1 = require_path();
+    var PathProcessorImpl = class {
+      constructor(normalizer, extChecker) {
+        __publicField(this, "normalizer");
+        __publicField(this, "extChecker");
+        this.normalizer = normalizer || new PathParsingNormalizer();
+        this.extChecker = extChecker || new DefaultFileExtensionChecker();
+      }
+      parse(component, path6) {
+        let normalizedPath = path6;
+        if (!normalizedPath || normalizedPath === "") {
+          normalizedPath = "/";
+        }
+        const normalized = this.normalizer.normalize(normalizedPath);
+        const pathComponents = this.createPathComponents(component, normalized, path6);
+        return new path_1.Path(pathComponents);
+      }
+      parseIdentity(component, path6) {
+        const parsed = this.parse(component, path6);
+        return {
+          identifierBase: () => parsed.base()
+        };
+      }
+      parseBaseAndBaseNameNoIdentifier(component, path6) {
+        const parsed = this.parse(component, path6);
+        return [parsed.base(), parsed.baseNameNoIdentifier()];
+      }
+      createPathComponents(component, normalizedPath, originalPath) {
+        let actualComponent = component;
+        let actualPath = normalizedPath;
+        if (normalizedPath.startsWith("/")) {
+          const parts = normalizedPath.split("/").filter((p) => p.length > 0);
+          if (parts.length > 0) {
+            const firstPart = parts[0];
+            const knownComponents = ["static", "layouts", "themes", "archetypes", "data", "i18n", "assets"];
+            if (knownComponents.includes(firstPart) && component === "content") {
+              actualComponent = firstPart;
+            }
+            const staticDirs = ["images", "assets", "static", "css", "js", "fonts"];
+            if (staticDirs.includes(firstPart) && component === "content") {
+              actualComponent = "static";
+            }
+          }
+        }
+        const lastSlash = actualPath.lastIndexOf("/");
+        const filename = lastSlash >= 0 ? actualPath.substring(lastSlash + 1) : actualPath;
+        const directory = lastSlash >= 0 ? actualPath.substring(0, lastSlash) : "";
+        let bundleType = this.detectBundleType(filename, actualComponent);
+        const positions = this.calculatePathPositions(actualPath);
+        const identifiers = this.extractIdentifiers(actualPath, filename);
+        return new pathcomponents_1.PathComponentsImpl(originalPath, actualPath, positions, identifiers, bundleType, false, actualComponent);
+      }
+      detectBundleType(filename, component) {
+        if (component !== "content" && component !== "archetypes") {
+          return type_1.PathType.File;
+        }
+        const parts = filename.split(".");
+        let baseName = parts[0];
+        if (baseName === "index" && this.isContentFile(filename)) {
+          return type_1.PathType.Leaf;
+        } else if (baseName === "_index" && this.isContentFile(filename)) {
+          return type_1.PathType.Branch;
+        } else if (this.isContentFile(filename)) {
+          return type_1.PathType.ContentSingle;
+        } else {
+          return type_1.PathType.File;
+        }
+      }
+      isContentFile(filename) {
+        const ext = this.getFileExtension(filename);
+        return ["md", "html", "markdown", "mdown", "mkd", "mkdn", "htm"].includes(ext.toLowerCase());
+      }
+      getFileExtension(filename) {
+        const lastDot = filename.lastIndexOf(".");
+        if (lastDot > 0 && lastDot < filename.length - 1) {
+          return filename.substring(lastDot + 1);
+        }
+        return "";
+      }
+      calculatePathPositions(normalizedPath) {
+        let sectionHigh = -1;
+        let containerLow = -1;
+        let containerHigh = -1;
+        let slashCount = 0;
+        for (let i = normalizedPath.length - 1; i >= 0; i--) {
+          const c = normalizedPath[i];
+          if (c === "/") {
+            slashCount++;
+            if (containerHigh === -1) {
+              containerHigh = i + 1;
+            } else if (containerLow === -1) {
+              containerLow = i + 1;
+            }
+            if (i > 0) {
+              sectionHigh = i;
+            }
+          }
+        }
+        return new pathcomponents_1.PathPositionsImpl(containerLow, containerHigh, sectionHigh, -1);
+      }
+      extractIdentifiers(normalizedPath, filename) {
+        const identifiers = [];
+        const basePath = normalizedPath.substring(0, normalizedPath.length - filename.length);
+        const basePathLength = basePath.length;
+        const parts = filename.split(".");
+        if (parts.length <= 1) {
+          return identifiers;
+        }
+        let currentPos = basePathLength + parts[0].length;
+        for (let i = 1; i < parts.length; i++) {
+          const part = parts[i];
+          const dotPos = currentPos;
+          const partStart = dotPos + 1;
+          const partEnd = partStart + part.length;
+          identifiers.push(new pathcomponents_1.LowHighImpl(partStart, partEnd));
+          currentPos = partEnd;
+        }
+        return identifiers;
+      }
+    };
+    exports2.PathProcessorImpl = PathProcessorImpl;
+    var PathParsingNormalizer = class {
+      constructor(toLowerCase = true, replaceSpaces = true) {
+        __publicField(this, "toLowerCase");
+        __publicField(this, "replaceSpaces");
+        this.toLowerCase = toLowerCase;
+        this.replaceSpaces = replaceSpaces;
+      }
+      normalize(path6) {
+        let result = path6;
+        result = result.replace(/\\/g, "/");
+        if (this.toLowerCase) {
+          result = result.toLowerCase();
+        }
+        if (this.replaceSpaces) {
+          result = result.replace(/\s/g, "-");
+        }
+        return result;
+      }
+    };
+    exports2.PathParsingNormalizer = PathParsingNormalizer;
+    var BasicPathNormalizer = class {
+      constructor(toLowerCase = true, replaceSpaces = true) {
+        __publicField(this, "toLowerCase");
+        __publicField(this, "replaceSpaces");
+        this.toLowerCase = toLowerCase;
+        this.replaceSpaces = replaceSpaces;
+      }
+      normalize(path6) {
+        let result = path6;
+        result = result.replace(/\\/g, "/");
+        if (this.toLowerCase) {
+          result = result.toLowerCase();
+        }
+        if (this.replaceSpaces) {
+          result = result.replace(/\s+/g, "-");
+        }
+        return result;
+      }
+    };
+    exports2.BasicPathNormalizer = BasicPathNormalizer;
+    var DefaultFileExtensionChecker = class {
+      isContentExt(ext) {
+        const contentExts = type_1.PATH_CONSTANTS.CONTENT_EXTENSIONS;
+        return contentExts.includes(ext.toLowerCase());
+      }
+      isHTML(ext) {
+        const htmlExts = type_1.PATH_CONSTANTS.HTML_EXTENSIONS;
+        return htmlExts.includes(ext.toLowerCase());
+      }
+      hasExt(path6) {
+        for (let i = path6.length - 1; i >= 0; i--) {
+          if (path6[i] === ".") {
+            return true;
+          }
+          if (path6[i] === "/") {
+            return false;
+          }
+        }
+        return false;
+      }
+    };
+    exports2.DefaultFileExtensionChecker = DefaultFileExtensionChecker;
+    var ConfigurablePathNormalizer = class {
+      constructor(config) {
+        __publicField(this, "rules", []);
+        if (config?.normalizer) {
+          this.rules.push(config.normalizer);
+        } else {
+          if (config?.normalize !== false) {
+            this.rules.push((path6) => path6.toLowerCase());
+          }
+          if (config?.replaceSpaces !== false) {
+            this.rules.push((path6) => path6.replace(/\s+/g, "-"));
+          }
+        }
+      }
+      normalize(path6) {
+        return this.rules.reduce((result, rule) => rule(result), path6);
+      }
+      addRule(rule) {
+        this.rules.push(rule);
+      }
+      clearRules() {
+        this.rules = [];
+      }
+    };
+    exports2.ConfigurablePathNormalizer = ConfigurablePathNormalizer;
+    var PathParserUtils = class {
+      static parseBasic(path6) {
+        const lastSlash = path6.lastIndexOf("/");
+        const dir = lastSlash >= 0 ? path6.substring(0, lastSlash) : "";
+        const name = lastSlash >= 0 ? path6.substring(lastSlash + 1) : path6;
+        const lastDot = name.lastIndexOf(".");
+        const ext = lastDot >= 0 ? name.substring(lastDot) : "";
+        const nameWithoutExt = lastDot >= 0 ? name.substring(0, lastDot) : name;
+        return { dir, name, ext, nameWithoutExt };
+      }
+      static join(...segments) {
+        return segments.filter((segment) => segment.length > 0).map((segment) => segment.replace(/^\/+|\/+$/g, "")).join("/").replace(/\/+/g, "/");
+      }
+      static normalizeBasic(path6) {
+        const normalizer = new BasicPathNormalizer();
+        return normalizer.normalize(path6);
+      }
+      static isBundle(path6) {
+        const basic = PathParserUtils.parseBasic(path6);
+        const indexNames = type_1.PATH_CONSTANTS.INDEX_NAMES;
+        return indexNames.includes(basic.nameWithoutExt);
+      }
+      static extractSection(path6) {
+        const normalized = path6.startsWith("/") ? path6.substring(1) : path6;
+        const firstSlash = normalized.indexOf("/");
+        return firstSlash >= 0 ? normalized.substring(0, firstSlash) : normalized;
+      }
+      static removeExtension(path6) {
+        const lastDot = path6.lastIndexOf(".");
+        const lastSlash = path6.lastIndexOf("/");
+        if (lastDot > lastSlash) {
+          return path6.substring(0, lastDot);
+        }
+        return path6;
+      }
+      static hasExtension(path6) {
+        const checker = new DefaultFileExtensionChecker();
+        return checker.hasExt(path6);
+      }
+    };
+    exports2.PathParserUtils = PathParserUtils;
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/factory/pathfactory.js
+var require_pathfactory = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/factory/pathfactory.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PathFactoryUtils = exports2.PathBuilder = exports2.SimplePathPool = exports2.DefaultPathFactory = exports2.PathFactoryImpl = void 0;
+    var pathparser_1 = require_pathparser();
+    var pathcomponents_1 = require_pathcomponents();
+    var path_1 = require_path();
+    var PathFactoryImpl = class {
+      constructor(config, pool) {
+        __publicField(this, "processor");
+        __publicField(this, "pool");
+        const normalizer = config?.normalizer ? { normalize: config.normalizer } : new pathparser_1.BasicPathNormalizer(config?.normalize !== false, config?.replaceSpaces !== false);
+        const extChecker = new pathparser_1.DefaultFileExtensionChecker();
+        this.processor = new pathparser_1.PathProcessorImpl(normalizer, extChecker);
+        if (pool) {
+          this.pool = pool;
+        }
+      }
+      create(component, path6, config) {
+        if (this.pool) {
+          const pooledPath = this.pool.get();
+        }
+        return this.processor.parse(component, path6);
+      }
+      createFromComponents(components) {
+        return new path_1.Path(components);
+      }
+      createMany(component, paths, config) {
+        return paths.map((path6) => this.create(component, path6, config));
+      }
+      createWithConfig(component, path6, normalizeConfig) {
+        const config = {};
+        if (normalizeConfig?.toLowerCase !== void 0) {
+          config.normalize = normalizeConfig.toLowerCase;
+        }
+        if (normalizeConfig?.replaceSpaces !== void 0) {
+          config.replaceSpaces = normalizeConfig.replaceSpaces;
+        }
+        if (normalizeConfig?.customNormalizer !== void 0) {
+          config.normalizer = normalizeConfig.customNormalizer;
+        }
+        return this.create(component, path6, config);
+      }
+    };
+    exports2.PathFactoryImpl = PathFactoryImpl;
+    var DefaultPathFactory = class extends PathFactoryImpl {
+      constructor() {
+        super({
+          normalize: true,
+          replaceSpaces: true
+        });
+      }
+    };
+    exports2.DefaultPathFactory = DefaultPathFactory;
+    var SimplePathPool = class {
+      constructor(maxSize = 100) {
+        __publicField(this, "pool", []);
+        __publicField(this, "maxSize");
+        this.maxSize = maxSize;
+      }
+      get() {
+        if (this.pool.length > 0) {
+          return this.pool.pop();
+        }
+        const components = pathcomponents_1.PathComponentsFactory.createEmpty();
+        return new path_1.Path(components);
+      }
+      put(path6) {
+        if (this.pool.length < this.maxSize) {
+          this.pool.push(path6);
+        }
+      }
+      clear() {
+        this.pool = [];
+      }
+      size() {
+        return this.pool.length;
+      }
+    };
+    exports2.SimplePathPool = SimplePathPool;
+    var PathBuilder = class {
+      constructor(factory) {
+        __publicField(this, "component", "");
+        __publicField(this, "path", "");
+        __publicField(this, "config", {});
+        __publicField(this, "factory");
+        this.factory = factory || new DefaultPathFactory();
+      }
+      withComponent(component) {
+        this.component = component;
+        return this;
+      }
+      withPath(path6) {
+        this.path = path6;
+        return this;
+      }
+      withNormalization(normalize3) {
+        this.config.normalize = normalize3;
+        return this;
+      }
+      withSpaceReplacement(replaceSpaces) {
+        this.config.replaceSpaces = replaceSpaces;
+        return this;
+      }
+      withNormalizer(normalizer) {
+        this.config.normalizer = normalizer;
+        return this;
+      }
+      build() {
+        if (!this.component || !this.path) {
+          throw new Error("Component and path must be set");
+        }
+        return this.factory.create(this.component, this.path, this.config);
+      }
+      reset() {
+        this.component = "";
+        this.path = "";
+        this.config = {};
+        return this;
+      }
+    };
+    exports2.PathBuilder = PathBuilder;
+    var _PathFactoryUtils = class {
+      static createContentPath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("content", path6);
+      }
+      static createStaticPath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("static", path6);
+      }
+      static createLayoutPath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("layouts", path6);
+      }
+      static createArchetypePath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("archetypes", path6);
+      }
+      static createDataPath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("data", path6);
+      }
+      static createThemePath(path6) {
+        return _PathFactoryUtils.defaultFactory.create("themes", path6);
+      }
+      static createFromConfig(config) {
+        const factoryConfig = {};
+        if (config.normalize !== void 0) {
+          factoryConfig.normalize = config.normalize;
+        }
+        if (config.replaceSpaces !== void 0) {
+          factoryConfig.replaceSpaces = config.replaceSpaces;
+        }
+        const factory = new PathFactoryImpl(factoryConfig);
+        return config.paths.map((path6) => factory.create(config.component, path6));
+      }
+      static builder() {
+        return new PathBuilder();
+      }
+      static createWithPool(component, path6, pool) {
+        const factory = new PathFactoryImpl(void 0, pool);
+        return factory.create(component, path6);
+      }
+    };
+    var PathFactoryUtils = _PathFactoryUtils;
+    __publicField(PathFactoryUtils, "defaultFactory", new DefaultPathFactory());
+    exports2.PathFactoryUtils = PathFactoryUtils;
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/paths/index.js
+var require_paths = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/paths/index.js"(exports2) {
+    "use strict";
+    var __createBinding = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() {
+          return m[k];
+        } };
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __exportStar = exports2 && exports2.__exportStar || function(m, exports3) {
+      for (var p in m)
+        if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p))
+          __createBinding(exports3, m, p);
+    };
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.PathDomain = exports2.PathValidationError = exports2.PathParseError = exports2.PathError = exports2.PATH_CONSTANTS = exports2.PathType = exports2.PathFactoryUtils = exports2.PathBuilder = exports2.SimplePathPool = exports2.DefaultPathFactory = exports2.PathFactoryImpl = exports2.PathUtils = exports2.Path = exports2.PathParserUtils = exports2.ConfigurablePathNormalizer = exports2.DefaultFileExtensionChecker = exports2.PathParsingNormalizer = exports2.BasicPathNormalizer = exports2.PathProcessorImpl = exports2.PathComponentsUtils = exports2.PathComponentsFactory = exports2.LowHighImpl = exports2.PathPositionsImpl = exports2.PathComponentsImpl = void 0;
+    __exportStar(require_type8(), exports2);
+    var pathcomponents_1 = require_pathcomponents();
+    Object.defineProperty(exports2, "PathComponentsImpl", { enumerable: true, get: function() {
+      return pathcomponents_1.PathComponentsImpl;
+    } });
+    Object.defineProperty(exports2, "PathPositionsImpl", { enumerable: true, get: function() {
+      return pathcomponents_1.PathPositionsImpl;
+    } });
+    Object.defineProperty(exports2, "LowHighImpl", { enumerable: true, get: function() {
+      return pathcomponents_1.LowHighImpl;
+    } });
+    Object.defineProperty(exports2, "PathComponentsFactory", { enumerable: true, get: function() {
+      return pathcomponents_1.PathComponentsFactory;
+    } });
+    Object.defineProperty(exports2, "PathComponentsUtils", { enumerable: true, get: function() {
+      return pathcomponents_1.PathComponentsUtils;
+    } });
+    var pathparser_1 = require_pathparser();
+    Object.defineProperty(exports2, "PathProcessorImpl", { enumerable: true, get: function() {
+      return pathparser_1.PathProcessorImpl;
+    } });
+    Object.defineProperty(exports2, "BasicPathNormalizer", { enumerable: true, get: function() {
+      return pathparser_1.BasicPathNormalizer;
+    } });
+    Object.defineProperty(exports2, "PathParsingNormalizer", { enumerable: true, get: function() {
+      return pathparser_1.PathParsingNormalizer;
+    } });
+    Object.defineProperty(exports2, "DefaultFileExtensionChecker", { enumerable: true, get: function() {
+      return pathparser_1.DefaultFileExtensionChecker;
+    } });
+    Object.defineProperty(exports2, "ConfigurablePathNormalizer", { enumerable: true, get: function() {
+      return pathparser_1.ConfigurablePathNormalizer;
+    } });
+    Object.defineProperty(exports2, "PathParserUtils", { enumerable: true, get: function() {
+      return pathparser_1.PathParserUtils;
+    } });
+    var path_1 = require_path();
+    Object.defineProperty(exports2, "Path", { enumerable: true, get: function() {
+      return path_1.Path;
+    } });
+    Object.defineProperty(exports2, "PathUtils", { enumerable: true, get: function() {
+      return path_1.PathUtils;
+    } });
+    var pathfactory_1 = require_pathfactory();
+    Object.defineProperty(exports2, "PathFactoryImpl", { enumerable: true, get: function() {
+      return pathfactory_1.PathFactoryImpl;
+    } });
+    Object.defineProperty(exports2, "DefaultPathFactory", { enumerable: true, get: function() {
+      return pathfactory_1.DefaultPathFactory;
+    } });
+    Object.defineProperty(exports2, "SimplePathPool", { enumerable: true, get: function() {
+      return pathfactory_1.SimplePathPool;
+    } });
+    Object.defineProperty(exports2, "PathBuilder", { enumerable: true, get: function() {
+      return pathfactory_1.PathBuilder;
+    } });
+    Object.defineProperty(exports2, "PathFactoryUtils", { enumerable: true, get: function() {
+      return pathfactory_1.PathFactoryUtils;
+    } });
+    var type_1 = require_type8();
+    Object.defineProperty(exports2, "PathType", { enumerable: true, get: function() {
+      return type_1.PathType;
+    } });
+    var type_2 = require_type8();
+    Object.defineProperty(exports2, "PATH_CONSTANTS", { enumerable: true, get: function() {
+      return type_2.PATH_CONSTANTS;
+    } });
+    var type_3 = require_type8();
+    Object.defineProperty(exports2, "PathError", { enumerable: true, get: function() {
+      return type_3.PathError;
+    } });
+    Object.defineProperty(exports2, "PathParseError", { enumerable: true, get: function() {
+      return type_3.PathParseError;
+    } });
+    Object.defineProperty(exports2, "PathValidationError", { enumerable: true, get: function() {
+      return type_3.PathValidationError;
+    } });
+    var pathfactory_2 = require_pathfactory();
+    var pathparser_2 = require_pathparser();
+    var path_2 = require_path();
+    var pathparser_3 = require_pathparser();
+    var pathfactory_3 = require_pathfactory();
+    var pathfactory_4 = require_pathfactory();
+    var pathparser_4 = require_pathparser();
+    exports2.PathDomain = {
+      createContentPath: pathfactory_2.PathFactoryUtils.createContentPath,
+      createStaticPath: pathfactory_2.PathFactoryUtils.createStaticPath,
+      createLayoutPath: pathfactory_2.PathFactoryUtils.createLayoutPath,
+      createArchetypePath: pathfactory_2.PathFactoryUtils.createArchetypePath,
+      createDataPath: pathfactory_2.PathFactoryUtils.createDataPath,
+      createThemePath: pathfactory_2.PathFactoryUtils.createThemePath,
+      builder: pathfactory_2.PathFactoryUtils.builder,
+      parseBasic: pathparser_2.PathParserUtils.parseBasic,
+      join: pathparser_2.PathParserUtils.join,
+      normalizeBasic: pathparser_2.PathParserUtils.normalizeBasic,
+      isBundle: pathparser_2.PathParserUtils.isBundle,
+      extractSection: pathparser_2.PathParserUtils.extractSection,
+      removeExtension: pathparser_2.PathParserUtils.removeExtension,
+      checkExtension: pathparser_2.PathParserUtils.hasExtension,
+      hasSpecificExtension: path_2.PathUtils.hasExtension,
+      isUnder: path_2.PathUtils.isUnder,
+      relativeTo: path_2.PathUtils.relativeTo,
+      compare: path_2.PathUtils.compare,
+      createProcessor: () => new pathparser_3.PathProcessorImpl(),
+      createFactory: () => new pathfactory_3.DefaultPathFactory(),
+      createPool: (maxSize) => new pathfactory_4.SimplePathPool(maxSize),
+      createNormalizer: (config) => new pathparser_4.BasicPathNormalizer(config?.toLowerCase, config?.replaceSpaces)
+    };
   }
 });
 
@@ -17074,10 +17530,12 @@ var require_translator = __commonJS({
     exports2.Translator = void 0;
     var log_1 = require_log();
     var yaml = __importStar(require_js_yaml());
+    var paths_1 = require_paths();
     var log = (0, log_1.getDomainLogger)("content", { component: "translator" });
     var Translator = class {
       constructor(contentLanguage) {
-        this.translateFuncs = /* @__PURE__ */ new Map();
+        __publicField(this, "contentLanguage");
+        __publicField(this, "translateFuncs", /* @__PURE__ */ new Map());
         this.contentLanguage = contentLanguage;
       }
       translate(lang, translationID) {
@@ -17108,7 +17566,8 @@ var require_translator = __commonJS({
                 return;
               }
               try {
-                const filename = path6.split("/").pop() || "";
+                const normalizedPath = paths_1.PATH_CONSTANTS.normalizePath(path6);
+                const filename = normalizedPath.split("/").pop() || "";
                 const langKey = filename.replace(/\.(yaml|yml)$/, "").toLowerCase();
                 const content = await this.readI18nFile(info);
                 const translations = this.parseI18nContent(content);
@@ -17209,7 +17668,7 @@ var require_hub = __commonJS({
     async function createContent(services) {
       const converter = new index_1.MDConverter((0, markdown_1.createMarkdown)(services.markdown()));
       const translator = await createTranslator(services);
-      const pageBuilder = new index_1.PageBuilder(services, services, null, null, new index_1.Taxonomy(services.views(), services), new index_1.Term(services), new index_1.Section(services), new index_1.Standalone(services), converter, null);
+      const pageBuilder = new index_1.PageBuilder(services, services, services, null, null, new index_1.Taxonomy(services.views(), services), new index_1.Term(services), new index_1.Section(services), new index_1.Standalone(services), converter, null);
       const pageMap = new index_1.PageMap(pageBuilder);
       pageBuilder.pageMapper = pageMap;
       pageMap.setupReverseIndex();
@@ -17228,7 +17687,7 @@ var require_kind = __commonJS({
     exports2.getKindMain = getKindMain;
     exports2.isBranch = isBranch;
     exports2.isDeprecatedAndReplacedWith = isDeprecatedAndReplacedWith;
-    var type_1 = require_type5();
+    var type_1 = require_type4();
     var kindMapMain = {
       [type_1.PageKind.PAGE]: type_1.PageKind.PAGE,
       [type_1.PageKind.HOME]: type_1.PageKind.HOME,
@@ -17275,7 +17734,10 @@ var require_identity = __commonJS({
     var log = (0, log_1.getDomainLogger)("content", { component: "identity" });
     var Identity = class {
       constructor(id, lang = "", langIdx = 0) {
-        this.stale = true;
+        __publicField(this, "id");
+        __publicField(this, "lang");
+        __publicField(this, "langIdx");
+        __publicField(this, "stale", true);
         this.id = id;
         this.lang = lang;
         this.langIdx = langIdx;
@@ -17381,7 +17843,11 @@ var require_fileinfo2 = __commonJS({
     }
     var FileInfo = class {
       constructor(fi, relName) {
-        this.lazyInitDone = false;
+        __publicField(this, "fileMetaInfo");
+        __publicField(this, "pathInfo");
+        __publicField(this, "bundleType");
+        __publicField(this, "uniqueIDCache");
+        __publicField(this, "lazyInitDone", false);
         this.fileMetaInfo = fi;
         const pathProcessor = paths_1.PathDomain.createProcessor();
         this.pathInfo = pathProcessor.parse(paths_1.PATH_CONSTANTS.COMPONENT_FOLDER_CONTENT, relName);
@@ -17542,6 +18008,7 @@ var require_sort = __commonJS({
     }
     var PageByWrapper = class {
       constructor(by) {
+        __publicField(this, "by");
         this.by = by;
       }
       sort(pages) {
@@ -17569,6 +18036,8 @@ var require_sort = __commonJS({
     };
     var PageSorterImpl = class {
       constructor(pages, by) {
+        __publicField(this, "pages");
+        __publicField(this, "by");
         this.pages = pages;
         this.by = by;
       }
@@ -17777,6 +18246,9 @@ var require_types3 = __commonJS({
 var require_frontmatter = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/content/vo/frontmatter.js"(exports2) {
     "use strict";
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
+      return mod && mod.__esModule ? mod : { "default": mod };
+    };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.FrontMatterParserImpl = void 0;
     exports2.newFrontMatter = newFrontMatter;
@@ -17786,6 +18258,7 @@ var require_frontmatter = __commonJS({
     var cast_1 = require_cast2();
     var string_1 = require_string2();
     var types_1 = require_types3();
+    var path_1 = __importDefault(require("path"));
     function newFrontMatter() {
       return {
         path: "",
@@ -17800,11 +18273,14 @@ var require_frontmatter = __commonJS({
     }
     var FrontMatterParserImpl = class {
       constructor(params, langSvc, taxonomySvc) {
+        __publicField(this, "params");
+        __publicField(this, "langSvc");
+        __publicField(this, "taxonomySvc");
         this.params = params;
         this.langSvc = langSvc;
         this.taxonomySvc = taxonomySvc;
       }
-      async parse() {
+      async parse(baseURL) {
         const fm = {
           terms: {},
           params: this.params,
@@ -17837,6 +18313,21 @@ var require_frontmatter = __commonJS({
         }
         try {
           await this.parseDate(fm);
+        } catch (err) {
+          throw err;
+        }
+        try {
+          await this.parseOrganization(fm, baseURL);
+        } catch (err) {
+          throw err;
+        }
+        try {
+          await this.parseAuthor(fm, baseURL);
+        } catch (err) {
+          throw err;
+        }
+        try {
+          await this.parseMenu(fm);
         } catch (err) {
           throw err;
         }
@@ -17904,6 +18395,178 @@ var require_frontmatter = __commonJS({
           fm.terms[viewName.plural()] = vals;
         }
       }
+      async parseOrganization(fm, baseURL) {
+        if (!this.params)
+          return;
+        const orgValue = this.params["organization"];
+        if (!orgValue || typeof orgValue !== "object")
+          return;
+        const organization = {};
+        if (orgValue.name !== void 0 && orgValue.name !== null) {
+          organization.name = cast_1.Cast.toString(orgValue.name);
+        }
+        if (orgValue.description !== void 0 && orgValue.description !== null) {
+          organization.description = cast_1.Cast.toString(orgValue.description);
+        }
+        if (orgValue.vision !== void 0 && orgValue.vision !== null) {
+          organization.vision = cast_1.Cast.toString(orgValue.vision);
+        }
+        if (orgValue.website !== void 0 && orgValue.website !== null) {
+          organization.website = cast_1.Cast.toString(orgValue.website);
+        }
+        if (orgValue.logo !== void 0 && orgValue.logo !== null) {
+          organization.logo = path_1.default.join(baseURL, cast_1.Cast.toString(orgValue.logo));
+        }
+        const contact = this.parseContact(orgValue.contact);
+        if (contact) {
+          organization.contact = contact;
+        }
+        const social = this.parseSocial(orgValue.social);
+        if (social) {
+          organization.social = social;
+        }
+        if (Object.keys(organization).length > 0) {
+          fm.organization = organization;
+        }
+      }
+      async parseMenu(fm) {
+        if (!this.params)
+          return;
+        const menuValue = this.params["menu"];
+        if (!menuValue || typeof menuValue !== "object")
+          return;
+        const menu = {};
+        for (const [menuName, menuSection] of Object.entries(menuValue)) {
+          if (menuSection === false) {
+            menu[menuName] = false;
+            continue;
+          }
+          if (Array.isArray(menuSection)) {
+            const menuItems = this.parseMenuItems(menuSection);
+            if (menuItems.length > 0) {
+              menu[menuName] = menuItems;
+            }
+          } else if (menuSection && typeof menuSection === "object") {
+            const parsedSection = {};
+            for (const [sectionName, sectionItems] of Object.entries(menuSection)) {
+              if (sectionItems === false) {
+                parsedSection[sectionName] = false;
+              } else if (Array.isArray(sectionItems)) {
+                const menuItems = this.parseMenuItems(sectionItems);
+                if (menuItems.length > 0) {
+                  parsedSection[sectionName] = menuItems;
+                }
+              }
+            }
+            if (Object.keys(parsedSection).length > 0) {
+              menu[menuName] = parsedSection;
+            }
+          }
+        }
+        if (Object.keys(menu).length > 0) {
+          fm.menu = menu;
+        }
+      }
+      parseMenuItems(items) {
+        const menuItems = [];
+        for (const item of items) {
+          if (!item || typeof item !== "object")
+            continue;
+          const menuItem = {
+            title: "",
+            url: ""
+          };
+          if (item.title !== void 0 && item.title !== null) {
+            menuItem.title = cast_1.Cast.toString(item.title);
+          } else {
+            continue;
+          }
+          if (item.url !== void 0 && item.url !== null) {
+            const urlValue = cast_1.Cast.toString(item.url);
+            if (urlValue === "") {
+              menuItem.url = "";
+            } else {
+              menuItem.url = urlValue;
+            }
+          } else {
+            continue;
+          }
+          if (item.weight !== void 0 && item.weight !== null) {
+            menuItem.weight = cast_1.Cast.toInt(item.weight);
+          }
+          if (Array.isArray(item.children)) {
+            const children2 = this.parseMenuItems(item.children);
+            if (children2.length > 0) {
+              menuItem.children = children2;
+            }
+          }
+          menuItems.push(menuItem);
+        }
+        return menuItems;
+      }
+      async parseAuthor(fm, baseURL) {
+        if (!this.params)
+          return;
+        const authorValue = this.params["author"];
+        if (!authorValue || typeof authorValue !== "object")
+          return;
+        const author = {};
+        if (authorValue.name !== void 0 && authorValue.name !== null) {
+          author.name = cast_1.Cast.toString(authorValue.name);
+        }
+        if (authorValue.description !== void 0 && authorValue.description !== null) {
+          author.description = cast_1.Cast.toString(authorValue.description);
+        }
+        if (authorValue.website !== void 0 && authorValue.website !== null) {
+          author.website = cast_1.Cast.toString(authorValue.website);
+        }
+        if (authorValue.avatar !== void 0 && authorValue.avatar !== null) {
+          author.avatar = path_1.default.join(baseURL, cast_1.Cast.toString(authorValue.avatar));
+        }
+        const contact = this.parseContact(authorValue.contact);
+        if (contact) {
+          author.contact = contact;
+        }
+        const social = this.parseSocial(authorValue.social);
+        if (social) {
+          author.social = social;
+        }
+        if (Object.keys(author).length > 0) {
+          fm.author = author;
+        }
+      }
+      parseContact(contactValue) {
+        if (!contactValue || typeof contactValue !== "object")
+          return null;
+        const contact = {};
+        if (contactValue.email !== void 0 && contactValue.email !== null) {
+          contact.email = cast_1.Cast.toString(contactValue.email);
+        }
+        if (contactValue.address !== void 0 && contactValue.address !== null) {
+          contact.address = cast_1.Cast.toString(contactValue.address);
+        }
+        if (contactValue.phone !== void 0 && contactValue.phone !== null) {
+          contact.phone = cast_1.Cast.toString(contactValue.phone);
+        }
+        return Object.keys(contact).length > 0 ? contact : null;
+      }
+      parseSocial(socialValue) {
+        if (!socialValue || typeof socialValue !== "object")
+          return null;
+        const social = {};
+        const knownPlatforms = ["github", "twitter", "linkedin"];
+        for (const platform of knownPlatforms) {
+          if (socialValue[platform] !== void 0 && socialValue[platform] !== null) {
+            social[platform] = cast_1.Cast.toString(socialValue[platform]);
+          }
+        }
+        for (const [key, value2] of Object.entries(socialValue)) {
+          if (!knownPlatforms.includes(key) && value2 !== void 0 && value2 !== null) {
+            social[key] = cast_1.Cast.toString(value2);
+          }
+        }
+        return Object.keys(social).length > 0 ? social : null;
+      }
       toSlashPreserveLeading(path6) {
         return path6.replace(/\\/g, "/");
       }
@@ -17956,6 +18619,7 @@ var require_classifier = __commonJS({
     var fileinfo_1 = require_fileinfo2();
     var Classifier = class {
       constructor(files) {
+        __publicField(this, "files");
         this.files = files;
       }
       static async newClassifier(fis) {
@@ -18045,6 +18709,7 @@ var require_dimensions = __commonJS({
     })(DimensionFlag || (exports2.DimensionFlag = DimensionFlag = {}));
     var DimensionFlagHelper = class {
       constructor(flag) {
+        __publicField(this, "flag");
         this.flag = flag;
       }
       has(o) {
@@ -18091,21 +18756,25 @@ var require_radix = __commonJS({
     exports2.createTreeFromMap = createTreeFromMap;
     var LeafNode = class {
       constructor(key, val) {
+        __publicField(this, "key");
+        __publicField(this, "val");
         this.key = key;
         this.val = val;
       }
     };
     var Edge = class {
       constructor(label, node) {
+        __publicField(this, "label");
+        __publicField(this, "node");
         this.label = label;
         this.node = node;
       }
     };
     var Node = class {
       constructor() {
-        this.leaf = null;
-        this.prefix = "";
-        this.edges = [];
+        __publicField(this, "leaf", null);
+        __publicField(this, "prefix", "");
+        __publicField(this, "edges", []);
       }
       isLeaf() {
         return this.leaf !== null;
@@ -18171,6 +18840,8 @@ var require_radix = __commonJS({
     }
     var Tree = class {
       constructor() {
+        __publicField(this, "root");
+        __publicField(this, "size");
         this.root = new Node();
         this.size = 0;
       }
@@ -18511,7 +19182,10 @@ var require_support = __commonJS({
     })(LockType || (exports2.LockType = LockType = {}));
     var Event = class {
       constructor(name, path6, source) {
-        this.stopPropagationFlag = false;
+        __publicField(this, "name");
+        __publicField(this, "path");
+        __publicField(this, "source");
+        __publicField(this, "stopPropagationFlag", false);
         this.name = name;
         this.path = path6;
         this.source = source;
@@ -18526,9 +19200,11 @@ var require_support = __commonJS({
     exports2.Event = Event;
     var WalkContext = class {
       constructor() {
-        this.dataInitialized = false;
-        this.events = [];
-        this.hooksPost = [];
+        __publicField(this, "dataInstance");
+        __publicField(this, "dataInitialized", false);
+        __publicField(this, "eventHandlers");
+        __publicField(this, "events", []);
+        __publicField(this, "hooksPost", []);
       }
       addEventListener(event, path6, handler) {
         if (!this.eventHandlers) {
@@ -18586,6 +19262,7 @@ var require_support = __commonJS({
     exports2.WalkContext = WalkContext;
     var WalkableTrees = class {
       constructor(trees) {
+        __publicField(this, "trees");
         this.trees = trees;
       }
       walkPrefixRaw(prefix, walker) {
@@ -18597,6 +19274,7 @@ var require_support = __commonJS({
     exports2.WalkableTrees = WalkableTrees;
     var MutableTrees = class {
       constructor(trees) {
+        __publicField(this, "trees");
         this.trees = trees;
       }
       delete(key) {
@@ -18686,6 +19364,9 @@ var require_simpletree = __commonJS({
     }
     var SimpleTree = class {
       constructor() {
+        __publicField(this, "mu");
+        __publicField(this, "tree");
+        __publicField(this, "zero");
         this.tree = new radix_1.Tree();
         this.zero = void 0;
         let locked = false;
@@ -18791,6 +19472,9 @@ var require_treeshifttree = __commonJS({
     var simpletree_1 = require_simpletree();
     var TreeShiftTree = class {
       constructor(d, length) {
+        __publicField(this, "d");
+        __publicField(this, "v");
+        __publicField(this, "trees");
         if (length <= 0) {
           throw new Error("length must be > 0");
         }
@@ -18876,6 +19560,10 @@ var require_nodeshifttree = __commonJS({
     var support_1 = require_support();
     var NodeShiftTree = class {
       constructor(cfg) {
+        __publicField(this, "tree");
+        __publicField(this, "dims");
+        __publicField(this, "shifter");
+        __publicField(this, "mu");
         if (!cfg.shifter) {
           throw new Error("Shifter is required");
         }
@@ -19113,7 +19801,15 @@ var require_nodeshifttree = __commonJS({
     exports2.NodeShiftTree = NodeShiftTree;
     var NodeShiftTreeWalker = class {
       constructor(config) {
-        this.skipPrefixes = [];
+        __publicField(this, "tree");
+        __publicField(this, "handle");
+        __publicField(this, "prefix");
+        __publicField(this, "lockType");
+        __publicField(this, "noShift");
+        __publicField(this, "exact");
+        __publicField(this, "debug");
+        __publicField(this, "walkContext");
+        __publicField(this, "skipPrefixes", []);
         if (!config.tree) {
           throw new Error("Tree is required");
         }
@@ -19365,6 +20061,8 @@ var require_pagetrees = __commonJS({
     var shifterpagesource_1 = require_shifterpagesource();
     var WeightedTermTreeNode = class {
       constructor(pageTreesNode, term) {
+        __publicField(this, "pageTreesNodeInstance");
+        __publicField(this, "term");
         this.pageTreesNodeInstance = pageTreesNode;
         this.term = term;
       }
@@ -19387,6 +20085,7 @@ var require_pagetrees = __commonJS({
     exports2.WeightedTermTreeNode = WeightedTermTreeNode;
     var PageTreesNode = class {
       constructor() {
+        __publicField(this, "nodes");
         this.nodes = /* @__PURE__ */ new Map();
       }
       setNode(key, value2) {
@@ -19490,6 +20189,11 @@ var require_pagetrees = __commonJS({
     exports2.PageTreesNode = PageTreesNode;
     var PageTrees = class {
       constructor() {
+        __publicField(this, "treePages");
+        __publicField(this, "treeResources");
+        __publicField(this, "treePagesResources");
+        __publicField(this, "treeTaxonomyEntries");
+        __publicField(this, "resourceTrees");
         this.treePages = new doctree_1.NodeShiftTree({
           shifter: new shifterpage_1.PageShifter()
         });
@@ -19588,6 +20292,9 @@ var require_pagesource = __commonJS({
     }
     var Source = class {
       constructor(file) {
+        __publicField(this, "id");
+        __publicField(this, "identity");
+        __publicField(this, "file");
         this.id = (++pageIDCounter).toString();
         this.identity = new identity_1.Identity(pageIDCounter);
         this.file = file;
@@ -19674,7 +20381,7 @@ var require_pagemap = __commonJS({
     exports2.addTrailingSlash = addTrailingSlash;
     var pagetrees_1 = require_pagetrees();
     var pagesource_1 = require_pagesource();
-    var type_1 = require_type4();
+    var type_1 = require_type8();
     var doctree_1 = require_doctree();
     var sort_1 = require_sort();
     var log_1 = require_log();
@@ -19694,12 +20401,14 @@ var require_pagemap = __commonJS({
     var ambiguousContentNode = new pagetrees_1.PageTreesNode();
     var ContentTreeReverseIndexMap = class {
       constructor() {
-        this.initOnce = false;
-        this.m = /* @__PURE__ */ new Map();
+        __publicField(this, "initOnce", false);
+        __publicField(this, "m", /* @__PURE__ */ new Map());
       }
     };
     var ContentTreeReverseIndex = class {
       constructor(initFn) {
+        __publicField(this, "initFn");
+        __publicField(this, "contentTreeReverseIndexMap");
         this.initFn = initFn;
         this.contentTreeReverseIndexMap = new ContentTreeReverseIndexMap();
       }
@@ -19727,6 +20436,9 @@ var require_pagemap = __commonJS({
     };
     var PageMapQueryPagesBelowPathImpl = class {
       constructor(path6, keyPart, include = exports2.pagePredicates.shouldListLocal) {
+        __publicField(this, "path");
+        __publicField(this, "keyPart");
+        __publicField(this, "include");
         this.path = path6;
         this.keyPart = keyPart;
         this.include = include;
@@ -19739,6 +20451,9 @@ var require_pagemap = __commonJS({
     var PageMapQueryPagesInSectionImpl = class extends PageMapQueryPagesBelowPathImpl {
       constructor(path6, keyPart, recursive, includeSelf, index, include) {
         super(path6, keyPart, include);
+        __publicField(this, "recursive");
+        __publicField(this, "includeSelf");
+        __publicField(this, "index");
         this.recursive = recursive;
         this.includeSelf = includeSelf;
         this.index = index;
@@ -19751,7 +20466,8 @@ var require_pagemap = __commonJS({
     var PageMap = class extends pagetrees_1.PageTrees {
       constructor(pageBuilder) {
         super();
-        this.pageReverseIndex = null;
+        __publicField(this, "pageReverseIndex", null);
+        __publicField(this, "pageBuilder");
         this.pageBuilder = pageBuilder;
       }
       setupReverseIndex() {
@@ -20065,7 +20781,9 @@ var require_pagecollector = __commonJS({
     var log = (0, log_1.getDomainLogger)("content", { component: "pagecollector" });
     var PagesCollector = class {
       constructor(pageMap, fs5) {
-        this.processedPaths = /* @__PURE__ */ new Set();
+        __publicField(this, "m");
+        __publicField(this, "fs");
+        __publicField(this, "processedPaths", /* @__PURE__ */ new Set());
         this.m = pageMap;
         this.fs = fs5;
       }
@@ -20200,6 +20918,10 @@ var require_content2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("content", { component: "content" });
     var Content = class {
       constructor(fs5, converter, pageMap, translator) {
+        __publicField(this, "fs");
+        __publicField(this, "converter");
+        __publicField(this, "pageMap");
+        __publicField(this, "translator");
         this.fs = fs5;
         this.converter = converter;
         this.pageMap = pageMap;
@@ -20438,6 +21160,7 @@ var require_converter = __commonJS({
     exports2.MDConverter = void 0;
     var MDConverter = class {
       constructor(markdown) {
+        __publicField(this, "md");
         this.md = markdown;
       }
       async convert(dctx, rctx) {
@@ -20466,11 +21189,15 @@ var require_pagecontent = __commonJS({
     exports2.newContent = newContent;
     var Content = class {
       constructor(source) {
-        this.renderedContent = "";
-        this.summary = "";
-        this.wordCount = 0;
-        this.readingTime = 0;
-        this.lazyRendered = true;
+        __publicField(this, "rawSource");
+        __publicField(this, "frontMatter");
+        __publicField(this, "renderedContent", "");
+        __publicField(this, "summary", "");
+        __publicField(this, "wordCount", 0);
+        __publicField(this, "readingTime", 0);
+        __publicField(this, "toc");
+        __publicField(this, "lazyRendered", true);
+        __publicField(this, "lazyRender");
         this.rawSource = source;
       }
       updateWithContentResult(result) {
@@ -20535,6 +21262,9 @@ var require_section = __commonJS({
     exports2.PAGE_HOME_BASE = "/";
     var Section = class {
       constructor(fsSvc) {
+        __publicField(this, "home");
+        __publicField(this, "seen");
+        __publicField(this, "fsSvc");
         this.home = null;
         this.seen = {};
         this.fsSvc = fsSvc;
@@ -20633,6 +21363,7 @@ var require_standalone = __commonJS({
     exports2.STANDALONE_PAGE_SITEMAP_BASE = "_sitemap";
     var Standalone = class {
       constructor(fsSvc) {
+        __publicField(this, "fsSvc");
         this.fsSvc = fsSvc;
       }
       async assemble(pages, pb) {
@@ -20663,7 +21394,10 @@ var require_pageoutput = __commonJS({
     var content_1 = require_content3();
     var Output = class {
       constructor(source, pageKind) {
-        this.target = null;
+        __publicField(this, "source");
+        __publicField(this, "pageKind");
+        __publicField(this, "baseName");
+        __publicField(this, "target", null);
         this.source = source;
         this.pageKind = pageKind;
         this.baseName = "";
@@ -20782,8 +21516,15 @@ var require_paginator = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.PaginatorManagerImpl = exports2.PaginatorImpl = void 0;
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("content", { component: "paginator" });
     var PaginatorImpl = class {
       constructor(paginatedElements, total, size, base) {
+        __publicField(this, "paginatedElements");
+        __publicField(this, "_pagers");
+        __publicField(this, "base");
+        __publicField(this, "total");
+        __publicField(this, "size");
         this.paginatedElements = paginatedElements;
         this.base = base;
         this.total = total;
@@ -20815,10 +21556,19 @@ var require_paginator = __commonJS({
       getPagers() {
         return this._pagers;
       }
+      getAllPages() {
+        const allPages = [];
+        for (const element2 of this.paginatedElements) {
+          allPages.push(...element2);
+        }
+        return allPages;
+      }
     };
     exports2.PaginatorImpl = PaginatorImpl;
     var PagerImpl = class {
       constructor(number, paginator) {
+        __publicField(this, "number");
+        __publicField(this, "paginator");
         this.number = number;
         this.paginator = paginator;
       }
@@ -20839,6 +21589,9 @@ var require_paginator = __commonJS({
       pages() {
         const elements = this.element();
         return elements;
+      }
+      allPages() {
+        return this.paginator.getAllPages();
       }
       pagers() {
         return this.paginator.pagers();
@@ -20886,8 +21639,10 @@ var require_paginator = __commonJS({
     };
     var PaginatorManagerImpl = class {
       constructor(svc, page) {
-        this.currentPager = null;
-        this.initialized = false;
+        __publicField(this, "currentPager", null);
+        __publicField(this, "initialized", false);
+        __publicField(this, "svc");
+        __publicField(this, "page");
         this.svc = svc;
         this.page = page;
       }
@@ -20904,10 +21659,15 @@ var require_paginator = __commonJS({
       setCurrent(current) {
         this.currentPager = current;
       }
-      async paginate(groups) {
+      async paginate(groupsOrPages) {
         if (!this.initialized) {
           const pagerSize = this.svc.pageSize();
-          const paginator = this.newPaginatorFromPageGroups(groups, pagerSize, this.page.paths().base());
+          let paginator;
+          if (Array.isArray(groupsOrPages) && groupsOrPages.length > 0 && "key" in groupsOrPages[0]) {
+            paginator = this.newPaginatorFromPageGroups(groupsOrPages, pagerSize, this.page.paths().base());
+          } else {
+            paginator = this.newPaginatorFromPages(groupsOrPages, pagerSize, this.page.paths().base());
+          }
           this.currentPager = paginator.pagers()[0];
           this.initialized = true;
         }
@@ -21002,6 +21762,7 @@ var require_scratch = __commonJS({
     exports2.Scratch = void 0;
     var Scratch = class {
       constructor() {
+        __publicField(this, "values");
         this.values = /* @__PURE__ */ new Map();
       }
       add(key, newAddend) {
@@ -21022,6 +21783,9 @@ var require_scratch = __commonJS({
         }
         this.values.set(key, newVal);
         return "";
+      }
+      Add(key, newAddend) {
+        return this.add(key, newAddend);
       }
       set(key, value2) {
         this.values.set(key, value2);
@@ -21106,6 +21870,9 @@ var require_paths2 = __commonJS({
 var require_page = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/content/entity/page.js"(exports2) {
     "use strict";
+    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
+      return mod && mod.__esModule ? mod : { "default": mod };
+    };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.TermPageImpl = exports2.TaxonomyPageImpl = exports2.PageImpl = void 0;
     var content_1 = require_content3();
@@ -21116,12 +21883,21 @@ var require_page = __commonJS({
     var paths_1 = require_paths2();
     var doctree_1 = require_doctree();
     var sort_1 = require_sort();
+    var path_1 = __importDefault(require("path"));
     var log_1 = require_log();
     var log = (0, log_1.getDomainLogger)("content", { component: "page" });
     var PageImpl = class {
       constructor(source, content, meta, layout, title = "", kind = "page", pageMap = null) {
-        this.output_ = null;
-        this.store_ = null;
+        __publicField(this, "source");
+        __publicField(this, "content");
+        __publicField(this, "meta");
+        __publicField(this, "layout");
+        __publicField(this, "pagerManager");
+        __publicField(this, "title_");
+        __publicField(this, "kind_");
+        __publicField(this, "pageMap");
+        __publicField(this, "output_", null);
+        __publicField(this, "store_", null);
         this.source = source;
         this.content = content;
         this.meta = meta;
@@ -21168,6 +21944,18 @@ var require_page = __commonJS({
       get Description() {
         return "";
       }
+      StaticURL(src) {
+        if (/^(https?:)?\/\//.test(src)) {
+          return src;
+        }
+        src = path_1.default.normalize(src);
+        src = src.replace(/\\/g, "/");
+        if (src.startsWith("/")) {
+          src = src.slice(1);
+        }
+        const base = this.meta.pageBaseUrl().replace(/\/+$/, "");
+        return `${base}/${src}`;
+      }
       params() {
         return this.meta.params();
       }
@@ -21188,6 +21976,9 @@ var require_page = __commonJS({
       }
       get Scratch() {
         return this.scratch();
+      }
+      pageBaseUrl() {
+        return this.meta.pageBaseUrl();
       }
       pageWeight() {
         return this.meta.pageWeight();
@@ -21210,6 +22001,15 @@ var require_page = __commonJS({
       noLink() {
         return this.meta.noLink();
       }
+      organization() {
+        return this.meta.organization();
+      }
+      author() {
+        return this.meta.author();
+      }
+      menu() {
+        return this.meta.menu();
+      }
       async current() {
         return await this.pagerManager.current();
       }
@@ -21219,8 +22019,8 @@ var require_page = __commonJS({
       async paginator() {
         return await this.pagerManager.paginator();
       }
-      async paginate(groups) {
-        return this.pagerManager.paginate(groups);
+      async paginate(groupsOrPages) {
+        return this.pagerManager.paginate(groupsOrPages);
       }
       file() {
         return this.source.file;
@@ -21294,7 +22094,7 @@ var require_page = __commonJS({
         return this.output().summary();
       }
       truncated() {
-        return false;
+        return true;
       }
       parent() {
         if (this.isHome()) {
@@ -21443,6 +22243,7 @@ var require_page = __commonJS({
     var TaxonomyPageImpl = class extends PageImpl {
       constructor(source, content, meta, layout, singular, title = "", kind = "taxonomy", pageMap = null) {
         super(source, content, meta, layout, title, kind, pageMap);
+        __publicField(this, "singular");
         this.singular = singular;
       }
       params() {
@@ -21455,6 +22256,7 @@ var require_page = __commonJS({
     var TermPageImpl = class extends TaxonomyPageImpl {
       constructor(source, content, meta, layout, singular, term, title = "", kind = "term", pageMap = null) {
         super(source, content, meta, layout, singular, title, kind, pageMap);
+        __publicField(this, "term");
         this.term = term;
       }
       params() {
@@ -21474,17 +22276,32 @@ var require_pagemeta = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Meta = void 0;
     var Meta = class {
-      constructor(list = "always", parameters = {}, weight = 0, date = new Date()) {
+      constructor(baseURL, list = "always", parameters = {}, weight = 0, date = new Date(), organization, author, menu) {
+        __publicField(this, "baseURL");
+        __publicField(this, "list");
+        __publicField(this, "parameters");
+        __publicField(this, "weight");
+        __publicField(this, "date");
+        __publicField(this, "org");
+        __publicField(this, "authorInfo");
+        __publicField(this, "menuConfig");
+        this.baseURL = baseURL;
         this.list = list;
         this.parameters = parameters;
         this.weight = weight;
         this.date = date;
+        this.org = organization;
+        this.authorInfo = author;
+        this.menuConfig = menu;
       }
       description() {
         return "";
       }
       params() {
         return this.parameters;
+      }
+      pageBaseUrl() {
+        return this.baseURL;
       }
       pageWeight() {
         return this.weight;
@@ -21515,6 +22332,15 @@ var require_pagemeta = __commonJS({
       }
       noLink() {
         return false;
+      }
+      organization() {
+        return this.org;
+      }
+      author() {
+        return this.authorInfo;
+      }
+      menu() {
+        return this.menuConfig;
       }
     };
     exports2.Meta = Meta;
@@ -21607,9 +22433,18 @@ var require_shortcode2 = __commonJS({
     var scratch_1 = require_scratch();
     var ShortcodeWithPage = class {
       constructor(params, inner, page, parent, name, isNamedParams, ordinal, indentation = "", posOffset = 0) {
-        this._innerDeindent = null;
-        this._pos = null;
-        this._scratch = null;
+        __publicField(this, "_params");
+        __publicField(this, "_inner");
+        __publicField(this, "_page");
+        __publicField(this, "_parent");
+        __publicField(this, "_name");
+        __publicField(this, "_isNamedParams");
+        __publicField(this, "_ordinal");
+        __publicField(this, "_indentation");
+        __publicField(this, "_innerDeindent", null);
+        __publicField(this, "_posOffset");
+        __publicField(this, "_pos", null);
+        __publicField(this, "_scratch", null);
         this._params = params;
         this._inner = inner;
         this._page = page;
@@ -21729,6 +22564,7 @@ var require_type9 = __commonJS({
     var TemplateError = class extends Error {
       constructor(message, code) {
         super(message);
+        __publicField(this, "code");
         this.code = code;
         this.name = "TemplateError";
       }
@@ -21802,8 +22638,8 @@ var require_baseof = __commonJS({
     var path6 = __importStar(require("path"));
     var BaseOf = class {
       constructor() {
-        this.baseof = /* @__PURE__ */ new Map();
-        this.needsBaseof = /* @__PURE__ */ new Map();
+        __publicField(this, "baseof", /* @__PURE__ */ new Map());
+        __publicField(this, "needsBaseof", /* @__PURE__ */ new Map());
       }
       getTemplateSearchOrder(templateName) {
         const searchOrder = [];
@@ -21905,6 +22741,9 @@ var require_info = __commonJS({
     var type_1 = require_type9();
     var TemplateInfo = class {
       constructor(name, template, fi) {
+        __publicField(this, "name");
+        __publicField(this, "template");
+        __publicField(this, "fi");
         this.name = name;
         this.template = template;
         this.fi = fi;
@@ -21991,20 +22830,18 @@ var require_info = __commonJS({
 var require_namespace = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/template/vo/namespace.js"(exports2) {
     "use strict";
-    var __importDefault = exports2 && exports2.__importDefault || function(mod) {
-      return mod && mod.__esModule ? mod : { "default": mod };
-    };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ShortcodeTemplateNamespace = exports2.PartialTemplateNamespace = exports2.RegularTemplateNamespace = void 0;
     exports2.newRegularTemplateNamespace = newRegularTemplateNamespace;
     exports2.newPartialTemplateNamespace = newPartialTemplateNamespace;
     exports2.newShortcodeTemplateNamespace = newShortcodeTemplateNamespace;
     var type_1 = require_type9();
-    var path_1 = __importDefault(require("path"));
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("template", { component: "namespace" });
     var BaseNamespace = class {
       constructor() {
-        this.templates = /* @__PURE__ */ new Map();
-        this.mutex = /* @__PURE__ */ new Set();
+        __publicField(this, "templates", /* @__PURE__ */ new Map());
+        __publicField(this, "mutex", /* @__PURE__ */ new Set());
       }
       addTemplate(name, state) {
         this.withLock(() => {
@@ -22015,6 +22852,12 @@ var require_namespace = __commonJS({
         return this.withReadLock(() => {
           if (this.templates.has(name)) {
             return this.templates.get(name) || null;
+          }
+          if (!name.endsWith(".html")) {
+            const htmlName = name + ".html";
+            if (this.templates.has(htmlName)) {
+              return this.templates.get(htmlName) || null;
+            }
           }
           for (const [key, template] of this.templates.entries()) {
             if (key.includes(name)) {
@@ -22137,7 +22980,7 @@ var require_namespace = __commonJS({
         this.addTemplate(name, shortcodeState);
       }
       getShortcode(name) {
-        return this.lookup(path_1.default.join("_shortcodes", name));
+        return this.lookup("_shortcodes/" + name);
       }
       hasShortcode(name) {
         return this.hasTemplate(name);
@@ -26410,9 +27253,9 @@ var require_cache2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("content", { component: "cache" });
     var ConcurrentCache = class {
       constructor() {
-        this.cache = /* @__PURE__ */ new Map();
-        this.pendingPromises = /* @__PURE__ */ new Map();
-        this.deletedKeys = /* @__PURE__ */ new Set();
+        __publicField(this, "cache", /* @__PURE__ */ new Map());
+        __publicField(this, "pendingPromises", /* @__PURE__ */ new Map());
+        __publicField(this, "deletedKeys", /* @__PURE__ */ new Set());
       }
       get(key) {
         return this.cache.get(key);
@@ -26528,7 +27371,11 @@ var require_parser = __commonJS({
     var log = (0, log_1.getDomainLogger)("template", { component: "parser" });
     var Parser = class {
       constructor(funcMap = /* @__PURE__ */ new Map()) {
-        this.readyInit = false;
+        __publicField(this, "prototypeText");
+        __publicField(this, "prototypeTextClone");
+        __publicField(this, "readyInit", false);
+        __publicField(this, "funcMap");
+        __publicField(this, "parseOverlapCache");
         this.funcMap = funcMap;
         this.prototypeText = (0, text_template_1.New)("");
         this.parseOverlapCache = new cache_1.ConcurrentCache();
@@ -26784,6 +27631,8 @@ var require_lookup = __commonJS({
     var baseof_1 = require_baseof();
     var Lookup = class {
       constructor(baseOf, funcMap) {
+        __publicField(this, "baseOf");
+        __publicField(this, "funcsv");
         this.baseOf = baseOf || new baseof_1.BaseOf();
         this.funcsv = /* @__PURE__ */ new Map();
         if (funcMap) {
@@ -26923,6 +27772,13 @@ var require_template2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("template", { component: "template-engine" });
     var TemplateEngine = class {
       constructor(executor, lookup, parser, templateNamespace, partialNamespace, shortcodeNamespace, fs5) {
+        __publicField(this, "executor");
+        __publicField(this, "lookup");
+        __publicField(this, "parser");
+        __publicField(this, "templateNamespace");
+        __publicField(this, "partialNamespace");
+        __publicField(this, "shortcodeNamespace");
+        __publicField(this, "fs");
         this.executor = executor;
         this.lookup = lookup;
         this.parser = parser;
@@ -27019,7 +27875,7 @@ var require_template2 = __commonJS({
           try {
             await this.addTemplateFileInfo(normalizedName, fi);
           } catch (error) {
-            throw new type_1.TemplateError(`Failed to add template ${normalizedName}: ${error.message}`, "LOAD_TEMPLATE_FAILED");
+            log.error("Error adding template:", new type_1.TemplateError(`Failed to add template ${normalizedName}: ${error.message}`, "LOAD_TEMPLATE_FAILED"));
           }
         };
         try {
@@ -27225,8 +28081,8 @@ var require_registry = __commonJS({
     var engineDependentFunctions = [];
     var PartialFunction = class {
       constructor() {
-        this.engine = null;
-        this.execute = async (name, context) => {
+        __publicField(this, "engine", null);
+        __publicField(this, "execute", async (name, context) => {
           if (!this.engine) {
             log.error(`Partial function called but engine not set: ${name}`);
             return `<!-- Partial function called but engine not ready: ${name} -->`;
@@ -27238,7 +28094,7 @@ var require_registry = __commonJS({
             log.error(`Partial execution failed for "${name}":`, error);
             return `<!-- Partial execution failed: ${name} - ${error.message} -->`;
           }
-        };
+        });
       }
       getFunctionName() {
         return "partial";
@@ -27489,8 +28345,45 @@ var require_registry = __commonJS({
         funcMap.set("lower", (str) => str.toLowerCase());
         funcMap.set("title", (str) => str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()));
         funcMap.set("trim", (str) => str.trim());
-        funcMap.set("replace", (str, old, newStr) => str.replace(new RegExp(old, "g"), newStr));
-        funcMap.set("split", (str, sep2) => {
+        funcMap.set("replace", (...args) => {
+          if (args.length < 3) {
+            throw new Error("replace requires at least 3 arguments: string, old, new");
+          }
+          const str = String(args[0]);
+          const old = String(args[1]);
+          const newStr = String(args[2]);
+          if (args.length >= 4) {
+            const limit = Number(args[3]);
+            if (isNaN(limit)) {
+              throw new Error("replace limit must be a number");
+            }
+            let result = str;
+            let count = 0;
+            let startIndex = 0;
+            while (count < limit && startIndex < result.length) {
+              const index = result.indexOf(old, startIndex);
+              if (index === -1)
+                break;
+              result = result.substring(0, index) + newStr + result.substring(index + old.length);
+              startIndex = index + newStr.length;
+              count++;
+            }
+            return result;
+          }
+          return str.split(old).join(newStr);
+        });
+        funcMap.set("replaceRE", (...args) => {
+          if (args.length < 3) {
+            throw new Error("replaceRE requires at least 3 arguments: pattern, replacement, string");
+          }
+          const pattern = args[0];
+          const repl = args[1];
+          const s = args[2];
+          const n2 = args.length >= 4 ? args[3] : void 0;
+          const stringsNs = funcMap.get("strings")();
+          return stringsNs.ReplaceRE(pattern, repl, s, n2);
+        });
+        funcMap.set("split", (str, sep3) => {
           if (str === null || str === void 0) {
             log.warn("split function: first argument is null or undefined");
             return [];
@@ -27501,9 +28394,9 @@ var require_registry = __commonJS({
               return str;
             }
             const stringValue = String(str);
-            return stringValue.split(sep2);
+            return stringValue.split(sep3);
           }
-          return str.split(sep2);
+          return str.split(sep3);
         });
         funcMap.set("splitRegex", (str, regexPattern) => {
           if (str === null || str === void 0) {
@@ -27532,15 +28425,18 @@ var require_registry = __commonJS({
             return [str];
           }
         });
-        funcMap.set("delimit", (arr, sep2) => {
+        funcMap.set("delimit", (arr, sep3) => {
           if (Array.isArray(arr)) {
-            return arr.join(sep2);
+            return arr.join(sep3);
           }
           return String(arr);
         });
-        funcMap.set("in", (arr, item) => {
-          if (Array.isArray(arr)) {
-            return arr.includes(item);
+        funcMap.set("in", (matchValue, item) => {
+          if (Array.isArray(matchValue)) {
+            return matchValue.includes(item);
+          }
+          if (typeof matchValue === "string" && typeof item === "string") {
+            return matchValue.includes(item);
           }
           return false;
         });
@@ -27586,15 +28482,46 @@ var require_registry = __commonJS({
           Replace: (s, old, newStr, limit) => {
             const str = String(s);
             if (limit === void 0) {
-              return str.replace(new RegExp(old.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), newStr);
+              return str.split(old).join(newStr);
             }
+            let result = str;
             let count = 0;
-            return str.replace(new RegExp(old.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), (match) => {
-              if (count < limit) {
-                count++;
-                return newStr;
+            let startIndex = 0;
+            while (count < limit && startIndex < result.length) {
+              const index = result.indexOf(old, startIndex);
+              if (index === -1)
+                break;
+              result = result.substring(0, index) + newStr + result.substring(index + old.length);
+              startIndex = index + newStr.length;
+              count++;
+            }
+            return result;
+          },
+          ReplaceRE: (pattern, repl, s, n2) => {
+            const sp = String(pattern);
+            const sr = String(repl);
+            const ss = String(s);
+            let nn = -1;
+            if (n2 !== void 0) {
+              const parsed = parseInt(String(n2), 10);
+              if (isNaN(parsed)) {
+                throw new Error("limit argument must be integer");
               }
-              return match;
+              nn = parsed;
+            }
+            let re;
+            try {
+              re = new RegExp(sp, "g");
+            } catch (err) {
+              throw new Error(`invalid regular expression: ${sp}`);
+            }
+            let replacementCount = 0;
+            return ss.replace(re, (match) => {
+              if (nn >= 0 && replacementCount >= nn) {
+                return match;
+              }
+              replacementCount++;
+              return sr;
             });
           },
           Split: (s, delimiter) => String(s).split(delimiter),
@@ -27641,6 +28568,197 @@ var require_registry = __commonJS({
             return str.charAt(0).toUpperCase() + str.slice(1);
           }
         }));
+        funcMap.set("substr", (a, ...nums) => {
+          const s = String(a);
+          const chars = Array.from(s);
+          const rlen = chars.length;
+          let start;
+          let length;
+          switch (nums.length) {
+            case 0:
+              throw new Error("too few arguments");
+            case 1:
+              const startNum = Number(nums[0]);
+              if (isNaN(startNum) || !Number.isInteger(startNum)) {
+                throw new Error("start argument must be an integer");
+              }
+              start = startNum;
+              length = rlen;
+              break;
+            case 2:
+              const startNum2 = Number(nums[0]);
+              const lengthNum = Number(nums[1]);
+              if (isNaN(startNum2) || !Number.isInteger(startNum2)) {
+                throw new Error("start argument must be an integer");
+              }
+              if (isNaN(lengthNum) || !Number.isInteger(lengthNum)) {
+                throw new Error("length argument must be an integer");
+              }
+              start = startNum2;
+              length = lengthNum;
+              break;
+            default:
+              throw new Error("too many arguments");
+          }
+          if (rlen === 0) {
+            return "";
+          }
+          if (start < 0) {
+            start += rlen;
+          }
+          if (start < 0) {
+            start = 0;
+          }
+          if (start > rlen - 1) {
+            return "";
+          }
+          let end = rlen;
+          if (length === 0) {
+            return "";
+          } else if (length < 0) {
+            end += length;
+          } else if (length > 0) {
+            end = start + length;
+          }
+          if (start >= end) {
+            return "";
+          }
+          if (end < 0) {
+            return "";
+          }
+          if (end > rlen) {
+            end = rlen;
+          }
+          return chars.slice(start, end).join("");
+        });
+        funcMap.set("truncate", (lengthParam, ...options) => {
+          const length = Number(lengthParam);
+          if (isNaN(length) || !Number.isInteger(length)) {
+            throw new Error("truncate length must be an integer");
+          }
+          let textParam;
+          let ellipsis = " \u2026";
+          switch (options.length) {
+            case 0:
+              throw new Error("truncate requires a length and a string");
+            case 1:
+              textParam = options[0];
+              ellipsis = " \u2026";
+              break;
+            case 2:
+              ellipsis = String(options[0]);
+              textParam = options[1];
+              break;
+            default:
+              throw new Error("too many arguments passed to truncate");
+          }
+          const text3 = String(textParam);
+          const isHTML = /<[^>]+>/.test(text3);
+          const chars = Array.from(text3);
+          if (chars.length <= length) {
+            if (isHTML) {
+              return text3;
+            }
+            return this.escapeHTML(text3);
+          }
+          if (isHTML) {
+            return this.truncateHTML(text3, length, ellipsis);
+          } else {
+            return this.truncateText(text3, length, ellipsis);
+          }
+        });
+      }
+      escapeHTML(text3) {
+        return text3.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+      }
+      truncateText(text3, length, ellipsis) {
+        const chars = Array.from(text3);
+        if (chars.length <= length) {
+          return this.escapeHTML(text3);
+        }
+        let lastWordIndex = 0;
+        let currentLen = 0;
+        for (let i = 0; i < chars.length && currentLen < length; i++) {
+          const char2 = chars[i];
+          currentLen++;
+          if (/\s/.test(char2)) {
+            lastWordIndex = i;
+          }
+          if (/[\u4e00-\u9fff\u3400-\u4dbf\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/.test(char2)) {
+            lastWordIndex = i;
+          }
+        }
+        let endPos = currentLen >= length ? lastWordIndex > 0 ? lastWordIndex : length : chars.length;
+        const truncated = chars.slice(0, endPos).join("");
+        return this.escapeHTML(truncated) + ellipsis;
+      }
+      truncateHTML(text3, length, ellipsis) {
+        const tagRegex = /^<(\/)?([^ ]+?)(?:(\s*\/)| .*?)?>/;
+        const htmlSinglets = /* @__PURE__ */ new Set(["br", "col", "link", "base", "img", "param", "area", "hr", "input"]);
+        const tags = [];
+        let lastWordIndex = 0;
+        let lastNonSpace = 0;
+        let currentLen = 0;
+        let endTextPos = 0;
+        let i = 0;
+        const chars = Array.from(text3);
+        while (i < chars.length) {
+          const currentChar = chars[i];
+          if (currentChar === "<") {
+            const remainingText = chars.slice(i).join("");
+            const match = remainingText.match(tagRegex);
+            if (match) {
+              const fullMatch = match[0];
+              const isClosing = match[1] === "/";
+              const tagName = match[2].toLowerCase();
+              const isSelfClosing = match[3] === "/";
+              i += fullMatch.length;
+              lastWordIndex = lastNonSpace;
+              const isSinglet = htmlSinglets.has(tagName);
+              if (!isSinglet && !isSelfClosing) {
+                tags.push({
+                  name: tagName,
+                  pos: i - fullMatch.length,
+                  openTag: !isClosing
+                });
+              }
+              continue;
+            }
+          }
+          currentLen++;
+          if (/\s/.test(currentChar)) {
+            lastWordIndex = lastNonSpace;
+          } else if (/[\u4e00-\u9fff\u3400-\u4dbf\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/.test(currentChar)) {
+            lastWordIndex = i;
+          } else {
+            lastNonSpace = i + 1;
+          }
+          if (currentLen > length) {
+            endTextPos = lastWordIndex > 0 ? lastWordIndex : i;
+            break;
+          }
+          i++;
+        }
+        if (currentLen <= length) {
+          return text3;
+        }
+        let output = chars.slice(0, endTextPos).join("") + ellipsis;
+        let currentTag = null;
+        for (let j = tags.length - 1; j >= 0; j--) {
+          const tag = tags[j];
+          if (tag.pos >= endTextPos || currentTag !== null) {
+            if (currentTag !== null && currentTag.name === tag.name) {
+              currentTag = null;
+            }
+            continue;
+          }
+          if (tag.openTag) {
+            output += `</${tag.name}>`;
+          } else {
+            currentTag = tag;
+          }
+        }
+        return output;
       }
       registerMathFunctions(funcMap) {
         funcMap.set("add", (a, b) => a + b);
@@ -27863,29 +28981,33 @@ var require_registry = __commonJS({
             const weekday = date.toLocaleString("en-US", { weekday: "short" });
             const monthName = date.toLocaleString("en-US", { month: "short" });
             const patterns = [
-              { pattern: "2006", value: year.toString() },
-              { pattern: "06", value: year.toString().slice(-2) },
-              { pattern: "January", value: date.toLocaleString("en-US", { month: "long" }) },
-              { pattern: "Jan", value: monthName },
-              { pattern: "01", value: month.toString().padStart(2, "0") },
-              { pattern: "1", value: month.toString() },
-              { pattern: "Monday", value: date.toLocaleString("en-US", { weekday: "long" }) },
-              { pattern: "Mon", value: weekday },
-              { pattern: "02", value: day.toString().padStart(2, "0") },
-              { pattern: "2", value: day.toString() },
-              { pattern: "15", value: hour.toString().padStart(2, "0") },
-              { pattern: "3", value: ((hour + 11) % 12 + 1).toString() },
-              { pattern: "04", value: minute.toString().padStart(2, "0") },
-              { pattern: "4", value: minute.toString() },
-              { pattern: "05", value: second.toString().padStart(2, "0") },
-              { pattern: "5", value: second.toString() },
-              { pattern: "PM", value: hour >= 12 ? "PM" : "AM" },
-              { pattern: "pm", value: hour >= 12 ? "pm" : "am" },
-              { pattern: "MST", value: date.toLocaleString("en-US", { timeZoneName: "short" }) }
+              { pattern: "2006", placeholder: "{{YEAR_FULL}}", value: year.toString() },
+              { pattern: "January", placeholder: "{{MONTH_FULL}}", value: date.toLocaleString("en-US", { month: "long" }) },
+              { pattern: "Monday", placeholder: "{{WEEKDAY_FULL}}", value: date.toLocaleString("en-US", { weekday: "long" }) },
+              { pattern: "MST", placeholder: "{{TIMEZONE}}", value: date.toLocaleString("en-US", { timeZoneName: "short" }) },
+              { pattern: "Jan", placeholder: "{{MONTH_SHORT}}", value: monthName },
+              { pattern: "Mon", placeholder: "{{WEEKDAY_SHORT}}", value: weekday },
+              { pattern: "06", placeholder: "{{YEAR_SHORT}}", value: year.toString().slice(-2) },
+              { pattern: "15", placeholder: "{{HOUR_24}}", value: hour.toString().padStart(2, "0") },
+              { pattern: "01", placeholder: "{{MONTH_ZERO}}", value: month.toString().padStart(2, "0") },
+              { pattern: "02", placeholder: "{{DAY_ZERO}}", value: day.toString().padStart(2, "0") },
+              { pattern: "04", placeholder: "{{MINUTE_ZERO}}", value: minute.toString().padStart(2, "0") },
+              { pattern: "05", placeholder: "{{SECOND_ZERO}}", value: second.toString().padStart(2, "0") },
+              { pattern: "PM", placeholder: "{{AMPM_UPPER}}", value: hour >= 12 ? "PM" : "AM" },
+              { pattern: "pm", placeholder: "{{AMPM_LOWER}}", value: hour >= 12 ? "pm" : "am" },
+              { pattern: "3", placeholder: "{{HOUR_12}}", value: ((hour + 11) % 12 + 1).toString() },
+              { pattern: "1", placeholder: "{{MONTH_NUM}}", value: month.toString() },
+              { pattern: "2", placeholder: "{{DAY_NUM}}", value: day.toString() },
+              { pattern: "4", placeholder: "{{MINUTE_NUM}}", value: minute.toString() },
+              { pattern: "5", placeholder: "{{SECOND_NUM}}", value: second.toString() }
             ];
             let result = layout;
-            for (const { pattern, value: value3 } of patterns) {
-              result = result.replace(new RegExp(pattern, "g"), value3);
+            for (const { pattern, placeholder } of patterns) {
+              const escapedPattern = pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+              result = result.replace(new RegExp(escapedPattern, "g"), placeholder);
+            }
+            for (const { placeholder, value: value3 } of patterns) {
+              result = result.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), value3);
             }
             return result;
           },
@@ -27978,15 +29100,21 @@ var require_registry = __commonJS({
             return Object.keys(obj).length;
           return 0;
         });
-        funcMap.set("first", (arr, n2) => {
-          if (!Array.isArray(arr))
-            return [];
-          return n2 ? arr.slice(0, n2) : arr.slice(0, 1);
+        funcMap.set("first", (n2, arr) => {
+          if (Array.isArray(n2)) {
+            return n2.slice(0, 1);
+          } else if (Array.isArray(arr)) {
+            return arr.slice(0, n2);
+          }
+          return [];
         });
-        funcMap.set("last", (arr, n2) => {
-          if (!Array.isArray(arr))
-            return [];
-          return n2 ? arr.slice(-n2) : arr.slice(-1);
+        funcMap.set("last", (n2, arr) => {
+          if (Array.isArray(n2)) {
+            return n2.slice(-1);
+          } else if (Array.isArray(arr)) {
+            return arr.slice(-n2);
+          }
+          return [];
         });
         funcMap.set("merge", (...args) => {
           const result = {};
@@ -28234,6 +29362,32 @@ var require_registry = __commonJS({
             return `${encodedKey}=${encodedValue}`;
           }).join("&");
           return queryString;
+        });
+        funcMap.set("isset", (c, key) => {
+          if (c === null || c === void 0) {
+            return false;
+          }
+          if (Array.isArray(c)) {
+            const k = Number(key);
+            if (isNaN(k) || !Number.isInteger(k)) {
+              console.warn(`isset unable to use key of type ${typeof key} as index`);
+              return false;
+            }
+            return c.length > k && k >= 0;
+          }
+          if (typeof c === "object") {
+            return key in c;
+          }
+          if (typeof c === "string") {
+            const k = Number(key);
+            if (isNaN(k) || !Number.isInteger(k)) {
+              console.warn(`isset unable to use key of type ${typeof key} as index`);
+              return false;
+            }
+            return c.length > k && k >= 0;
+          }
+          console.warn(`calling isset with unsupported type "${typeof c}" (${c.constructor?.name || typeof c}) will always return false.`);
+          return false;
         });
       }
       doIndex(item, indices) {
@@ -28724,12 +29878,32 @@ var require_registry = __commonJS({
               return null;
             }
             return this.unmarshalContent(dataStr, options);
+          },
+          Plainify: (s) => {
+            const str = String(s);
+            return this.stripHTML(str);
           }
         }));
         funcMap.set("unmarshal", (...args) => {
           const transform = funcMap.get("transform")();
           return transform.Unmarshal(...args);
         });
+        funcMap.set("plainify", (s) => {
+          const str = String(s);
+          return this.stripHTML(str);
+        });
+      }
+      stripHTML(html) {
+        if (!html.includes("<") && !html.includes(">")) {
+          return html;
+        }
+        let result = html.replace(/\n/g, " ").replace(/<\/p>/gi, "\n").replace(/<br\s*\/?>/gi, "\n").replace(/<\/div>/gi, "\n").replace(/<\/h[1-6]>/gi, "\n").replace(/<\/li>/gi, "\n").replace(/<\/tr>/gi, "\n").replace(/<\/blockquote>/gi, "\n");
+        result = result.replace(/<[^>]*>/g, "");
+        const lines = result.split("\n");
+        const normalizedLines = lines.map((line) => line.trim().replace(/\s+/g, " "));
+        result = normalizedLines.filter((line) => line.length > 0).join("\n").trim();
+        result = result.replace(/\n\s*\n/g, "\n");
+        return result;
       }
       unmarshalContent(content, options = {}) {
         const trimmedContent = content.trim();
@@ -29019,7 +30193,15 @@ var require_template3 = __commonJS({
     exports2.Factory = Factory;
     var Builder = class {
       constructor() {
-        this.funcMap = /* @__PURE__ */ new Map();
+        __publicField(this, "funcMap", /* @__PURE__ */ new Map());
+        __publicField(this, "services");
+        __publicField(this, "fs");
+        __publicField(this, "templateNamespace");
+        __publicField(this, "partialNamespace");
+        __publicField(this, "shortcodeNamespace");
+        __publicField(this, "lookup");
+        __publicField(this, "parser");
+        __publicField(this, "executor");
       }
       withFs(fs5) {
         this.fs = fs5;
@@ -29263,8 +30445,29 @@ var require_pagebuilder = __commonJS({
     var template_1 = require_template4();
     var log = (0, log_1.getDomainLogger)("content", { component: "pagebuilder" });
     var PageBuilder = class {
-      constructor(langSvc, taxonomySvc, templateSvc, pageMapper, taxonomy, term, section, standalone, converter, contentHub) {
-        this.renderableDocument = null;
+      constructor(urlSvc, langSvc, taxonomySvc, templateSvc, pageMapper, taxonomy, term, section, standalone, converter, contentHub) {
+        __publicField(this, "urlSvc");
+        __publicField(this, "langSvc");
+        __publicField(this, "taxonomySvc");
+        __publicField(this, "templateSvc");
+        __publicField(this, "pageMapper");
+        __publicField(this, "taxonomy");
+        __publicField(this, "term");
+        __publicField(this, "section");
+        __publicField(this, "standalone");
+        __publicField(this, "converter");
+        __publicField(this, "contentHub");
+        __publicField(this, "source");
+        __publicField(this, "sourceByte");
+        __publicField(this, "kind");
+        __publicField(this, "singular");
+        __publicField(this, "term_");
+        __publicField(this, "langIdx");
+        __publicField(this, "fm");
+        __publicField(this, "fmParser");
+        __publicField(this, "c");
+        __publicField(this, "renderableDocument", null);
+        this.urlSvc = urlSvc;
         this.langSvc = langSvc;
         this.taxonomySvc = taxonomySvc;
         this.templateSvc = templateSvc;
@@ -29375,6 +30578,15 @@ var require_pagebuilder = __commonJS({
             meta.weight = this.fm.weight;
             meta.parameters = this.fm.params || {};
             meta.date = this.fm.date;
+            if (this.fm.organization !== void 0) {
+              meta.org = this.fm.organization;
+            }
+            if (this.fm.author !== void 0) {
+              meta.authorInfo = this.fm.author;
+            }
+            if (this.fm.menu !== void 0) {
+              meta.menuConfig = this.fm.menu;
+            }
           }
         }
       }
@@ -29515,7 +30727,7 @@ var require_pagebuilder = __commonJS({
           this.fm = (0, frontmatter_1.newFrontMatter)();
           return;
         }
-        this.fm = await this.fmParser.parse();
+        this.fm = await this.fmParser.parse(this.urlSvc.baseUrl());
       }
       createShortcodeRenderer(p) {
         return async (shortcode) => {
@@ -29635,18 +30847,18 @@ var require_pagebuilder = __commonJS({
       async buildOutput(p) {
       }
       async newPage(source, content) {
-        const meta = new pagemeta_1.Meta("always", {}, 0, new Date());
+        const meta = new pagemeta_1.Meta(this.urlSvc.baseUrl(), "always", {}, 0, new Date());
         const layout = new pagelayout_1.Layout();
         return new page_1.PageImpl(source, content, meta, layout, "", (0, kind_1.getKindMain)("page"), this.pageMapper);
       }
       async newTaxonomy(source, content, singular) {
-        const meta = new pagemeta_1.Meta("always", {}, 0, new Date());
+        const meta = new pagemeta_1.Meta(this.urlSvc.baseUrl(), "always", {}, 0, new Date());
         const layout = new pagelayout_1.Layout();
         const page = new page_1.TaxonomyPageImpl(source, content, meta, layout, singular, singular, (0, kind_1.getKindMain)("taxonomy"), this.pageMapper);
         return page;
       }
       async newTerm(source, content, singular, term) {
-        const meta = new pagemeta_1.Meta("always", {}, 0, new Date());
+        const meta = new pagemeta_1.Meta(this.urlSvc.baseUrl(), "always", {}, 0, new Date());
         const layout = new pagelayout_1.Layout();
         const page = new page_1.TermPageImpl(source, content, meta, layout, singular, term, term, (0, kind_1.getKindMain)("term"), this.pageMapper);
         return page;
@@ -29713,6 +30925,8 @@ var require_taxonomy3 = __commonJS({
     var filepath = __importStar(require("path"));
     var Taxonomy = class {
       constructor(views, fsSvc) {
+        __publicField(this, "views");
+        __publicField(this, "fsSvc");
         this.views = views;
         this.fsSvc = fsSvc;
       }
@@ -29814,6 +31028,8 @@ var require_term = __commonJS({
     }
     var Term = class {
       constructor(fsSvc) {
+        __publicField(this, "terms");
+        __publicField(this, "fsSvc");
         this.terms = {};
         this.fsSvc = fsSvc;
       }
@@ -29927,7 +31143,7 @@ var require_content3 = __commonJS({
           __createBinding(exports3, m, p);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    __exportStar(require_type5(), exports2);
+    __exportStar(require_type4(), exports2);
     __exportStar(require_hub(), exports2);
     __exportStar(require_kind(), exports2);
     __exportStar(require_identity(), exports2);
@@ -29954,8 +31170,12 @@ var require_pager = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.SitePager = void 0;
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("site", { component: "pager" });
     var SitePager = class {
       constructor(page, pager) {
+        __publicField(this, "page");
+        __publicField(this, "pager");
         this.page = page;
         this.pager = pager;
       }
@@ -29970,6 +31190,9 @@ var require_pager = __commonJS({
       }
       pages() {
         return this.pager.pages();
+      }
+      allPages() {
+        return this.pager.allPages();
       }
       pagers() {
         return this.pager.pagers();
@@ -30034,6 +31257,10 @@ var require_pager = __commonJS({
         const contentPages = this.pages();
         return this.page.sitePages(contentPages);
       }
+      get AllPages() {
+        const allContentPages = this.pager.allPages();
+        return this.page.sitePages(allContentPages);
+      }
     };
     exports2.SitePager = SitePager;
   }
@@ -30054,9 +31281,14 @@ var require_page2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("site", { component: "page" });
     var Page = class {
       constructor(tmplSvc, langSvc, publisher, contentPage, site) {
-        this.pageOutput = null;
-        this.resources = [];
-        this._paginator = null;
+        __publicField(this, "tmplSvc");
+        __publicField(this, "langSvc");
+        __publicField(this, "publisher");
+        __publicField(this, "contentPage");
+        __publicField(this, "pageOutput", null);
+        __publicField(this, "site");
+        __publicField(this, "resources", []);
+        __publicField(this, "_paginator", null);
         this.tmplSvc = tmplSvc;
         this.langSvc = langSvc;
         this.publisher = publisher;
@@ -30101,7 +31333,6 @@ var require_page2 = __commonJS({
           let currentPager = current.next();
           while (currentPager) {
             this.setCurrent(currentPager);
-            await this.setupCurrentPaginator();
             const paginationTargets = [path_1.default.join(prefix, currentPager.url(), this.getPageOutput().targetFileBase())];
             await this.renderAndWritePage(tmpl, paginationTargets);
             currentPager = currentPager.next();
@@ -30126,7 +31357,8 @@ var require_page2 = __commonJS({
           } else {
             prefix = this.site.getLanguage().getCurrentLanguage();
           }
-          targetFilenames.push(path_1.default.join(prefix, pageSource.path()));
+          let resourcePath = pageSource.path();
+          targetFilenames.push(path_1.default.join(prefix, resourcePath));
           let stream = null;
           try {
             const opener = () => pageSource.pageFile().open();
@@ -30223,6 +31455,9 @@ var require_page2 = __commonJS({
       scratch() {
         return this.contentPage.scratch();
       }
+      get Scratch() {
+        return this.contentPage.scratch();
+      }
       IsAncestor(other) {
         return this.contentPage.isAncestor(other.contentPage);
       }
@@ -30244,11 +31479,23 @@ var require_page2 = __commonJS({
       get Content() {
         return this.getPageOutput().content();
       }
+      async Summary() {
+        return this.contentPage.output().summary();
+      }
+      async ReadingTime() {
+        return await this.getPageOutput().readingTime();
+      }
+      async WordCount() {
+        return await this.getPageOutput().wordCount();
+      }
       get Description() {
         return this.description();
       }
       get Date() {
         return this.pageDate();
+      }
+      get LocalDate() {
+        return this.pageDate().toLocaleDateString();
       }
       get RelPermalink() {
         let targetPath;
@@ -30276,6 +31523,9 @@ var require_page2 = __commonJS({
       isHome() {
         return this.contentPage.isHome();
       }
+      get IsHome() {
+        return this.isHome();
+      }
       isPage() {
         return this.contentPage.isPage();
       }
@@ -30301,6 +31551,9 @@ var require_page2 = __commonJS({
         return [this.contentPage.output()];
       }
       truncated() {
+        return this.contentPage.truncated();
+      }
+      get Truncated() {
         return this.contentPage.truncated();
       }
       parent() {
@@ -30348,6 +31601,9 @@ var require_page2 = __commonJS({
       params() {
         return this.contentPage.params ? this.contentPage.params() : {};
       }
+      pageBaseUrl() {
+        return this.contentPage.pageBaseUrl() ? this.contentPage.pageBaseUrl() : "";
+      }
       pageWeight() {
         return this.contentPage.pageWeight ? this.contentPage.pageWeight() : 0;
       }
@@ -30356,6 +31612,9 @@ var require_page2 = __commonJS({
       }
       publishDate() {
         return this.contentPage.publishDate ? this.contentPage.publishDate() : new Date();
+      }
+      get PublishDate() {
+        return this.publishDate();
       }
       async relatedKeywords(cfg) {
         return this.contentPage.relatedKeywords ? await this.contentPage.relatedKeywords(cfg) : [];
@@ -30369,6 +31628,15 @@ var require_page2 = __commonJS({
       noLink() {
         return this.contentPage.noLink ? this.contentPage.noLink() : false;
       }
+      organization() {
+        return this.contentPage.organization ? this.contentPage.organization() : void 0;
+      }
+      author() {
+        return this.contentPage.author ? this.contentPage.author() : void 0;
+      }
+      menu() {
+        return this.contentPage.menu ? this.contentPage.menu() : void 0;
+      }
       current() {
         return this.contentPage.current();
       }
@@ -30381,11 +31649,8 @@ var require_page2 = __commonJS({
       paginator() {
         return this.contentPage.paginator();
       }
-      async paginate(groups) {
-        return this.contentPage.paginate(groups);
-      }
-      async Summary() {
-        return this.contentPage.output().summary();
+      async paginate(groupsOrPages) {
+        return this.contentPage.paginate(groupsOrPages);
       }
       get Plain() {
         return this.rawContent();
@@ -30419,8 +31684,24 @@ var require_page2 = __commonJS({
         return this.isTranslated();
       }
       async Paginator() {
+        if (this._paginator) {
+          return this._paginator;
+        }
         await this.setupCurrentPaginator();
         return this._paginator;
+      }
+      async Paginate(pages) {
+        try {
+          const contentPages = pages.map((p) => p.contentPage);
+          const pager = await this.contentPage.paginate(contentPages);
+          if (pager) {
+            this._paginator = new pager_1.SitePager(this, pager);
+          }
+          return this._paginator;
+        } catch (error) {
+          log.error("Error during pagination:", error);
+          return null;
+        }
       }
       async setupCurrentPaginator() {
         try {
@@ -30501,6 +31782,17 @@ var require_page2 = __commonJS({
       get Kind() {
         return this.kind();
       }
+      get Type() {
+        if (this.kind() === "home") {
+          return "page";
+        } else if (this.kind() === "page") {
+          const section = this.section();
+          if (section && section.length > 0) {
+            return section;
+          }
+        }
+        return "page";
+      }
       get Parent() {
         return this.sitePage(this.contentPage.parent());
       }
@@ -30526,6 +31818,8 @@ var require_taxonomies_builder = __commonJS({
     var log = (0, log_1.getDomainLogger)("site", { component: "taxonomies-builder" });
     var WeightedPage = class {
       constructor(page, ordinalWeightPage) {
+        __publicField(this, "page");
+        __publicField(this, "ordinalWeightPage");
         this.page = page;
         this.ordinalWeightPage = ordinalWeightPage;
       }
@@ -30587,7 +31881,7 @@ var require_taxonomies_builder = __commonJS({
     exports2.WeightedPages = WeightedPages;
     var Taxonomy = class {
       constructor() {
-        this.terms = /* @__PURE__ */ new Map();
+        __publicField(this, "terms", /* @__PURE__ */ new Map());
       }
       get(term) {
         return this.terms.get(term);
@@ -30636,6 +31930,8 @@ var require_taxonomies_builder = __commonJS({
     exports2.Taxonomy = Taxonomy;
     var OrderedTaxonomyEntry = class {
       constructor(name, weightedPages) {
+        __publicField(this, "name");
+        __publicField(this, "weightedPages");
         this.name = name;
         this.weightedPages = weightedPages;
       }
@@ -30664,7 +31960,7 @@ var require_taxonomies_builder = __commonJS({
     exports2.OrderedTaxonomy = OrderedTaxonomy;
     var TaxonomyList = class {
       constructor() {
-        this.taxonomies = /* @__PURE__ */ new Map();
+        __publicField(this, "taxonomies", /* @__PURE__ */ new Map());
       }
       get(taxonomyName) {
         return this.taxonomies.get(taxonomyName);
@@ -30694,6 +31990,7 @@ var require_taxonomies_builder = __commonJS({
     exports2.TaxonomyList = TaxonomyList;
     var TaxonomiesBuilder = class {
       constructor(contentService) {
+        __publicField(this, "contentService");
         this.contentService = contentService;
       }
       async buildTaxonomiesForLanguage(langIndex, site) {
@@ -30719,6 +32016,136 @@ var require_taxonomies_builder = __commonJS({
       }
     };
     exports2.TaxonomiesBuilder = TaxonomiesBuilder;
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/menu.js
+var require_menu = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/menu.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Menus = exports2.Menu = void 0;
+    exports2.newEmptyMenus = newEmptyMenus;
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("site", { component: "menu" });
+    var Menu = class {
+      constructor(options) {
+        __publicField(this, "_title");
+        __publicField(this, "_url");
+        __publicField(this, "_children");
+        __publicField(this, "_weight");
+        __publicField(this, "_identifier");
+        this._title = options.title;
+        this._url = options.url;
+        this._children = options.children || [];
+        this._weight = options.weight || 0;
+        this._identifier = options.identifier || this._url;
+      }
+      title() {
+        return this._title;
+      }
+      get Title() {
+        return this.title();
+      }
+      url() {
+        return this._url;
+      }
+      get URL() {
+        return this.url();
+      }
+      children() {
+        return [...this._children];
+      }
+      get Children() {
+        return this.children();
+      }
+      weight() {
+        return this._weight;
+      }
+      identifier() {
+        return this._identifier;
+      }
+      hasChildren() {
+        return this._children.length > 0;
+      }
+      get HasChildren() {
+        return this.hasChildren();
+      }
+      addChild(child) {
+        const newChildren = [...this._children, child];
+        return new Menu({
+          title: this._title,
+          url: this._url,
+          children: newChildren,
+          weight: this._weight,
+          identifier: this._identifier
+        });
+      }
+      toJSON() {
+        return {
+          title: this._title,
+          url: this._url,
+          weight: this._weight,
+          children: this._children.map((child) => child.toJSON())
+        };
+      }
+      withChildren(children2) {
+        return new Menu({
+          title: this._title,
+          url: this._url,
+          children: children2,
+          weight: this._weight,
+          identifier: this._identifier
+        });
+      }
+    };
+    exports2.Menu = Menu;
+    var Menus = class {
+      constructor(options = {}) {
+        __publicField(this, "_nav");
+        __publicField(this, "_footer");
+        this._nav = options.nav ? this.sortMenus([...options.nav]) : [];
+        this._footer = options.footer ? this.sortMenus([...options.footer]) : [];
+      }
+      nav() {
+        return [...this._nav];
+      }
+      get Nav() {
+        return this.nav();
+      }
+      footer() {
+        return [...this._footer];
+      }
+      get Footer() {
+        return this.footer();
+      }
+      sortMenus(menus) {
+        return menus.sort((a, b) => {
+          if (a.weight() !== b.weight()) {
+            if (b.weight() === 0)
+              return -1;
+            if (a.weight() === 0)
+              return 1;
+            return a.weight() - b.weight();
+          }
+          const titleComparison = a.title().localeCompare(b.title());
+          if (titleComparison !== 0) {
+            return titleComparison;
+          }
+          return a.identifier().localeCompare(b.identifier());
+        });
+      }
+      toJSON() {
+        return {
+          nav: this._nav.map((menu) => menu.toJSON()),
+          footer: this._footer.map((menu) => menu.toJSON())
+        };
+      }
+    };
+    exports2.Menus = Menus;
+    function newEmptyMenus() {
+      return new Menus({});
+    }
   }
 });
 
@@ -30775,10 +32202,48 @@ var require_site = __commonJS({
     var page_1 = require_page2();
     var log_1 = require_log();
     var taxonomies_builder_1 = require_taxonomies_builder();
+    var menu_1 = require_menu();
     var log = (0, log_1.getDomainLogger)("site", { component: "site" });
     var Site3 = class {
+      constructor(configSvc, contentSvc, translationSvc, languageSvc, sitemap, staticCopySvc, publisher, author, organization, compiler, url, ref, language, navigation, title) {
+        __publicField(this, "configSvc");
+        __publicField(this, "contentSvc");
+        __publicField(this, "translationSvc");
+        __publicField(this, "languageSvc");
+        __publicField(this, "sitemap");
+        __publicField(this, "staticCopySvc");
+        __publicField(this, "publisher");
+        __publicField(this, "template", null);
+        __publicField(this, "author");
+        __publicField(this, "organization");
+        __publicField(this, "compiler");
+        __publicField(this, "url");
+        __publicField(this, "ref", null);
+        __publicField(this, "language");
+        __publicField(this, "navigation", null);
+        __publicField(this, "title");
+        __publicField(this, "home", null);
+        this.configSvc = configSvc;
+        this.contentSvc = contentSvc;
+        this.translationSvc = translationSvc;
+        this.languageSvc = languageSvc;
+        this.sitemap = sitemap;
+        this.staticCopySvc = staticCopySvc;
+        this.publisher = publisher;
+        this.author = author;
+        this.organization = organization;
+        this.compiler = compiler;
+        this.url = url;
+        this.ref = ref;
+        this.language = language;
+        this.navigation = navigation;
+        this.title = title;
+      }
       get Title() {
         return this.title;
+      }
+      get Compiler() {
+        return this.compiler;
       }
       get IsGoogleAnalyticsEnabled() {
         return this.configSvc.isGoogleAnalyticsEnabled();
@@ -30801,32 +32266,23 @@ var require_site = __commonJS({
       get IsXDisableInlineCSS() {
         return this.configSvc.isXDisableInlineCSS();
       }
+      get ConfiguredSocialPlatforms() {
+        return this.configSvc.getConfiguredSocialPlatforms();
+      }
+      GetSocialLink(platformId) {
+        return this.configSvc.getSocialLink(platformId);
+      }
+      GetSocialTitle(platformId) {
+        return this.configSvc.getSocialTitle(platformId);
+      }
       async Pages() {
         const langIndex = this.languageSvc.getLanguageIndex(this.language.getCurrentLanguage());
         const cps = await this.contentSvc.globalPages(langIndex);
         return this.sitePages(cps);
       }
-      get RegularPages() {
-        const cps = this.contentSvc.globalRegularPages();
+      async RegularPages() {
+        const cps = await this.contentSvc.globalRegularPages();
         return this.sitePages(cps);
-      }
-      constructor(configSvc, contentSvc, translationSvc, languageSvc, sitemap, staticCopySvc, publisher, author, compiler, url, ref, language, navigation, title) {
-        this.template = null;
-        this.home = null;
-        this.configSvc = configSvc;
-        this.contentSvc = contentSvc;
-        this.translationSvc = translationSvc;
-        this.languageSvc = languageSvc;
-        this.sitemap = sitemap;
-        this.staticCopySvc = staticCopySvc;
-        this.publisher = publisher;
-        this.author = author;
-        this.compiler = compiler;
-        this.url = url;
-        this.ref = ref;
-        this.language = language;
-        this.navigation = navigation;
-        this.title = title;
       }
       async build(template) {
         try {
@@ -30870,6 +32326,13 @@ var require_site = __commonJS({
           throw error;
         }
       }
+      async renderAllLanguages() {
+        const languageKeys = this.languageSvc.languageKeys();
+        for (const lang of languageKeys) {
+          this.language.setCurrentLanguage(lang);
+          await this.render();
+        }
+      }
       async render() {
         try {
           await this.renderPages();
@@ -30889,7 +32352,6 @@ var require_site = __commonJS({
         const pages = [];
         let pageCount = 0;
         await this.contentSvc.walkPages(langIndex, async (page) => {
-          log.debug("--- Processing page:", page.file().filename(), page.pageIdentity().pageLanguage());
           const sitePage = await this.sitePage(page);
           pages.push(sitePage);
           pageCount++;
@@ -30946,9 +32408,15 @@ var require_site = __commonJS({
         return this.configSvc.configParams();
       }
       get Taxonomies() {
+        if (!this.navigation) {
+          return new taxonomies_builder_1.TaxonomyList();
+        }
         return this.navigation.getTaxonomies(this.language.getCurrentLanguage()) || new taxonomies_builder_1.TaxonomyList();
       }
       get Menus() {
+        if (!this.navigation) {
+          return new menu_1.Menus();
+        }
         return this.navigation.getMenus(this.language.getCurrentLanguage());
       }
       getTitle() {
@@ -30969,10 +32437,16 @@ var require_site = __commonJS({
       baseURL() {
         return this.url.base;
       }
+      get BaseURL() {
+        return this.baseURL();
+      }
       getURL() {
         return this.url;
       }
       getRef() {
+        if (!this.ref) {
+          return {};
+        }
         return this.ref;
       }
       getLanguage() {
@@ -30988,6 +32462,9 @@ var require_site = __commonJS({
         return this.language.languages();
       }
       getNavigation() {
+        if (!this.navigation) {
+          return {};
+        }
         return this.navigation;
       }
       getPublisher() {
@@ -30996,8 +32473,11 @@ var require_site = __commonJS({
       getTemplate() {
         return this.template;
       }
-      getAuthor() {
-        return this.author;
+      get Author() {
+        return this.author.author(this.home?.author());
+      }
+      get Organization() {
+        return this.organization.organization(this.home?.organization());
       }
       getCompiler() {
         return this.compiler;
@@ -31039,8 +32519,10 @@ var require_site = __commonJS({
       async generateNavigations() {
         const lang = this.language.getCurrentLanguage();
         const langIndex = this.languageSvc.getLanguageIndex(lang);
-        await this.navigation.generateMenusForLanguage(lang, langIndex);
-        await this.navigation.generateTaxonomiesForLanguage(lang, langIndex, this);
+        if (this.navigation) {
+          await this.navigation.generateMenusForLanguage(lang, langIndex);
+          await this.navigation.generateTaxonomiesForLanguage(lang, langIndex, this);
+        }
       }
       GetPage(...ref) {
         if (ref.length > 1) {
@@ -31093,8 +32575,11 @@ var require_publisher = __commonJS({
     exports2.Publisher = void 0;
     exports2.openFileForWriting = openFileForWriting;
     var path_1 = __importDefault(require("path"));
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("site", { component: "publisher" });
     var Publisher = class {
       constructor(fs5) {
+        __publicField(this, "fs");
         this.fs = fs5;
       }
       async publishSource(src, ...filenames) {
@@ -31150,6 +32635,7 @@ var require_publisher = __commonJS({
     exports2.Publisher = Publisher;
     var MultiWriter = class {
       constructor(files) {
+        __publicField(this, "files");
         this.files = files;
       }
       async write(data) {
@@ -31188,6 +32674,13 @@ var require_baseurl = __commonJS({
     exports2.BaseURL = void 0;
     var BaseURL = class {
       constructor(url, isRelative = false) {
+        __publicField(this, "url");
+        __publicField(this, "withPath");
+        __publicField(this, "withPathNoTrailingSlash");
+        __publicField(this, "withoutPath");
+        __publicField(this, "basePath");
+        __publicField(this, "basePathNoTrailingSlash");
+        __publicField(this, "isRelative");
         this.url = url;
         this.isRelative = isRelative;
         this.withPath = url.toString();
@@ -31347,7 +32840,9 @@ var require_url = __commonJS({
     var text_1 = require_text();
     var URL2 = class {
       constructor(base, canonical = false) {
-        this.baseURL = null;
+        __publicField(this, "base");
+        __publicField(this, "canonical");
+        __publicField(this, "baseURL", null);
         this.base = base;
         this.canonical = canonical;
         this.setup();
@@ -31363,8 +32858,8 @@ var require_url = __commonJS({
         if (input.startsWith("http://") || input.startsWith("https://")) {
           return [true, null];
         }
-        const isAbsolute = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(input);
-        return [isAbsolute, null];
+        const isAbsolute2 = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(input);
+        return [isAbsolute2, null];
       }
       startWithBaseUrlRoot(input) {
         if (!this.baseURL)
@@ -31408,6 +32903,9 @@ var require_url = __commonJS({
       }
       relURL(input) {
         if (!input) {
+          if (this.baseURL) {
+            return this.baseURL.basePath;
+          }
           return "";
         }
         const [isAbs, err] = this.isAbsURL(input);
@@ -31523,6 +33021,9 @@ var require_ref = __commonJS({
     var log = (0, log_1.getDomainLogger)("site", { component: "ref" });
     var Ref = class {
       constructor(site, contentSvc, notFoundURL = "#ZgotmplZ") {
+        __publicField(this, "site");
+        __publicField(this, "contentSvc");
+        __publicField(this, "notFoundURL");
         this.site = site;
         this.contentSvc = contentSvc;
         this.notFoundURL = notFoundURL;
@@ -31616,8 +33117,11 @@ var require_language3 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.Language = void 0;
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("site", { component: "language" });
     var CollatorWrapper = class {
       constructor(collator) {
+        __publicField(this, "collator");
         this.collator = collator;
       }
       compare(a, b) {
@@ -31626,7 +33130,10 @@ var require_language3 = __commonJS({
     };
     var Language = class {
       constructor(langSvc) {
-        this.collator = null;
+        __publicField(this, "langSvc");
+        __publicField(this, "currentLocation");
+        __publicField(this, "currentLanguage");
+        __publicField(this, "collator", null);
         this.langSvc = langSvc;
         this.currentLocation = "UTC";
         this.currentLanguage = "";
@@ -31730,6 +33237,9 @@ var require_author = __commonJS({
     exports2.newAuthor = newAuthor;
     var Author = class {
       constructor(name, email) {
+        __publicField(this, "_name");
+        __publicField(this, "_email");
+        __publicField(this, "_homeAuthor");
         this._name = name;
         this._email = email;
       }
@@ -31739,10 +33249,131 @@ var require_author = __commonJS({
       email() {
         return this._email;
       }
+      author(author) {
+        this._homeAuthor = author;
+        return this;
+      }
+      get Name() {
+        return this._homeAuthor?.name || this.name();
+      }
+      get Description() {
+        return this._homeAuthor?.description || "";
+      }
+      get Avatar() {
+        return this._homeAuthor?.avatar || "";
+      }
+      get Twitter() {
+        return this._homeAuthor?.social?.twitter || "";
+      }
+      get Socials() {
+        const socials = [];
+        if (!this._homeAuthor?.social) {
+          return socials;
+        }
+        for (const [key, value2] of Object.entries(this._homeAuthor.social)) {
+          if (value2) {
+            socials.push({
+              ID: key,
+              Link: value2
+            });
+          }
+        }
+        return socials;
+      }
     };
     exports2.Author = Author;
     function newAuthor(name, email) {
       return new Author(name, email);
+    }
+  }
+});
+
+// node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/organization.js
+var require_organization = __commonJS({
+  "node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/organization.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.Organization = void 0;
+    exports2.newOrganization = newOrganization;
+    var log_1 = require_log();
+    var log = (0, log_1.getDomainLogger)("site", { component: "organization" });
+    var Organization = class {
+      constructor() {
+        __publicField(this, "_name");
+        __publicField(this, "_description");
+        __publicField(this, "_website");
+        __publicField(this, "_logo");
+        __publicField(this, "_email");
+        __publicField(this, "_address");
+        __publicField(this, "_vision");
+        __publicField(this, "_homeOrganization");
+        this._name = "MDFriday";
+        this._description = "Turn markdown to website, in minutes.";
+        this._website = "https://mdfriday.com";
+        this._logo = "https://gohugo.net/mdfriday.svg";
+        this._email = "support@mdfriday.com";
+        this._address = "Cang long Street, Wuhan, China";
+        this._vision = "Make site generation easy and accessible for everyone.";
+      }
+      name() {
+        return this._name;
+      }
+      description() {
+        return this._description;
+      }
+      website() {
+        return this._website;
+      }
+      organization(organization) {
+        this._homeOrganization = organization;
+        return this;
+      }
+      get Name() {
+        return this._homeOrganization?.name || this.name();
+      }
+      get Description() {
+        return this._homeOrganization?.description || this.description();
+      }
+      get Website() {
+        return this._homeOrganization?.website || this.website();
+      }
+      get Vision() {
+        return this._homeOrganization?.vision || this._vision;
+      }
+      get Logo() {
+        return this._homeOrganization?.logo || this._logo;
+      }
+      get Address() {
+        return this._homeOrganization?.contact?.address || this._address;
+      }
+      get Email() {
+        return this._homeOrganization?.contact?.email || this._email;
+      }
+      get Social() {
+        return this._homeOrganization?.social;
+      }
+      SocialById(id) {
+        return this._homeOrganization?.social?.[id] || "";
+      }
+      get Socials() {
+        const socials = [];
+        if (!this._homeOrganization?.social) {
+          return socials;
+        }
+        for (const [key, value2] of Object.entries(this._homeOrganization.social)) {
+          if (value2) {
+            socials.push({
+              ID: key,
+              Link: value2
+            });
+          }
+        }
+        return socials;
+      }
+    };
+    exports2.Organization = Organization;
+    function newOrganization() {
+      return new Organization();
     }
   }
 });
@@ -31756,6 +33387,7 @@ var require_version = __commonJS({
     exports2.newVersion = newVersion;
     var Compiler = class {
       constructor(version) {
+        __publicField(this, "ver");
         this.ver = version;
       }
       version() {
@@ -31772,208 +33404,6 @@ var require_version = __commonJS({
   }
 });
 
-// node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/menu.js
-var require_menu = __commonJS({
-  "node_modules/@mdfriday/foundry/dist/internal/domain/site/valueobject/menu.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.MENUS_BEFORE = exports2.MENUS_AFTER = exports2.Menus = exports2.Menu = exports2.MenuEntry = void 0;
-    exports2.newEmptyMenus = newEmptyMenus;
-    var log_1 = require_log();
-    var log = (0, log_1.getDomainLogger)("site", { component: "menu" });
-    var MenuEntry = class {
-      constructor(options) {
-        this._title = options.title;
-        this._url = options.url;
-        this._isDir = options.isDir;
-        this._hasIndex = options.hasIndex;
-        this._children = options.children || [];
-        this._weight = options.weight || 0;
-        this._identifier = options.identifier || this._url;
-      }
-      title() {
-        return this._title;
-      }
-      url() {
-        return this._url;
-      }
-      isDirectory() {
-        return this._isDir;
-      }
-      hasIndex() {
-        return this._hasIndex;
-      }
-      children() {
-        return [...this._children];
-      }
-      weight() {
-        return this._weight;
-      }
-      identifier() {
-        return this._identifier;
-      }
-      hasChildren() {
-        return this._children.length > 0;
-      }
-      addChild(child) {
-        const newChildren = [...this._children, child];
-        return new MenuEntry({
-          title: this._title,
-          url: this._url,
-          isDir: this._isDir,
-          hasIndex: this._hasIndex,
-          children: newChildren,
-          weight: this._weight,
-          identifier: this._identifier
-        });
-      }
-      toJSON() {
-        return {
-          title: this._title,
-          url: this._url,
-          isDir: this._isDir,
-          hasIndex: this._hasIndex,
-          children: this._children.map((child) => child.toJSON())
-        };
-      }
-      withChildren(children2) {
-        return new MenuEntry({
-          title: this._title,
-          url: this._url,
-          isDir: this._isDir,
-          hasIndex: this._hasIndex,
-          children: children2,
-          weight: this._weight,
-          identifier: this._identifier
-        });
-      }
-    };
-    exports2.MenuEntry = MenuEntry;
-    var Menu = class {
-      constructor(entries = []) {
-        this._entries = [...entries];
-      }
-      entries() {
-        return [...this._entries];
-      }
-      get(index) {
-        return this._entries[index];
-      }
-      get length() {
-        return this._entries.length;
-      }
-      add(entry) {
-        const newEntries = [...this._entries, entry];
-        return new Menu(newEntries).sortMenu();
-      }
-      sortMenu() {
-        const sorted = [...this._entries].sort((a, b) => {
-          if (a.weight() !== b.weight()) {
-            if (b.weight() === 0)
-              return -1;
-            if (a.weight() === 0)
-              return 1;
-            return a.weight() - b.weight();
-          }
-          const titleComparison = a.title().localeCompare(b.title());
-          if (titleComparison !== 0) {
-            return titleComparison;
-          }
-          return a.identifier().localeCompare(b.identifier());
-        });
-        return new Menu(sorted);
-      }
-      filterMenu(predicate) {
-        const filtered = this._entries.filter(predicate);
-        return new Menu(filtered);
-      }
-      findByIdentifier(identifier) {
-        return this._entries.find((entry) => entry.identifier() === identifier);
-      }
-      findByUrl(url) {
-        return this._entries.find((entry) => entry.url() === url);
-      }
-      getLeaves() {
-        return this.filterMenu((entry) => !entry.hasChildren());
-      }
-      getBranches() {
-        return this.filterMenu((entry) => entry.hasChildren());
-      }
-      toJSON() {
-        return this._entries.map((entry) => entry.toJSON());
-      }
-      [Symbol.iterator]() {
-        return this._entries[Symbol.iterator]();
-      }
-      map(callback) {
-        return this._entries.map(callback);
-      }
-      forEach(callback) {
-        this._entries.forEach(callback);
-      }
-    };
-    exports2.Menu = Menu;
-    var Menus = class {
-      constructor(menus = /* @__PURE__ */ new Map()) {
-        this._menus = new Map(menus);
-      }
-      get(name) {
-        return this._menus.get(name);
-      }
-      set(name, menu) {
-        const newMenus = new Map(this._menus);
-        newMenus.set(name, menu);
-        return new Menus(newMenus);
-      }
-      names() {
-        return Array.from(this._menus.keys());
-      }
-      has(name) {
-        return this._menus.has(name);
-      }
-      hasSubMenu(entry) {
-        const menu = this._menus.get(entry.title());
-        if (!menu)
-          return false;
-        if (menu.length === 1 && menu.get(0)?.title() === entry.title()) {
-          return false;
-        }
-        return menu.length > 1;
-      }
-      entries() {
-        return Array.from(this._menus.entries());
-      }
-      toJSON() {
-        const result = {};
-        for (const [name, menu] of this._menus.entries()) {
-          result[name] = menu.toJSON();
-        }
-        return result;
-      }
-      merge(other) {
-        const newMenus = new Map(this._menus);
-        for (const [name, menu] of other._menus.entries()) {
-          if (newMenus.has(name)) {
-            const existingMenu = newMenus.get(name);
-            const mergedEntries = [...existingMenu.entries(), ...menu.entries()];
-            const mergedMenu = new Menu(mergedEntries).sortMenu();
-            newMenus.set(name, mergedMenu);
-          } else {
-            newMenus.set(name, menu);
-          }
-        }
-        return new Menus(newMenus);
-      }
-    };
-    exports2.Menus = Menus;
-    function newEmptyMenus() {
-      return new Menus();
-    }
-    exports2.MENUS_AFTER = "after";
-    exports2.MENUS_BEFORE = "before";
-  }
-});
-
 // node_modules/@mdfriday/foundry/dist/internal/domain/site/entity/navigation.js
 var require_navigation = __commonJS({
   "node_modules/@mdfriday/foundry/dist/internal/domain/site/entity/navigation.js"(exports2) {
@@ -31986,10 +33416,12 @@ var require_navigation = __commonJS({
     var log = (0, log_1.getDomainLogger)("site", { component: "navigation" });
     var Navigation = class {
       constructor(langSvc) {
-        this.taxonomiesBuilder = null;
-        this.taxonomiesCache = /* @__PURE__ */ new Map();
-        this.menuBuilder = null;
-        this.menuCache = /* @__PURE__ */ new Map();
+        __publicField(this, "taxonomies");
+        __publicField(this, "taxonomiesBuilder", null);
+        __publicField(this, "taxonomiesCache", /* @__PURE__ */ new Map());
+        __publicField(this, "menus");
+        __publicField(this, "menuBuilder", null);
+        __publicField(this, "menuCache", /* @__PURE__ */ new Map());
         this.taxonomies = /* @__PURE__ */ new Map();
         this.menus = /* @__PURE__ */ new Map();
         for (const lang of langSvc.languageKeys()) {
@@ -32063,8 +33495,11 @@ var require_menu_builder = __commonJS({
     var menu_1 = require_menu();
     var log = (0, log_1.getDomainLogger)("site", { component: "menu-builder" });
     var MenuBuilder = class {
-      constructor(contentService) {
+      constructor(contentService, site) {
+        __publicField(this, "contentService");
+        __publicField(this, "site");
         this.contentService = contentService;
+        this.site = site;
       }
       async buildMenusForLanguage(langIndex) {
         const menuMap = /* @__PURE__ */ new Map();
@@ -32075,113 +33510,237 @@ var require_menu_builder = __commonJS({
       }
       async processPage(page, menuMap) {
         try {
-          const pagePath = page.path();
-          const urlPath = pagePath;
-          if (!this.isValidMenuPath(pagePath)) {
+          const menu = page.menu();
+          if (!menu) {
             return;
           }
-          const pathParts = this.parsePathParts(pagePath);
-          if (pathParts.length === 0) {
-            return;
+          const pageUrl = await this.generatePageUrl(page);
+          for (const [menuName, menuSection] of Object.entries(menu)) {
+            await this.processMenuSection(menuName, menuSection, pageUrl, page, menuMap);
           }
-          this.buildMenuStructure(pathParts, urlPath, page, menuMap);
         } catch (error) {
           log.error(`Error processing page for menu: ${error}`);
         }
       }
-      isValidMenuPath(path6) {
-        if (path6.startsWith(".") || path6.includes("/.")) {
-          return false;
+      async processMenuSection(menuName, menuSection, pageUrl, page, menuMap) {
+        if (menuSection === false || Array.isArray(menuSection) && menuSection.length === 0) {
+          return;
         }
-        return path6.endsWith(".md") || !path6.includes(".");
+        if (Array.isArray(menuSection)) {
+          await this.processMenuItems(menuName, menuSection, pageUrl, page, menuMap);
+        } else if (menuSection && typeof menuSection === "object") {
+          let subsectionIndex = 0;
+          for (const [subsectionName, subsectionItems] of Object.entries(menuSection)) {
+            if (subsectionItems === false || Array.isArray(subsectionItems) && subsectionItems.length === 0) {
+              continue;
+            }
+            if (Array.isArray(subsectionItems)) {
+              const fullMenuName = `${menuName}.${subsectionName}`;
+              await this.processMenuItems(fullMenuName, subsectionItems, pageUrl, page, menuMap);
+              if (menuName === "footer") {
+                const subsectionKey = `${fullMenuName}::__subsection__`;
+                if (!menuMap.has(subsectionKey)) {
+                  menuMap.set(subsectionKey, {
+                    title: subsectionName,
+                    url: "",
+                    children: /* @__PURE__ */ new Map(),
+                    weight: 1e3,
+                    level: 0,
+                    menuName: fullMenuName,
+                    order: subsectionIndex
+                  });
+                }
+              }
+              subsectionIndex++;
+            }
+          }
+        }
       }
-      parsePathParts(path6) {
-        let cleanPath = path6.replace(/^\/+/, "").replace(/\.md$/, "");
-        const parts = cleanPath.split("/").filter((part) => part.length > 0);
-        return parts;
-      }
-      buildMenuStructure(pathParts, urlPath, page, menuMap) {
-        for (let i = 0; i < pathParts.length; i++) {
-          const currentPath = pathParts.slice(0, i + 1).join("/");
-          const isLeaf = i === pathParts.length - 1;
-          const isIndex = pathParts[i] === "index" || pathParts[i] === "_index";
-          let menuStructure = menuMap.get(currentPath);
+      async processMenuItems(menuName, menuItems, pageUrl, page, menuMap) {
+        for (let index = 0; index < menuItems.length; index++) {
+          const item = menuItems[index];
+          if (!item || typeof item !== "object")
+            continue;
+          if (!item.title || typeof item.title !== "string")
+            continue;
+          let itemUrl = item.url || "";
+          if (itemUrl === "") {
+            itemUrl = pageUrl;
+          } else {
+            itemUrl = await this.processMenuItemUrl(itemUrl);
+          }
+          const weight = typeof item.weight === "number" ? item.weight : 1e3;
+          const menuKey = `${menuName}::${item.title}`;
+          let menuStructure = menuMap.get(menuKey);
           if (!menuStructure) {
             menuStructure = {
-              title: this.formatTitle(pathParts[i]),
-              url: this.buildUrl(pathParts.slice(0, i + 1)),
-              isDir: !isLeaf || isIndex,
-              hasIndex: isIndex && pathParts[i] === "index",
+              title: item.title,
+              url: itemUrl,
               children: /* @__PURE__ */ new Map(),
-              weight: this.calculateWeight(pathParts[i]),
-              level: i
+              weight,
+              level: 0,
+              menuName: menuName || void 0,
+              order: index
             };
-            menuMap.set(currentPath, menuStructure);
-          }
-          if (isLeaf) {
-            menuStructure.url = urlPath;
-            if (pathParts[i] === "index") {
-              menuStructure.hasIndex = true;
-              menuStructure.isDir = false;
+            menuMap.set(menuKey, menuStructure);
+          } else {
+            if (weight < menuStructure.weight) {
+              menuStructure.weight = weight;
+              menuStructure.url = itemUrl;
             }
           }
-          if (i > 0) {
-            const parentPath = pathParts.slice(0, i).join("/");
-            const parentStructure = menuMap.get(parentPath);
-            if (parentStructure) {
-              parentStructure.children.set(currentPath, menuStructure);
-              parentStructure.isDir = true;
-            }
+          if (Array.isArray(item.children)) {
+            await this.processChildrenItems(menuKey, item.children, pageUrl, page, menuMap, menuStructure);
           }
         }
       }
-      formatTitle(name) {
-        if (name === "index" || name === "_index") {
-          return name;
+      async processChildrenItems(parentKey, children2, pageUrl, page, menuMap, parentStructure) {
+        for (let childIndex = 0; childIndex < children2.length; childIndex++) {
+          const child = children2[childIndex];
+          if (!child || typeof child !== "object")
+            continue;
+          if (!child.title || typeof child.title !== "string")
+            continue;
+          let childUrl = child.url || "";
+          if (childUrl === "") {
+            childUrl = pageUrl;
+          } else {
+            childUrl = await this.processMenuItemUrl(childUrl);
+          }
+          const weight = typeof child.weight === "number" ? child.weight : 1e3;
+          const childKey = `${parentKey}::${child.title}`;
+          const childStructure = {
+            title: child.title,
+            url: childUrl,
+            children: /* @__PURE__ */ new Map(),
+            weight,
+            level: parentStructure.level + 1,
+            menuName: parentStructure.menuName || void 0,
+            order: childIndex
+          };
+          menuMap.set(childKey, childStructure);
+          parentStructure.children.set(childKey, childStructure);
+          if (Array.isArray(child.children)) {
+            await this.processChildrenItems(childKey, child.children, pageUrl, page, menuMap, childStructure);
+          }
         }
-        return name.replace(/[-_]/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
       }
-      buildUrl(pathParts) {
-        return "/" + pathParts.join("/") + "/";
+      async generatePageUrl(page) {
+        try {
+          const sitePage = await this.site.sitePage(page);
+          return sitePage.RelPermalink;
+        } catch (error) {
+          log.error(`Error generating page URL for ${page.path()}: ${error}`);
+          return this.fallbackUrlFromPath(page.path());
+        }
       }
-      calculateWeight(name) {
-        if (name === "index")
-          return 0;
-        if (name === "_index")
-          return 1;
-        return name.charCodeAt(0);
+      async processMenuItemUrl(url) {
+        try {
+          return this.site.getURL().relURL(url);
+        } catch (error) {
+          log.error(`Error processing menu item URL ${url}: ${error}`);
+          return url;
+        }
+      }
+      fallbackUrlFromPath(path6) {
+        let url = path6.replace(/\.md$/, "");
+        if (!url.startsWith("/")) {
+          url = "/" + url;
+        }
+        if (!url.endsWith("/") && !url.includes(".")) {
+          url = url + "/";
+        }
+        return url;
       }
       convertToMenus(menuMap) {
-        const menus = /* @__PURE__ */ new Map();
-        const rootEntries = [];
-        for (const [path6, structure] of menuMap.entries()) {
+        const menuGroups = /* @__PURE__ */ new Map();
+        for (const [key, structure] of menuMap.entries()) {
+          if (key.includes("::__subsection__")) {
+            continue;
+          }
           if (structure.level === 0) {
-            rootEntries.push(structure);
+            const menuName = structure.menuName || "main";
+            if (!menuGroups.has(menuName)) {
+              menuGroups.set(menuName, []);
+            }
+            menuGroups.get(menuName).push(structure);
           }
         }
-        if (rootEntries.length > 0) {
-          const mainMenu = this.buildMenuFromStructures(rootEntries, menuMap);
-          menus.set("main", mainMenu);
+        const navItems = this.buildMenuItems(menuGroups.get("nav") || [], menuMap);
+        const footerItems = [];
+        const footerSubMenus = /* @__PURE__ */ new Map();
+        const footerSubMenuOrder = /* @__PURE__ */ new Map();
+        for (const [menuName, structures] of menuGroups.entries()) {
+          if (menuName.startsWith("footer.")) {
+            const subsectionName = menuName.substring("footer.".length);
+            const items = this.buildMenuItems(structures, menuMap, false);
+            footerSubMenus.set(subsectionName, items);
+            const subsectionKey = `${menuName}::__subsection__`;
+            const placeholderStructure = menuMap.get(subsectionKey);
+            if (placeholderStructure) {
+              footerSubMenuOrder.set(subsectionName, placeholderStructure.order);
+            }
+          }
         }
-        return new menu_1.Menus(menus);
+        const sortedFooterSubMenus = Array.from(footerSubMenus.entries()).sort((a, b) => {
+          const orderA = footerSubMenuOrder.get(a[0]) || 0;
+          const orderB = footerSubMenuOrder.get(b[0]) || 0;
+          return orderA - orderB;
+        });
+        for (let i = 0; i < sortedFooterSubMenus.length; i++) {
+          const [subsectionName, items] = sortedFooterSubMenus[i];
+          if (items.length > 0) {
+            const topLevelMenu = new menu_1.Menu({
+              title: this.capitalizeFirstLetter(subsectionName),
+              url: "",
+              children: items,
+              weight: i + 1,
+              identifier: `footer-${subsectionName}`
+            });
+            footerItems.push(topLevelMenu);
+          }
+        }
+        const options = {};
+        if (navItems.length > 0) {
+          options.nav = navItems;
+        }
+        if (footerItems.length > 0) {
+          options.footer = footerItems;
+        }
+        return new menu_1.Menus(options);
       }
-      buildMenuFromStructures(structures, menuMap) {
-        const entries = [];
+      capitalizeFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+      buildMenuItems(structures, menuMap, shouldSort = true) {
+        const items = [];
         for (const structure of structures) {
           const childStructures = Array.from(structure.children.values());
-          const children2 = childStructures.length > 0 ? this.buildMenuFromStructures(childStructures, menuMap).entries() : [];
-          const entry = new menu_1.MenuEntry({
+          const children2 = childStructures.length > 0 ? this.buildMenuItems(childStructures, menuMap, shouldSort) : [];
+          const item = new menu_1.Menu({
             title: structure.title,
             url: structure.url,
-            isDir: structure.isDir,
-            hasIndex: structure.hasIndex,
             children: children2,
             weight: structure.weight,
             identifier: structure.url
           });
-          entries.push(entry);
+          items.push(item);
         }
-        return new menu_1.Menu(entries).sortMenu();
+        if (shouldSort) {
+          return items.sort((a, b) => {
+            if (a.weight() !== b.weight()) {
+              return a.weight() - b.weight();
+            }
+            return a.title().localeCompare(b.title());
+          });
+        }
+        return items.sort((a, b) => {
+          const structureA = structures.find((s) => s.title === a.title());
+          const structureB = structures.find((s) => s.title === b.title());
+          const orderA = structureA?.order || 0;
+          const orderB = structureB?.order || 0;
+          return orderA - orderB;
+        });
       }
     };
     exports2.MenuBuilder = MenuBuilder;
@@ -32201,14 +33760,18 @@ var require_navigation_factory = __commonJS({
     var log_1 = require_log();
     var log = (0, log_1.getDomainLogger)("site", { component: "navigation-factory" });
     var NavigationFactory = class {
-      constructor(langService, contentService) {
+      constructor(langService, contentService, site) {
+        __publicField(this, "langService");
+        __publicField(this, "contentService");
+        __publicField(this, "site");
         this.langService = langService;
         this.contentService = contentService;
+        this.site = site;
       }
       createNavigation() {
         try {
           const navigation = (0, navigation_1.newNavigation)(this.langService);
-          const menuBuilder = new menu_builder_1.MenuBuilder(this.contentService);
+          const menuBuilder = new menu_builder_1.MenuBuilder(this.contentService, this.site);
           navigation.setMenuBuilder(menuBuilder);
           const taxonomiesBuilder = new taxonomies_builder_1.TaxonomiesBuilder(this.contentService);
           navigation.setTaxonomiesBuilder(taxonomiesBuilder);
@@ -32220,8 +33783,8 @@ var require_navigation_factory = __commonJS({
       }
     };
     exports2.NavigationFactory = NavigationFactory;
-    function createNavigationFactory(langService, contentService) {
-      return new NavigationFactory(langService, contentService);
+    function createNavigationFactory(langService, contentService, site) {
+      return new NavigationFactory(langService, contentService, site);
     }
   }
 });
@@ -32238,6 +33801,7 @@ var require_site2 = __commonJS({
     var ref_1 = require_ref();
     var language_1 = require_language3();
     var author_1 = require_author();
+    var organization_1 = require_organization();
     var version_1 = require_version();
     var navigation_factory_1 = require_navigation_factory();
     var log_1 = require_log();
@@ -32246,12 +33810,13 @@ var require_site2 = __commonJS({
       const publisher = new publisher_1.Publisher(services.publishFs());
       const url = new url_1.URL(services.baseUrl(), true);
       const language = new language_1.Language(services);
-      const navigationFactory = (0, navigation_factory_1.createNavigationFactory)(services, services);
-      const navigation = navigationFactory.createNavigation();
       const author = (0, author_1.newAuthor)("MDFriday", "support@mdfriday.com");
+      const organization = (0, organization_1.newOrganization)();
       const compiler = (0, version_1.newVersion)("0.1.0");
-      const site = new site_1.Site(services, services, services, services, services, services, publisher, author, compiler, url, {}, language, navigation, services.siteTitle());
-      const ref = new ref_1.Ref({
+      const site = new site_1.Site(services, services, services, services, services, services, publisher, author, organization, compiler, url, null, language, null, services.siteTitle());
+      const navigationFactory = (0, navigation_factory_1.createNavigationFactory)(services, services, site);
+      site.navigation = navigationFactory.createNavigation();
+      site.ref = new ref_1.Ref({
         home: { page: null },
         sitePage: async (target) => {
           const sitePage = await site.sitePage(target);
@@ -32261,7 +33826,6 @@ var require_site2 = __commonJS({
           };
         }
       }, services, "/404.html");
-      site.ref = ref;
       return site;
     }
   }
@@ -32290,9 +33854,9 @@ var require_resource = __commonJS({
     var log = (0, log_1.getDomainLogger)("resources", { component: "publisher" });
     var ResourceHash = class {
       constructor() {
-        this.value = "";
-        this.size = 0;
-        this.resource = null;
+        __publicField(this, "value", "");
+        __publicField(this, "size", 0);
+        __publicField(this, "resource", null);
       }
       async setup(resource) {
         if (this.value)
@@ -32321,8 +33885,8 @@ var require_resource = __commonJS({
     exports2.ResourceHash = ResourceHash;
     var PublishOnce = class {
       constructor() {
-        this.hasPublished = false;
-        this.publishPromise = null;
+        __publicField(this, "hasPublished", false);
+        __publicField(this, "publishPromise", null);
       }
       async do(publishFn) {
         if (this.hasPublished)
@@ -32339,6 +33903,13 @@ var require_resource = __commonJS({
     exports2.PublishOnce = PublishOnce;
     var ResourceImpl = class {
       constructor(openReadSeekCloser, mediaType, paths, data = {}, publisher) {
+        __publicField(this, "h");
+        __publicField(this, "openReadSeekCloser");
+        __publicField(this, "_mediaType");
+        __publicField(this, "paths");
+        __publicField(this, "_data");
+        __publicField(this, "publisher");
+        __publicField(this, "publishOnce");
         this.h = new ResourceHash();
         this.openReadSeekCloser = openReadSeekCloser;
         this._mediaType = mediaType;
@@ -36861,7 +38432,7 @@ var require_acorn = __commonJS({
       pp$5.parseParenArrowList = function(startPos, startLoc, exprList, forInit) {
         return this.parseArrowExpression(this.startNodeAt(startPos, startLoc), exprList, false, forInit);
       };
-      var empty = [];
+      var empty2 = [];
       pp$5.parseNew = function() {
         if (this.containsEsc) {
           this.raiseRecoverable(this.start, "Escape sequence in keyword new");
@@ -36891,7 +38462,7 @@ var require_acorn = __commonJS({
         if (this.eat(types$1.parenL)) {
           node.arguments = this.parseExprList(types$1.parenR, this.options.ecmaVersion >= 8, false);
         } else {
-          node.arguments = empty;
+          node.arguments = empty2;
         }
         return this.finishNode(node, "NewExpression");
       };
@@ -68484,7 +70055,8 @@ var require_minifier = __commonJS({
     var terser_1 = require_bundle_min();
     var MinifierClient = class {
       constructor(minifyOutput = false) {
-        this.minifiers = /* @__PURE__ */ new Map();
+        __publicField(this, "minifiers", /* @__PURE__ */ new Map());
+        __publicField(this, "minifyOutput");
         this.minifyOutput = minifyOutput;
         this.setupMinifiers();
       }
@@ -68548,6 +70120,7 @@ var require_minifier = __commonJS({
     exports2.MinifierClient = MinifierClient;
     var MinifyTransformation = class {
       constructor(minifierClient) {
+        __publicField(this, "minifierClient");
         this.minifierClient = minifierClient;
       }
       key() {
@@ -68631,6 +70204,7 @@ var require_integrity = __commonJS({
     exports2.IntegrityClient = IntegrityClient;
     var FingerprintTransformation = class {
       constructor(algo) {
+        __publicField(this, "algo");
         this.algo = algo;
       }
       key() {
@@ -68696,6 +70270,9 @@ var require_template5 = __commonJS({
     var resources_1 = require_resources2();
     var ExecuteAsTemplateTransform = class {
       constructor(templateExecutor, targetPath, data) {
+        __publicField(this, "templateExecutor");
+        __publicField(this, "_targetPath");
+        __publicField(this, "data");
         this.templateExecutor = templateExecutor;
         this._targetPath = targetPath;
         this.data = data;
@@ -68776,6 +70353,7 @@ var require_template5 = __commonJS({
     };
     var TemplateClient = class {
       constructor(templateExecutor) {
+        __publicField(this, "templateExecutor");
         this.templateExecutor = templateExecutor;
       }
       async executeAsTemplate(resource, targetPath, data) {
@@ -68853,6 +70431,8 @@ var require_publisher2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("resources", { component: "publisher" });
     var Publisher = class {
       constructor(pubFs, urlSvc) {
+        __publicField(this, "pubFs");
+        __publicField(this, "urlSvc");
         this.pubFs = pubFs;
         this.urlSvc = urlSvc;
       }
@@ -68909,6 +70489,7 @@ var require_publisher2 = __commonJS({
     var FileWritable = class extends stream_1.Writable {
       constructor(file) {
         super();
+        __publicField(this, "file");
         this.file = file;
       }
       _write(chunk, _encoding, callback) {
@@ -68977,10 +70558,10 @@ var require_http2 = __commonJS({
     var log = (0, log_1.getDomainLogger)("resources", { component: "http-client" });
     var HttpClient = class {
       constructor() {
-        this.defaultTimeout = 3e4;
-        this.defaultHeaders = {
+        __publicField(this, "defaultTimeout", 3e4);
+        __publicField(this, "defaultHeaders", {
           "User-Agent": "MDFriday-Resources/1.0.0"
-        };
+        });
       }
       async fromRemote(uri, options) {
         return new Promise((resolve) => {
@@ -69109,15 +70690,23 @@ var require_resources = __commonJS({
     var template_1 = require_template5();
     var publisher_1 = require_publisher2();
     var http_1 = require_http2();
-    var type_1 = require_type7();
+    var type_1 = require_type6();
     var path6 = __importStar(require("path"));
     var crypto_1 = require("crypto");
     var log_1 = require_log();
     var log = (0, log_1.getDomainLogger)("resources", { component: "resources" });
     var Resources = class {
       constructor(workspace) {
-        this.cache = /* @__PURE__ */ new Map();
-        this.templateClient = null;
+        __publicField(this, "cache", /* @__PURE__ */ new Map());
+        __publicField(this, "workspace");
+        __publicField(this, "fsSvc");
+        __publicField(this, "urlSvc");
+        __publicField(this, "templateSvc");
+        __publicField(this, "publisher");
+        __publicField(this, "minifierClient");
+        __publicField(this, "integrityClient");
+        __publicField(this, "templateClient", null);
+        __publicField(this, "httpClient");
         this.workspace = workspace;
         this.fsSvc = workspace;
         this.urlSvc = workspace;
@@ -69420,7 +71009,12 @@ var require_resourcepaths = __commonJS({
     var path6 = __importStar(require("path"));
     var ResourcePaths = class {
       constructor(dir = "", file = "", baseDirTarget = "", baseDirLink = "", targetBasePaths = [], baseUrl = "") {
-        this.baseUrl = "";
+        __publicField(this, "dir");
+        __publicField(this, "baseDirTarget");
+        __publicField(this, "baseDirLink");
+        __publicField(this, "targetBasePaths");
+        __publicField(this, "file");
+        __publicField(this, "baseUrl", "");
         this.dir = dir;
         this.file = file;
         this.baseDirTarget = baseDirTarget;
@@ -69517,6 +71111,8 @@ var require_transformation = __commonJS({
     var crypto_1 = require("crypto");
     var ResourceTransformationKey = class {
       constructor(name, elements = []) {
+        __publicField(this, "name");
+        __publicField(this, "elements");
         this.name = name;
         this.elements = elements;
       }
@@ -69554,6 +71150,9 @@ var require_resourcemetadata = __commonJS({
     exports2.ResourceMetadataImpl = void 0;
     var ResourceMetadataImpl = class {
       constructor(target, mediaType, metaData) {
+        __publicField(this, "target");
+        __publicField(this, "mediaType");
+        __publicField(this, "metaData");
         this.target = target;
         this.mediaType = mediaType;
         this.metaData = metaData;
@@ -69714,6 +71313,9 @@ var require_ssg = __commonJS({
     }
     async function createContentEngine(filesystem, config, modules, markdown) {
       const services = {
+        baseUrl: () => {
+          return config.getRoot().baseUrl();
+        },
         markdown: () => markdown,
         newFileMetaInfo: (filename) => {
           return filesystem.newFileMetaInfo(filename);
@@ -69883,8 +71485,17 @@ var require_ssg = __commonJS({
         disqusShortname: () => config.getService().disqusShortname(),
         isXRespectDoNotTrack: () => config.getService().isXRespectDoNotTrack(),
         isXDisableInlineCSS: () => config.getService().isXDisableInlineCSS(),
+        getConfiguredSocialPlatforms: () => config.getSocial().getConfiguredPlatforms(),
+        getSocialLink: (platformId) => {
+          const socialLink = config.getSocial().getSocialLink(platformId);
+          return socialLink ? socialLink.url : "";
+        },
+        getSocialTitle: (platformId) => {
+          const socialLink = config.getSocial().getSocialLink(platformId);
+          return socialLink ? socialLink.title : "";
+        },
         globalPages: async (langIndex) => await content.globalPages(langIndex),
-        globalRegularPages: () => content.globalRegularPages(),
+        globalRegularPages: async () => await content.globalRegularPages(),
         walkPages: async (langIndex, walker) => {
           await content.walkPages(langIndex, walker);
         },
@@ -70001,7 +71612,7 @@ var require_ssg = __commonJS({
         throw new Error(`Failed to process SSG: ${message}`);
       }
     }
-    async function generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress) {
+    async function generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress, httpClient) {
       try {
         onProgress?.({
           stage: "config",
@@ -70014,7 +71625,7 @@ var require_ssg = __commonJS({
           message: "Creating and downloading modules...",
           percentage: 10
         });
-        const modules = await createModuleWithProgress(config, onProgress);
+        const modules = await createModuleWithProgress(config, onProgress, httpClient);
         onProgress?.({
           stage: "filesystem",
           message: "Creating filesystem...",
@@ -70075,7 +71686,7 @@ var require_ssg = __commonJS({
         throw new Error(`Failed to generate static site: ${message}`);
       }
     }
-    async function createModuleWithProgress(config, onProgress) {
+    async function createModuleWithProgress(config, onProgress, httpClient) {
       const info = {
         osFs: () => config.fs(),
         projDir: () => config.getDir().getWorkingDir(),
@@ -70084,7 +71695,8 @@ var require_ssg = __commonJS({
         importPaths: () => config.getModule().importPaths(),
         defaultLanguageKey: () => config.getLanguage().defaultLanguage(),
         otherLanguageKeys: () => config.getLanguage().otherLanguageKeys(),
-        getRelDir: (name, langKey) => config.getLanguage().getRelDir(name, langKey)
+        getRelDir: (name, langKey) => config.getLanguage().getRelDir(name, langKey),
+        httpClient: httpClient ? () => httpClient : void 0
       };
       return await createModulesWithProgressTracking(info, onProgress);
     }
@@ -70114,12 +71726,12 @@ var require_ssg = __commonJS({
       } : void 0;
       await site.buildWithProgress(template, pageProgressCallback);
     }
-    async function processSSGWithProgress(projDir, modulesDir, markdown, onProgress) {
+    async function processSSGWithProgress(projDir, modulesDir, markdown, onProgress, httpClient) {
       try {
         const originalCwd = process.cwd();
         process.chdir(projDir);
         try {
-          await generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress);
+          await generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress, httpClient);
         } finally {
           process.chdir(originalCwd);
         }
@@ -70129,10 +71741,10 @@ var require_ssg = __commonJS({
         throw new Error(`Failed to process SSG: ${message}`);
       }
     }
-    async function serveSSG(projDir, modulesDir, markdown, onProgress) {
+    async function serveSSG(projDir, modulesDir, markdown, onProgress, httpClient) {
       try {
         process.chdir(projDir);
-        return await generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress);
+        return await generateStaticSiteWithProgress(projDir, modulesDir, markdown, onProgress, httpClient);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         log.error(`\u274C SSG processing failed: ${message}`);
@@ -71790,18 +73402,20 @@ var require_content_file_watcher = __commonJS({
     var log = (0, log_1.getDomainLogger)("web", { component: "content-file-watcher" });
     var ContentFileWatcher = class {
       constructor(config) {
+        __publicField(this, "config");
+        __publicField(this, "watcher", null);
+        __publicField(this, "eventQueue", []);
+        __publicField(this, "batchTimer", null);
+        __publicField(this, "batchDelay");
+        __publicField(this, "callbacks", []);
         this.config = config;
-        this.watcher = null;
-        this.eventQueue = [];
-        this.batchTimer = null;
-        this.callbacks = [];
         this.batchDelay = config.batchDelay || 500;
       }
       async startWatching() {
         if (this.watcher) {
           await this.stopWatching();
         }
-        this.watcher = chokidar.watch(this.config.contentDir, {
+        this.watcher = chokidar.watch(this.config.contentDirs, {
           ignored: [
             /(^|[\/\\])\../,
             /\.tmp$/,
@@ -71827,9 +73441,16 @@ var require_content_file_watcher = __commonJS({
       }
       queueEvent(filePath, eventType) {
         let fp = filePath;
-        const { projContentDir, contentDir } = this.config;
-        if (projContentDir !== contentDir && fp.startsWith(contentDir)) {
-          fp = projContentDir + fp.slice(contentDir.length);
+        const { projContentDirs, contentDirs } = this.config;
+        for (let i = 0; i < projContentDirs.length; i++) {
+          const projContentDir = projContentDirs[i];
+          for (let j = 0; j < contentDirs.length; j++) {
+            const contentDir = contentDirs[j];
+            if (projContentDir !== contentDir && fp.startsWith(contentDir)) {
+              fp = projContentDir + fp.slice(contentDir.length);
+              break;
+            }
+          }
         }
         const normalizedPath = path6.normalize(fp);
         if (!this.isRelevantFile(normalizedPath)) {
@@ -71969,10 +73590,11 @@ var require_livereload_server = __commonJS({
     var log = (0, log_1.getDomainLogger)("web", { component: "livereload-server" });
     var FoundryLiveReloadServer = class {
       constructor(config) {
-        this.httpServer = null;
-        this.wsServer = null;
-        this.clients = /* @__PURE__ */ new Set();
-        this.running = false;
+        __publicField(this, "httpServer", null);
+        __publicField(this, "wsServer", null);
+        __publicField(this, "clients", /* @__PURE__ */ new Set());
+        __publicField(this, "running", false);
+        __publicField(this, "config");
         this.config = {
           port: config.port || 8091,
           host: config.host || "localhost",
@@ -72338,8 +73960,10 @@ var require_electron_livereload_server = __commonJS({
     var log = (0, log_1.getDomainLogger)("web", { component: "electron-livereload-server" });
     var ElectronLiveReloadServer = class {
       constructor(config) {
-        this.httpServer = null;
-        this.running = false;
+        __publicField(this, "httpServer", null);
+        __publicField(this, "running", false);
+        __publicField(this, "config");
+        __publicField(this, "stateFilePath");
         this.config = {
           port: config.port || 8091,
           host: config.host || "localhost",
@@ -72753,13 +74377,17 @@ var require_incremental_build_coordinator = __commonJS({
     var log = (0, log_1.getDomainLogger)("build", { component: "incremental-coordinator" });
     var IncrementalBuildCoordinator = class {
       constructor(config) {
+        __publicField(this, "config");
+        __publicField(this, "fileWatcher");
+        __publicField(this, "liveReloadServer");
+        __publicField(this, "buildInProgress", false);
+        __publicField(this, "initialized", false);
+        __publicField(this, "domainInstances");
         this.config = config;
-        this.buildInProgress = false;
-        this.initialized = false;
         if (config.enableWatching) {
           const watcherConfig = {
-            contentDir: config.contentDir,
-            projContentDir: config.projContentDir || config.contentDir,
+            contentDirs: config.contentDirs,
+            projContentDirs: config.projContentDirs || config.contentDirs,
             batchDelay: config.batchDelay || 500
           };
           this.fileWatcher = new content_file_watcher_1.ContentFileWatcher(watcherConfig);
@@ -72786,7 +74414,7 @@ var require_incremental_build_coordinator = __commonJS({
       }
       async performFullBuildAndCacheDomains() {
         try {
-          this.domainInstances = await (0, ssg_1.serveSSG)(this.config.projDir, this.config.modulesDir, this.config.markdown, this.config.progressCallback);
+          this.domainInstances = await (0, ssg_1.serveSSG)(this.config.projDir, this.config.modulesDir, this.config.markdown, this.config.progressCallback, this.config.httpClient);
         } catch (error) {
           log.error("Failed to perform full build and cache domains:", error);
           throw error;
@@ -72839,7 +74467,7 @@ var require_incremental_build_coordinator = __commonJS({
         try {
           const fileMetaInfos = await this.domainInstances.fs.getFileMetaInfos(this.getEventsFilePaths(events));
           await this.domainInstances.content.handleChangeFiles(fileMetaInfos);
-          await this.domainInstances.site.render();
+          await this.domainInstances.site.renderAllLanguages();
           if (this.liveReloadServer) {
             const changedPaths = events.map((e) => e.filePath);
             this.liveReloadServer.notifyReload(changedPaths);
@@ -72855,7 +74483,7 @@ var require_incremental_build_coordinator = __commonJS({
       async performFullRebuild(events) {
         await (0, ssg_1.processSSGWithProgress)(this.config.projDir, this.config.modulesDir, this.config.markdown, (progress) => {
           log.info(`Rebuild progress: ${progress.stage} - ${progress.percentage}%`);
-        });
+        }, this.config.httpClient);
         if (this.liveReloadServer) {
           const changedPaths = events.map((e) => e.filePath);
           this.liveReloadServer.notifyReload(changedPaths);
@@ -74611,6 +76239,9 @@ function text2(data) {
 function space() {
   return text2(" ");
 }
+function empty() {
+  return text2("");
+}
 function listen(node, event, handler, options) {
   node.addEventListener(event, handler, options);
   return () => node.removeEventListener(event, handler, options);
@@ -76238,10 +77869,13 @@ function createStyleRenderer(plugin, options = {}) {
 
 // src/theme/themeApiService.ts
 var import_obsidian2 = require("obsidian");
-var THEMES_JSON_URL = "https://gohugo.net/themes.json";
-var themesCache = null;
-var allTagsCache = null;
-var cacheTimestamp = null;
+var THEMES_JSON_URLS = {
+  global: "https://gohugo.net/themes.json",
+  east: "https://sunwei.xyz/mdf/themes-zh.json"
+};
+var themesCache = {};
+var allTagsCache = {};
+var cacheTimestamp = {};
 var CACHE_EXPIRY_MS = 2 * 60 * 60 * 1e3;
 function mapRawThemeToThemeItem(rawTheme) {
   return {
@@ -76261,10 +77895,10 @@ function mapRawThemeToThemeItem(rawTheme) {
     asset: rawTheme.screenshot
   };
 }
-async function fetchAllThemes() {
+async function fetchAllThemes(themesUrl) {
   try {
     const timestamp = Date.now();
-    const urlWithTimestamp = `${THEMES_JSON_URL}?_t=${timestamp}`;
+    const urlWithTimestamp = `${themesUrl}?_t=${timestamp}`;
     const response = await (0, import_obsidian2.requestUrl)({
       url: urlWithTimestamp,
       method: "GET",
@@ -76301,27 +77935,38 @@ function filterThemes(themes, searchTerm = "", selectedTags = []) {
   }
   return filteredThemes;
 }
+function getThemesUrl(plugin) {
+  if (!plugin) {
+    return THEMES_JSON_URLS.global;
+  }
+  const downloadServer = plugin.settings.downloadServer || "global";
+  return THEMES_JSON_URLS[downloadServer];
+}
 var themeApiService = {
-  async initializeThemes() {
+  async initializeThemes(plugin) {
+    const themesUrl = getThemesUrl(plugin);
+    const serverKey = plugin?.settings.downloadServer || "global";
     const now = Date.now();
-    const isCacheExpired = cacheTimestamp === null || now - cacheTimestamp > CACHE_EXPIRY_MS;
-    if (themesCache === null || isCacheExpired) {
-      themesCache = await fetchAllThemes();
-      allTagsCache = extractAllTags(themesCache);
-      cacheTimestamp = now;
+    const isCacheExpired = !cacheTimestamp[serverKey] || now - cacheTimestamp[serverKey] > CACHE_EXPIRY_MS;
+    if (!themesCache[serverKey] || isCacheExpired) {
+      themesCache[serverKey] = await fetchAllThemes(themesUrl);
+      allTagsCache[serverKey] = extractAllTags(themesCache[serverKey]);
+      cacheTimestamp[serverKey] = now;
     }
   },
-  async getAllThemes() {
-    await this.initializeThemes();
-    return themesCache || [];
+  async getAllThemes(plugin) {
+    await this.initializeThemes(plugin);
+    const serverKey = plugin?.settings.downloadServer || "global";
+    return themesCache[serverKey] || [];
   },
-  async fetchThemes(page = 1, limit = 20, selectedTags = [], searchTerm = "") {
-    return this.searchThemes(page, limit, searchTerm, selectedTags);
+  async fetchThemes(page = 1, limit = 20, selectedTags = [], searchTerm = "", plugin) {
+    return this.searchThemes(page, limit, searchTerm, selectedTags, plugin);
   },
-  async searchThemes(page = 1, limit = 20, searchTerm = "", selectedTags = []) {
+  async searchThemes(page = 1, limit = 20, searchTerm = "", selectedTags = [], plugin) {
     try {
-      await this.initializeThemes();
-      const allThemes = themesCache || [];
+      await this.initializeThemes(plugin);
+      const serverKey = plugin?.settings.downloadServer || "global";
+      const allThemes = themesCache[serverKey] || [];
       const filteredThemes = filterThemes(allThemes, searchTerm, selectedTags);
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
@@ -76333,10 +77978,11 @@ var themeApiService = {
       return { themes: [], hasMore: false };
     }
   },
-  async fetchAllTags() {
+  async fetchAllTags(plugin) {
     try {
-      await this.initializeThemes();
-      return allTagsCache || [];
+      await this.initializeThemes(plugin);
+      const serverKey = plugin?.settings.downloadServer || "global";
+      return allTagsCache[serverKey] || [];
     } catch (error) {
       console.error("Error fetching theme tags:", error);
       return [];
@@ -76351,20 +77997,22 @@ var themeApiService = {
       tags: theme.tags
     };
   },
-  async getThemeById(themeId) {
+  async getThemeById(themeId, plugin) {
     try {
-      await this.initializeThemes();
-      const themes = themesCache || [];
+      await this.initializeThemes(plugin);
+      const serverKey = plugin?.settings.downloadServer || "global";
+      const themes = themesCache[serverKey] || [];
       return themes.find((theme) => theme.id === themeId) || null;
     } catch (error) {
       console.error("Error getting theme by ID:", error);
       return null;
     }
   },
-  async fetchThemeByName(name) {
+  async fetchThemeByName(name, plugin) {
     try {
-      await this.initializeThemes();
-      const allThemes = themesCache || [];
+      await this.initializeThemes(plugin);
+      const serverKey = plugin?.settings.downloadServer || "global";
+      const allThemes = themesCache[serverKey] || [];
       const theme = allThemes.find((t) => t.name.toLowerCase() === name.toLowerCase());
       return theme || null;
     } catch (error) {
@@ -76372,33 +78020,39 @@ var themeApiService = {
       return null;
     }
   },
-  clearCache() {
-    themesCache = null;
-    allTagsCache = null;
-    cacheTimestamp = null;
+  clearCache(serverKey) {
+    if (serverKey) {
+      delete themesCache[serverKey];
+      delete allTagsCache[serverKey];
+      delete cacheTimestamp[serverKey];
+    } else {
+      themesCache = {};
+      allTagsCache = {};
+      cacheTimestamp = {};
+    }
   }
 };
 
 // src/svelte/Site.svelte
 function add_css3(target) {
-  append_styles(target, "svelte-hnzno1", `.site-builder.svelte-hnzno1.svelte-hnzno1{padding:20px;max-width:100%}.section.svelte-hnzno1.svelte-hnzno1{margin-bottom:20px}.section-label.svelte-hnzno1.svelte-hnzno1{display:block;margin-bottom:8px;font-weight:500;color:var(--text-normal);font-size:14px}.form-input.svelte-hnzno1.svelte-hnzno1{width:100%;padding:10px 12px;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);color:var(--text-normal);font-size:14px;line-height:1.4;box-sizing:border-box;min-height:38px}.form-select.svelte-hnzno1.svelte-hnzno1{width:100%;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);color:var(--text-normal);font-size:14px;line-height:1.4;box-sizing:border-box;min-height:38px;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:40px}.theme-selector.svelte-hnzno1.svelte-hnzno1{width:100%}.current-theme.svelte-hnzno1.svelte-hnzno1{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);min-height:38px;box-sizing:border-box}.theme-name.svelte-hnzno1.svelte-hnzno1{color:var(--text-normal);font-size:14px}.change-theme-btn.svelte-hnzno1.svelte-hnzno1{padding:6px 12px;border:1px solid var(--interactive-accent);border-radius:3px;background:transparent;color:var(--interactive-accent);font-size:12px;cursor:pointer;transition:all 0.2s;white-space:nowrap}.change-theme-btn.svelte-hnzno1.svelte-hnzno1:hover{background:var(--interactive-accent);color:var(--text-on-accent)}.section-title.svelte-hnzno1.svelte-hnzno1{margin:0 0 10px 0;font-size:16px;font-weight:600;color:var(--text-normal)}.preview-section.svelte-hnzno1.svelte-hnzno1,.publish-section.svelte-hnzno1.svelte-hnzno1{padding:15px;border:1px solid var(--background-modifier-border);border-radius:6px;background:var(--background-secondary)}.action-button.svelte-hnzno1.svelte-hnzno1{padding:10px 20px;border:none;border-radius:4px;background:var(--interactive-accent);color:var(--text-on-accent);font-size:14px;font-weight:500;cursor:pointer;transition:background-color 0.2s;min-height:38px}.action-button.svelte-hnzno1.svelte-hnzno1:hover:not(:disabled){background:var(--interactive-accent-hover)}.action-button.svelte-hnzno1.svelte-hnzno1:disabled{background:var(--background-modifier-border);color:var(--text-muted);cursor:not-allowed}.preview-button.svelte-hnzno1.svelte-hnzno1{margin-bottom:10px}.publish-button.svelte-hnzno1.svelte-hnzno1{margin-left:10px}.preview-link.svelte-hnzno1.svelte-hnzno1,.publish-success.svelte-hnzno1.svelte-hnzno1{margin-top:15px;padding:10px;background:var(--background-primary);border-radius:4px;border:1px solid var(--background-modifier-border)}.preview-url.svelte-hnzno1.svelte-hnzno1,.publish-url.svelte-hnzno1.svelte-hnzno1{display:block;color:var(--interactive-accent);text-decoration:none;word-break:break-all;margin-top:5px}.preview-url.svelte-hnzno1.svelte-hnzno1:hover,.publish-url.svelte-hnzno1.svelte-hnzno1:hover{text-decoration:underline}.progress-container.svelte-hnzno1.svelte-hnzno1{margin:10px 0}.progress-container.svelte-hnzno1 p.svelte-hnzno1{margin:0 0 10px 0;color:var(--text-muted);font-size:14px}.publish-options.svelte-hnzno1.svelte-hnzno1{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}.publish-select-wrapper.svelte-hnzno1.svelte-hnzno1{flex:1;min-width:150px}.success-message.svelte-hnzno1.svelte-hnzno1{margin:0 0 5px 0;color:var(--text-success);font-weight:500}.ftp-success-info.svelte-hnzno1.svelte-hnzno1{margin:5px 0 0 0;color:var(--text-muted);font-size:14px}.preview-actions.svelte-hnzno1.svelte-hnzno1{margin-top:10px;display:flex;gap:10px}.export-button.svelte-hnzno1.svelte-hnzno1{background:var(--interactive-normal);color:var(--text-normal);border:1px solid var(--background-modifier-border)}.export-button.svelte-hnzno1.svelte-hnzno1:hover:not(:disabled){background:var(--interactive-hover)}.export-button.svelte-hnzno1.svelte-hnzno1:disabled{opacity:0.6}.advanced-settings.svelte-hnzno1.svelte-hnzno1{border:1px solid var(--background-modifier-border);border-radius:4px;overflow:hidden}.advanced-toggle.svelte-hnzno1.svelte-hnzno1{width:100%;padding:12px 16px;border:none;background:transparent;color:var(--text-normal);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background-color 0.2s;box-shadow:none}.advanced-toggle.svelte-hnzno1.svelte-hnzno1:hover{background:var(--background-modifier-hover)}.toggle-icon.svelte-hnzno1.svelte-hnzno1{transition:transform 0.2s;font-size:12px;color:var(--text-muted)}.toggle-icon.expanded.svelte-hnzno1.svelte-hnzno1{transform:rotate(90deg)}.advanced-content.svelte-hnzno1.svelte-hnzno1{background:var(--background-secondary);padding:16px;border-top:1px solid var(--background-modifier-border)}.advanced-field.svelte-hnzno1.svelte-hnzno1{margin-bottom:16px}.advanced-field.svelte-hnzno1.svelte-hnzno1:last-child{margin-bottom:0}.field-hint.svelte-hnzno1.svelte-hnzno1{font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.4}.multilang-table.svelte-hnzno1.svelte-hnzno1{border:1px solid var(--background-modifier-border);border-radius:4px;overflow:hidden;background:var(--background-primary)}.multilang-header.svelte-hnzno1.svelte-hnzno1{display:grid;grid-template-columns:1fr 2fr;background:var(--background-secondary);border-bottom:1px solid var(--background-modifier-border)}.multilang-header-cell.svelte-hnzno1.svelte-hnzno1{padding:10px 12px;font-weight:500;font-size:14px;color:var(--text-normal);border-right:1px solid var(--background-modifier-border);display:flex;align-items:center;justify-content:space-between;overflow:hidden;min-width:0}.add-language-btn.svelte-hnzno1.svelte-hnzno1{padding:4px 8px;border:1px solid var(--interactive-accent);border-radius:3px;background:transparent;color:var(--interactive-accent);font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap;margin-left:8px}.add-language-btn.svelte-hnzno1.svelte-hnzno1:hover{background:var(--interactive-accent);color:var(--text-on-accent)}.multilang-header-cell.svelte-hnzno1.svelte-hnzno1:last-child{border-right:none}.multilang-row.svelte-hnzno1.svelte-hnzno1{display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--background-modifier-border);transition:background-color 0.2s}.multilang-row.svelte-hnzno1.svelte-hnzno1:last-child{border-bottom:none}.multilang-row.svelte-hnzno1.svelte-hnzno1:hover{background:var(--background-modifier-hover)}.multilang-cell.svelte-hnzno1.svelte-hnzno1{padding:10px 12px;display:flex;align-items:center;border-right:1px solid var(--background-modifier-border);min-height:38px;box-sizing:border-box;overflow:hidden;min-width:0}.multilang-cell.svelte-hnzno1.svelte-hnzno1:last-child{border-right:none}.content-path-cell.svelte-hnzno1.svelte-hnzno1{gap:8px}.content-path.svelte-hnzno1.svelte-hnzno1{color:var(--text-normal);font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.default-badge.svelte-hnzno1.svelte-hnzno1{background:var(--interactive-accent);color:var(--text-on-accent);padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;white-space:nowrap}.language-cell.svelte-hnzno1.svelte-hnzno1{display:flex;align-items:center;gap:8px}.language-select.svelte-hnzno1.svelte-hnzno1{flex:1;max-width:180px;padding:4px 8px;border:1px solid var(--background-modifier-border);border-radius:3px;background:var(--background-primary);color:var(--text-normal);font-size:13px;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 6px center;background-size:12px;padding-right:24px}.remove-btn.svelte-hnzno1.svelte-hnzno1{width:20px;height:20px;border:none;border-radius:50%;background:transparent;color:var(--text-muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0;margin-left:4px}.multilang-row.svelte-hnzno1:hover .remove-btn.svelte-hnzno1{opacity:1}.remove-btn.svelte-hnzno1.svelte-hnzno1:hover{background:var(--background-modifier-error);color:var(--text-on-accent);transform:scale(1.1)}.remove-icon.svelte-hnzno1.svelte-hnzno1{line-height:1;font-weight:bold}.multilang-empty.svelte-hnzno1.svelte-hnzno1{padding:20px;text-align:center;color:var(--text-muted);font-style:italic}.empty-message.svelte-hnzno1.svelte-hnzno1{font-size:14px}`);
+  append_styles(target, "svelte-1soj2u", `.site-builder.svelte-1soj2u.svelte-1soj2u{padding:20px;max-width:100%}.section.svelte-1soj2u.svelte-1soj2u{margin-bottom:20px}.section-label.svelte-1soj2u.svelte-1soj2u{display:block;margin-bottom:8px;font-weight:500;color:var(--text-normal);font-size:14px}.form-input.svelte-1soj2u.svelte-1soj2u{width:100%;padding:10px 12px;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);color:var(--text-normal);font-size:14px;line-height:1.4;box-sizing:border-box;min-height:38px}.form-select.svelte-1soj2u.svelte-1soj2u{width:100%;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);color:var(--text-normal);font-size:14px;line-height:1.4;box-sizing:border-box;min-height:38px;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:40px}.theme-selector.svelte-1soj2u.svelte-1soj2u{width:100%}.current-theme.svelte-1soj2u.svelte-1soj2u{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary);min-height:38px;box-sizing:border-box}.theme-name.svelte-1soj2u.svelte-1soj2u{color:var(--text-normal);font-size:14px;flex:1}.theme-actions.svelte-1soj2u.svelte-1soj2u{display:flex;align-items:center;gap:8px}.change-theme-btn.svelte-1soj2u.svelte-1soj2u{padding:6px 12px;border:1px solid var(--interactive-accent);border-radius:3px;background:transparent;color:var(--interactive-accent);font-size:12px;cursor:pointer;transition:all 0.2s;white-space:nowrap}.change-theme-btn.svelte-1soj2u.svelte-1soj2u:hover{background:var(--interactive-accent);color:var(--text-on-accent)}.download-sample-btn.svelte-1soj2u.svelte-1soj2u{padding:6px 12px;border:1px solid var(--text-accent);border-radius:3px;background:transparent;color:var(--text-accent);font-size:12px;cursor:pointer;transition:all 0.2s;white-space:nowrap}.download-sample-btn.svelte-1soj2u.svelte-1soj2u:hover{background:var(--text-accent);color:var(--text-on-accent)}.sample-download-progress.svelte-1soj2u.svelte-1soj2u{display:flex;flex-direction:column;gap:4px;min-width:120px}.progress-text.svelte-1soj2u.svelte-1soj2u{font-size:11px;color:var(--text-muted);text-align:center}.section-title.svelte-1soj2u.svelte-1soj2u{margin:0 0 10px 0;font-size:16px;font-weight:600;color:var(--text-normal)}.preview-section.svelte-1soj2u.svelte-1soj2u,.publish-section.svelte-1soj2u.svelte-1soj2u{padding:15px;border:1px solid var(--background-modifier-border);border-radius:6px;background:var(--background-secondary)}.action-button.svelte-1soj2u.svelte-1soj2u{padding:10px 20px;border:none;border-radius:4px;background:var(--interactive-accent);color:var(--text-on-accent);font-size:14px;font-weight:500;cursor:pointer;transition:background-color 0.2s;min-height:38px}.action-button.svelte-1soj2u.svelte-1soj2u:hover:not(:disabled){background:var(--interactive-accent-hover)}.action-button.svelte-1soj2u.svelte-1soj2u:disabled{background:var(--background-modifier-border);color:var(--text-muted);cursor:not-allowed}.preview-button.svelte-1soj2u.svelte-1soj2u{margin-bottom:10px}.publish-button.svelte-1soj2u.svelte-1soj2u{margin-left:10px}.preview-link.svelte-1soj2u.svelte-1soj2u,.publish-success.svelte-1soj2u.svelte-1soj2u{margin-top:15px;padding:10px;background:var(--background-primary);border-radius:4px;border:1px solid var(--background-modifier-border)}.preview-url.svelte-1soj2u.svelte-1soj2u,.publish-url.svelte-1soj2u.svelte-1soj2u{display:block;color:var(--interactive-accent);text-decoration:none;word-break:break-all;margin-top:5px}.preview-url.svelte-1soj2u.svelte-1soj2u:hover,.publish-url.svelte-1soj2u.svelte-1soj2u:hover{text-decoration:underline}.progress-container.svelte-1soj2u.svelte-1soj2u{margin:10px 0}.progress-container.svelte-1soj2u p.svelte-1soj2u{margin:0 0 10px 0;color:var(--text-muted);font-size:14px}.publish-options.svelte-1soj2u.svelte-1soj2u{display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap}.publish-select-wrapper.svelte-1soj2u.svelte-1soj2u{flex:1;min-width:150px}.success-message.svelte-1soj2u.svelte-1soj2u{margin:0 0 5px 0;color:var(--text-success);font-weight:500}.ftp-success-info.svelte-1soj2u.svelte-1soj2u{margin:5px 0 0 0;color:var(--text-muted);font-size:14px}.preview-actions.svelte-1soj2u.svelte-1soj2u{margin-top:10px;display:flex;gap:10px}.export-button.svelte-1soj2u.svelte-1soj2u{background:var(--interactive-normal);color:var(--text-normal);border:1px solid var(--background-modifier-border)}.export-button.svelte-1soj2u.svelte-1soj2u:hover:not(:disabled){background:var(--interactive-hover)}.export-button.svelte-1soj2u.svelte-1soj2u:disabled{opacity:0.6}.advanced-settings.svelte-1soj2u.svelte-1soj2u{border:1px solid var(--background-modifier-border);border-radius:4px;overflow:hidden}.advanced-toggle.svelte-1soj2u.svelte-1soj2u{width:100%;padding:12px 16px;border:none;background:transparent;color:var(--text-normal);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background-color 0.2s;box-shadow:none}.advanced-toggle.svelte-1soj2u.svelte-1soj2u:hover{background:var(--background-modifier-hover)}.toggle-icon.svelte-1soj2u.svelte-1soj2u{transition:transform 0.2s;font-size:12px;color:var(--text-muted)}.toggle-icon.expanded.svelte-1soj2u.svelte-1soj2u{transform:rotate(90deg)}.advanced-content.svelte-1soj2u.svelte-1soj2u{background:var(--background-secondary);padding:16px;border-top:1px solid var(--background-modifier-border)}.advanced-field.svelte-1soj2u.svelte-1soj2u{margin-bottom:16px}.advanced-field.svelte-1soj2u.svelte-1soj2u:last-child{margin-bottom:0}.field-hint.svelte-1soj2u.svelte-1soj2u{font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.4}.multilang-table.svelte-1soj2u.svelte-1soj2u{border:1px solid var(--background-modifier-border);border-radius:4px;overflow:hidden;background:var(--background-primary)}.multilang-header.svelte-1soj2u.svelte-1soj2u{display:grid;grid-template-columns:1fr 2fr;background:var(--background-secondary);border-bottom:1px solid var(--background-modifier-border)}.multilang-header-cell.svelte-1soj2u.svelte-1soj2u{padding:10px 12px;font-weight:500;font-size:14px;color:var(--text-normal);border-right:1px solid var(--background-modifier-border);display:flex;align-items:center;justify-content:space-between;overflow:hidden;min-width:0}.add-language-btn.svelte-1soj2u.svelte-1soj2u{padding:4px 8px;border:1px solid var(--interactive-accent);border-radius:3px;background:transparent;color:var(--interactive-accent);font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap;margin-left:8px}.add-language-btn.svelte-1soj2u.svelte-1soj2u:hover{background:var(--interactive-accent);color:var(--text-on-accent)}.multilang-header-cell.svelte-1soj2u.svelte-1soj2u:last-child{border-right:none}.multilang-row.svelte-1soj2u.svelte-1soj2u{display:grid;grid-template-columns:1fr 2fr;border-bottom:1px solid var(--background-modifier-border);transition:background-color 0.2s}.multilang-row.svelte-1soj2u.svelte-1soj2u:last-child{border-bottom:none}.multilang-row.svelte-1soj2u.svelte-1soj2u:hover{background:var(--background-modifier-hover)}.multilang-cell.svelte-1soj2u.svelte-1soj2u{padding:10px 12px;display:flex;align-items:center;border-right:1px solid var(--background-modifier-border);min-height:38px;box-sizing:border-box;overflow:hidden;min-width:0}.multilang-cell.svelte-1soj2u.svelte-1soj2u:last-child{border-right:none}.content-path-cell.svelte-1soj2u.svelte-1soj2u{gap:8px}.content-path.svelte-1soj2u.svelte-1soj2u{color:var(--text-normal);font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.default-badge.svelte-1soj2u.svelte-1soj2u{background:var(--interactive-accent);color:var(--text-on-accent);padding:2px 6px;border-radius:3px;font-size:11px;font-weight:500;white-space:nowrap}.language-cell.svelte-1soj2u.svelte-1soj2u{display:flex;align-items:center;gap:8px}.language-select.svelte-1soj2u.svelte-1soj2u{flex:1;max-width:180px;padding:4px 8px;border:1px solid var(--background-modifier-border);border-radius:3px;background:var(--background-primary);color:var(--text-normal);font-size:13px;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 6px center;background-size:12px;padding-right:24px}.remove-btn.svelte-1soj2u.svelte-1soj2u{width:20px;height:20px;border:none;border-radius:50%;background:transparent;color:var(--text-muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;opacity:0;margin-left:4px}.multilang-row.svelte-1soj2u:hover .remove-btn.svelte-1soj2u{opacity:1}.remove-btn.svelte-1soj2u.svelte-1soj2u:hover{background:var(--background-modifier-error);color:var(--text-on-accent);transform:scale(1.1)}.remove-icon.svelte-1soj2u.svelte-1soj2u{line-height:1;font-weight:bold}.multilang-empty.svelte-1soj2u.svelte-1soj2u{padding:20px;text-align:center;color:var(--text-muted);font-style:italic}.empty-message.svelte-1soj2u.svelte-1soj2u{font-size:14px}.site-assets-container.svelte-1soj2u.svelte-1soj2u{border:1px solid var(--background-modifier-border);border-radius:4px;background:var(--background-primary)}.assets-display.svelte-1soj2u.svelte-1soj2u{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;min-height:38px;box-sizing:border-box}.assets-path.svelte-1soj2u.svelte-1soj2u{color:var(--text-normal);font-size:14px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.assets-placeholder.svelte-1soj2u.svelte-1soj2u{color:var(--text-muted);font-size:14px;font-style:italic;flex:1}.clear-assets-btn.svelte-1soj2u.svelte-1soj2u{padding:4px 8px;border:1px solid var(--interactive-accent);border-radius:3px;background:transparent;color:var(--interactive-accent);font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap;margin-left:8px}.clear-assets-btn.svelte-1soj2u.svelte-1soj2u:hover{background:var(--interactive-accent);color:var(--text-on-accent)}.assets-hint.svelte-1soj2u.svelte-1soj2u{padding:8px 12px;background:var(--background-secondary);border-top:1px solid var(--background-modifier-border);font-size:12px;color:var(--text-muted);line-height:1.4}`);
 }
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[76] = list[i];
+  child_ctx[92] = list[i];
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[79] = list[i];
+  child_ctx[95] = list[i];
   return child_ctx;
 }
 function get_each_context_2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[82] = list[i];
+  child_ctx[98] = list[i];
   return child_ctx;
 }
-function create_if_block_10(ctx) {
+function create_if_block_13(ctx) {
   let button;
   let t_1_value = ctx[4]("ui.clear") + "";
   let t_1;
@@ -76409,14 +78063,14 @@ function create_if_block_10(ctx) {
     c() {
       button = element("button");
       t_1 = text2(t_1_value);
-      attr(button, "class", "add-language-btn svelte-hnzno1");
+      attr(button, "class", "add-language-btn svelte-1soj2u");
       attr(button, "title", button_title_value = ctx[4]("ui.clear_all_content"));
     },
     m(target, anchor) {
       insert(target, button, anchor);
       append(button, t_1);
       if (!mounted) {
-        dispose = listen(button, "click", ctx[23]);
+        dispose = listen(button, "click", ctx[28]);
         mounted = true;
       }
     },
@@ -76435,7 +78089,7 @@ function create_if_block_10(ctx) {
     }
   };
 }
-function create_if_block_9(ctx) {
+function create_if_block_12(ctx) {
   let span;
   let t_1_value = ctx[4]("ui.default") + "";
   let t_1;
@@ -76443,7 +78097,7 @@ function create_if_block_9(ctx) {
     c() {
       span = element("span");
       t_1 = text2(t_1_value);
-      attr(span, "class", "default-badge svelte-hnzno1");
+      attr(span, "class", "default-badge svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, span, anchor);
@@ -76461,10 +78115,10 @@ function create_if_block_9(ctx) {
 }
 function create_each_block_2(ctx) {
   let option;
-  let t0_value = ctx[82].name + "";
+  let t0_value = ctx[98].name + "";
   let t0;
   let t1;
-  let t2_value = ctx[82].englishName + "";
+  let t2_value = ctx[98].englishName + "";
   let t2;
   let t3;
   let option_value_value;
@@ -76475,7 +78129,7 @@ function create_each_block_2(ctx) {
       t1 = text2(" (");
       t2 = text2(t2_value);
       t3 = text2(")");
-      option.__value = option_value_value = ctx[82].code;
+      option.__value = option_value_value = ctx[98].code;
       option.value = option.__value;
     },
     m(target, anchor) {
@@ -76492,22 +78146,22 @@ function create_each_block_2(ctx) {
     }
   };
 }
-function create_if_block_8(ctx) {
+function create_if_block_11(ctx) {
   let button;
   let span;
   let button_title_value;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[42](ctx[79]);
+    return ctx[52](ctx[95]);
   }
   return {
     c() {
       button = element("button");
       span = element("span");
       span.textContent = "\xD7";
-      attr(span, "class", "remove-icon svelte-hnzno1");
-      attr(button, "class", "remove-btn svelte-hnzno1");
+      attr(span, "class", "remove-icon svelte-1soj2u");
+      attr(button, "class", "remove-btn svelte-1soj2u");
       attr(button, "title", button_title_value = ctx[4]("ui.remove_language"));
     },
     m(target, anchor) {
@@ -76536,7 +78190,7 @@ function create_each_block_1(key_1, ctx) {
   let div2;
   let div0;
   let span;
-  let t0_value = (ctx[79].folder ? ctx[79].folder.name : ctx[79].file ? ctx[79].file.name : ctx[4]("ui.no_content_selected")) + "";
+  let t0_value = (ctx[95].folder ? ctx[95].folder.name : ctx[95].file ? ctx[95].file.name : ctx[4]("ui.no_content_selected")) + "";
   let t0;
   let t1;
   let t2;
@@ -76546,16 +78200,16 @@ function create_each_block_1(key_1, ctx) {
   let t3;
   let mounted;
   let dispose;
-  let if_block0 = ctx[79].weight === 1 && create_if_block_9(ctx);
-  let each_value_2 = ctx[20];
+  let if_block0 = ctx[95].weight === 1 && create_if_block_12(ctx);
+  let each_value_2 = ctx[25];
   let each_blocks = [];
   for (let i = 0; i < each_value_2.length; i += 1) {
     each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
   }
   function change_handler(...args) {
-    return ctx[41](ctx[79], ...args);
+    return ctx[51](ctx[95], ...args);
   }
-  let if_block1 = ctx[3].length > 1 && create_if_block_8(ctx);
+  let if_block1 = ctx[3].length > 1 && create_if_block_11(ctx);
   return {
     key: key_1,
     first: null,
@@ -76576,11 +78230,11 @@ function create_each_block_1(key_1, ctx) {
       t3 = space();
       if (if_block1)
         if_block1.c();
-      attr(span, "class", "content-path svelte-hnzno1");
-      attr(div0, "class", "multilang-cell content-path-cell svelte-hnzno1");
-      attr(select, "class", "language-select svelte-hnzno1");
-      attr(div1, "class", "multilang-cell language-cell svelte-hnzno1");
-      attr(div2, "class", "multilang-row svelte-hnzno1");
+      attr(span, "class", "content-path svelte-1soj2u");
+      attr(div0, "class", "multilang-cell content-path-cell svelte-1soj2u");
+      attr(select, "class", "language-select svelte-1soj2u");
+      attr(div1, "class", "multilang-cell language-cell svelte-1soj2u");
+      attr(div2, "class", "multilang-row svelte-1soj2u");
       toggle_class(div2, "removable", ctx[3].length > 1);
       this.first = div2;
     },
@@ -76600,7 +78254,7 @@ function create_each_block_1(key_1, ctx) {
           each_blocks[i].m(select, null);
         }
       }
-      select_option(select, ctx[79].languageCode);
+      select_option(select, ctx[95].languageCode);
       append(div1, t3);
       if (if_block1)
         if_block1.m(div1, null);
@@ -76611,13 +78265,13 @@ function create_each_block_1(key_1, ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 24 && t0_value !== (t0_value = (ctx[79].folder ? ctx[79].folder.name : ctx[79].file ? ctx[79].file.name : ctx[4]("ui.no_content_selected")) + ""))
+      if (dirty[0] & 24 && t0_value !== (t0_value = (ctx[95].folder ? ctx[95].folder.name : ctx[95].file ? ctx[95].file.name : ctx[4]("ui.no_content_selected")) + ""))
         set_data(t0, t0_value);
-      if (ctx[79].weight === 1) {
+      if (ctx[95].weight === 1) {
         if (if_block0) {
           if_block0.p(ctx, dirty);
         } else {
-          if_block0 = create_if_block_9(ctx);
+          if_block0 = create_if_block_12(ctx);
           if_block0.c();
           if_block0.m(div0, null);
         }
@@ -76625,8 +78279,8 @@ function create_each_block_1(key_1, ctx) {
         if_block0.d(1);
         if_block0 = null;
       }
-      if (dirty[0] & 1048576) {
-        each_value_2 = ctx[20];
+      if (dirty[0] & 33554432) {
+        each_value_2 = ctx[25];
         let i;
         for (i = 0; i < each_value_2.length; i += 1) {
           const child_ctx = get_each_context_2(ctx, each_value_2, i);
@@ -76643,14 +78297,14 @@ function create_each_block_1(key_1, ctx) {
         }
         each_blocks.length = each_value_2.length;
       }
-      if (dirty[0] & 1048584 && select_value_value !== (select_value_value = ctx[79].languageCode)) {
-        select_option(select, ctx[79].languageCode);
+      if (dirty[0] & 33554440 && select_value_value !== (select_value_value = ctx[95].languageCode)) {
+        select_option(select, ctx[95].languageCode);
       }
       if (ctx[3].length > 1) {
         if (if_block1) {
           if_block1.p(ctx, dirty);
         } else {
-          if_block1 = create_if_block_8(ctx);
+          if_block1 = create_if_block_11(ctx);
           if_block1.c();
           if_block1.m(div1, null);
         }
@@ -76675,7 +78329,7 @@ function create_each_block_1(key_1, ctx) {
     }
   };
 }
-function create_if_block_7(ctx) {
+function create_if_block_10(ctx) {
   let div;
   let span;
   let t_1_value = ctx[4]("ui.no_content_selected_hint") + "";
@@ -76685,8 +78339,8 @@ function create_if_block_7(ctx) {
       div = element("div");
       span = element("span");
       t_1 = text2(t_1_value);
-      attr(span, "class", "empty-message svelte-hnzno1");
-      attr(div, "class", "multilang-empty svelte-hnzno1");
+      attr(span, "class", "empty-message svelte-1soj2u");
+      attr(div, "class", "multilang-empty svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -76703,7 +78357,85 @@ function create_if_block_7(ctx) {
     }
   };
 }
-function create_if_block_6(ctx) {
+function create_else_block_3(ctx) {
+  let span;
+  let t_1_value = ctx[4]("ui.site_assets_placeholder") + "";
+  let t_1;
+  return {
+    c() {
+      span = element("span");
+      t_1 = text2(t_1_value);
+      attr(span, "class", "assets-placeholder svelte-1soj2u");
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append(span, t_1);
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & 16 && t_1_value !== (t_1_value = ctx2[4]("ui.site_assets_placeholder") + ""))
+        set_data(t_1, t_1_value);
+    },
+    d(detaching) {
+      if (detaching)
+        detach(span);
+    }
+  };
+}
+function create_if_block_9(ctx) {
+  let span;
+  let t0_value = (ctx[20].folder?.name || ctx[20].path) + "";
+  let t0;
+  let t1;
+  let button;
+  let t2_value = ctx[4]("ui.clear_assets") + "";
+  let t2;
+  let button_title_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      span = element("span");
+      t0 = text2(t0_value);
+      t1 = space();
+      button = element("button");
+      t2 = text2(t2_value);
+      attr(span, "class", "assets-path svelte-1soj2u");
+      attr(button, "class", "clear-assets-btn svelte-1soj2u");
+      attr(button, "title", button_title_value = ctx[4]("ui.clear_assets"));
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append(span, t0);
+      insert(target, t1, anchor);
+      insert(target, button, anchor);
+      append(button, t2);
+      if (!mounted) {
+        dispose = listen(button, "click", ctx[29]);
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & 1048576 && t0_value !== (t0_value = (ctx2[20].folder?.name || ctx2[20].path) + ""))
+        set_data(t0, t0_value);
+      if (dirty[0] & 16 && t2_value !== (t2_value = ctx2[4]("ui.clear_assets") + ""))
+        set_data(t2, t2_value);
+      if (dirty[0] & 16 && button_title_value !== (button_title_value = ctx2[4]("ui.clear_assets"))) {
+        attr(button, "title", button_title_value);
+      }
+    },
+    d(detaching) {
+      if (detaching)
+        detach(span);
+      if (detaching)
+        detach(t1);
+      if (detaching)
+        detach(button);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_8(ctx) {
   let div6;
   let div1;
   let label0;
@@ -76774,31 +78506,31 @@ function create_if_block_6(ctx) {
       t12 = space();
       div4 = element("div");
       t13 = text2(t13_value);
-      attr(label0, "class", "section-label svelte-hnzno1");
+      attr(label0, "class", "section-label svelte-1soj2u");
       attr(label0, "for", "site-path");
       attr(input0, "type", "text");
-      attr(input0, "class", "form-input svelte-hnzno1");
+      attr(input0, "class", "form-input svelte-1soj2u");
       attr(input0, "placeholder", input0_placeholder_value = ctx[4]("ui.site_path_placeholder"));
       attr(input0, "title", input0_title_value = ctx[4]("ui.site_path_hint"));
-      attr(div0, "class", "field-hint svelte-hnzno1");
-      attr(div1, "class", "advanced-field svelte-hnzno1");
-      attr(label1, "class", "section-label svelte-hnzno1");
+      attr(div0, "class", "field-hint svelte-1soj2u");
+      attr(div1, "class", "advanced-field svelte-1soj2u");
+      attr(label1, "class", "section-label svelte-1soj2u");
       attr(label1, "for", "google-analytics");
       attr(input1, "type", "text");
-      attr(input1, "class", "form-input svelte-hnzno1");
+      attr(input1, "class", "form-input svelte-1soj2u");
       attr(input1, "placeholder", input1_placeholder_value = ctx[4]("ui.google_analytics_placeholder"));
       attr(input1, "title", input1_title_value = ctx[4]("ui.google_analytics_hint"));
-      attr(div2, "class", "field-hint svelte-hnzno1");
-      attr(div3, "class", "advanced-field svelte-hnzno1");
-      attr(label2, "class", "section-label svelte-hnzno1");
+      attr(div2, "class", "field-hint svelte-1soj2u");
+      attr(div3, "class", "advanced-field svelte-1soj2u");
+      attr(label2, "class", "section-label svelte-1soj2u");
       attr(label2, "for", "disqus-shortname");
       attr(input2, "type", "text");
-      attr(input2, "class", "form-input svelte-hnzno1");
+      attr(input2, "class", "form-input svelte-1soj2u");
       attr(input2, "placeholder", input2_placeholder_value = ctx[4]("ui.disqus_placeholder"));
       attr(input2, "title", input2_title_value = ctx[4]("ui.disqus_hint"));
-      attr(div4, "class", "field-hint svelte-hnzno1");
-      attr(div5, "class", "advanced-field svelte-hnzno1");
-      attr(div6, "class", "advanced-content svelte-hnzno1");
+      attr(div4, "class", "field-hint svelte-1soj2u");
+      attr(div5, "class", "advanced-field svelte-1soj2u");
+      attr(div6, "class", "advanced-content svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -76833,10 +78565,10 @@ function create_if_block_6(ctx) {
       append(div4, t13);
       if (!mounted) {
         dispose = [
-          listen(input0, "input", ctx[44]),
-          listen(input0, "blur", ctx[26]),
-          listen(input1, "input", ctx[45]),
-          listen(input2, "input", ctx[46])
+          listen(input0, "input", ctx[54]),
+          listen(input0, "blur", ctx[33]),
+          listen(input1, "input", ctx[55]),
+          listen(input2, "input", ctx[56])
         ];
         mounted = true;
       }
@@ -76890,6 +78622,159 @@ function create_if_block_6(ctx) {
     }
   };
 }
+function create_if_block_6(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block_7, create_else_block_2];
+  const if_blocks = [];
+  function select_block_type_1(ctx2, dirty) {
+    if (ctx2[17])
+      return 0;
+    return 1;
+  }
+  current_block_type_index = select_block_type_1(ctx, [-1, -1, -1, -1]);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type_1(ctx2, dirty);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if_blocks[current_block_type_index].d(detaching);
+      if (detaching)
+        detach(if_block_anchor);
+    }
+  };
+}
+function create_else_block_2(ctx) {
+  let button;
+  let t_1_value = ctx[4]("ui.download_sample") + "";
+  let t_1;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      button = element("button");
+      t_1 = text2(t_1_value);
+      attr(button, "class", "download-sample-btn svelte-1soj2u");
+    },
+    m(target, anchor) {
+      insert(target, button, anchor);
+      append(button, t_1);
+      if (!mounted) {
+        dispose = listen(button, "click", ctx[31]);
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & 16 && t_1_value !== (t_1_value = ctx2[4]("ui.download_sample") + ""))
+        set_data(t_1, t_1_value);
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching)
+        detach(button);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_if_block_7(ctx) {
+  let div;
+  let span;
+  let t0_value = ctx[4]("ui.downloading_sample") + "";
+  let t0;
+  let t1;
+  let progressbar;
+  let current;
+  progressbar = new ProgressBar_default({
+    props: {
+      progress: ctx[18]
+    }
+  });
+  return {
+    c() {
+      div = element("div");
+      span = element("span");
+      t0 = text2(t0_value);
+      t1 = space();
+      create_component(progressbar.$$.fragment);
+      attr(span, "class", "progress-text svelte-1soj2u");
+      attr(div, "class", "sample-download-progress svelte-1soj2u");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, span);
+      append(span, t0);
+      append(div, t1);
+      mount_component(progressbar, div, null);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if ((!current || dirty[0] & 16) && t0_value !== (t0_value = ctx2[4]("ui.downloading_sample") + ""))
+        set_data(t0, t0_value);
+      const progressbar_changes = {};
+      if (dirty[0] & 262144)
+        progressbar_changes.progress = ctx2[18];
+      progressbar.$set(progressbar_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(progressbar.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(progressbar.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching)
+        detach(div);
+      destroy_component(progressbar);
+    }
+  };
+}
 function create_else_block_1(ctx) {
   let button;
   let t_1_value = (ctx[11] ? ctx[4]("ui.regenerate_preview") : ctx[4]("ui.generate_preview")) + "";
@@ -76901,21 +78786,21 @@ function create_else_block_1(ctx) {
     c() {
       button = element("button");
       t_1 = text2(t_1_value);
-      attr(button, "class", "action-button preview-button svelte-hnzno1");
+      attr(button, "class", "action-button preview-button svelte-1soj2u");
       button.disabled = button_disabled_value = ctx[3].length === 0;
     },
     m(target, anchor) {
       insert(target, button, anchor);
       append(button, t_1);
       if (!mounted) {
-        dispose = listen(button, "click", ctx[27]);
+        dispose = listen(button, "click", ctx[34]);
         mounted = true;
       }
     },
     p(ctx2, dirty) {
       if (dirty[0] & 2064 && t_1_value !== (t_1_value = (ctx2[11] ? ctx2[4]("ui.regenerate_preview") : ctx2[4]("ui.generate_preview")) + ""))
         set_data(t_1, t_1_value);
-      if (dirty[0] & 1048584 && button_disabled_value !== (button_disabled_value = ctx2[3].length === 0)) {
+      if (dirty[0] & 33554440 && button_disabled_value !== (button_disabled_value = ctx2[3].length === 0)) {
         button.disabled = button_disabled_value;
       }
     },
@@ -76947,8 +78832,8 @@ function create_if_block_5(ctx) {
       t0 = text2(t0_value);
       t1 = space();
       create_component(progressbar.$$.fragment);
-      attr(p, "class", "svelte-hnzno1");
-      attr(div, "class", "progress-container svelte-hnzno1");
+      attr(p, "class", "svelte-1soj2u");
+      attr(div, "class", "progress-container svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -77012,11 +78897,11 @@ function create_if_block_4(ctx) {
       t4 = text2(t4_value);
       attr(a, "href", ctx[10]);
       attr(a, "target", "_blank");
-      attr(a, "class", "preview-url svelte-hnzno1");
-      attr(button, "class", "action-button export-button svelte-hnzno1");
+      attr(a, "class", "preview-url svelte-1soj2u");
+      attr(button, "class", "action-button export-button svelte-1soj2u");
       button.disabled = ctx[16];
-      attr(div0, "class", "preview-actions svelte-hnzno1");
-      attr(div1, "class", "preview-link svelte-hnzno1");
+      attr(div0, "class", "preview-actions svelte-1soj2u");
+      attr(div1, "class", "preview-link svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -77030,7 +78915,7 @@ function create_if_block_4(ctx) {
       append(div0, button);
       append(button, t4);
       if (!mounted) {
-        dispose = listen(button, "click", ctx[29]);
+        dispose = listen(button, "click", ctx[36]);
         mounted = true;
       }
     },
@@ -77058,14 +78943,14 @@ function create_if_block_4(ctx) {
 }
 function create_each_block(ctx) {
   let option;
-  let t_1_value = ctx[76].label + "";
+  let t_1_value = ctx[92].label + "";
   let t_1;
   let option_value_value;
   return {
     c() {
       option = element("option");
       t_1 = text2(t_1_value);
-      option.__value = option_value_value = ctx[76].value;
+      option.__value = option_value_value = ctx[92].value;
       option.value = option.__value;
     },
     m(target, anchor) {
@@ -77073,9 +78958,9 @@ function create_each_block(ctx) {
       append(option, t_1);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & 262144 && t_1_value !== (t_1_value = ctx2[76].label + ""))
+      if (dirty[0] & 4194304 && t_1_value !== (t_1_value = ctx2[92].label + ""))
         set_data(t_1, t_1_value);
-      if (dirty[0] & 262144 && option_value_value !== (option_value_value = ctx2[76].value)) {
+      if (dirty[0] & 4194304 && option_value_value !== (option_value_value = ctx2[92].value)) {
         option.__value = option_value_value;
         option.value = option.__value;
       }
@@ -77097,14 +78982,14 @@ function create_else_block(ctx) {
     c() {
       button = element("button");
       t_1 = text2(t_1_value);
-      attr(button, "class", "action-button publish-button svelte-hnzno1");
+      attr(button, "class", "action-button publish-button svelte-1soj2u");
       button.disabled = button_disabled_value = !ctx[11];
     },
     m(target, anchor) {
       insert(target, button, anchor);
       append(button, t_1);
       if (!mounted) {
-        dispose = listen(button, "click", ctx[28]);
+        dispose = listen(button, "click", ctx[35]);
         mounted = true;
       }
     },
@@ -77143,8 +79028,8 @@ function create_if_block_3(ctx) {
       t0 = text2(t0_value);
       t1 = space();
       create_component(progressbar.$$.fragment);
-      attr(p, "class", "svelte-hnzno1");
-      attr(div, "class", "progress-container svelte-hnzno1");
+      attr(p, "class", "svelte-1soj2u");
+      attr(div, "class", "progress-container svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -77185,13 +79070,13 @@ function create_if_block(ctx) {
   let t0_value = ctx[4]("ui.published_successfully") + "";
   let t0;
   let t1;
-  function select_block_type_2(ctx2, dirty) {
+  function select_block_type_4(ctx2, dirty) {
     if (ctx2[15])
       return create_if_block_1;
     if (ctx2[2] === "ftp")
       return create_if_block_2;
   }
-  let current_block_type = select_block_type_2(ctx, [-1, -1, -1]);
+  let current_block_type = select_block_type_4(ctx, [-1, -1, -1, -1]);
   let if_block = current_block_type && current_block_type(ctx);
   return {
     c() {
@@ -77201,8 +79086,8 @@ function create_if_block(ctx) {
       t1 = space();
       if (if_block)
         if_block.c();
-      attr(p, "class", "success-message svelte-hnzno1");
-      attr(div, "class", "publish-success svelte-hnzno1");
+      attr(p, "class", "success-message svelte-1soj2u");
+      attr(div, "class", "publish-success svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -77215,7 +79100,7 @@ function create_if_block(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & 16 && t0_value !== (t0_value = ctx2[4]("ui.published_successfully") + ""))
         set_data(t0, t0_value);
-      if (current_block_type === (current_block_type = select_block_type_2(ctx2, dirty)) && if_block) {
+      if (current_block_type === (current_block_type = select_block_type_4(ctx2, dirty)) && if_block) {
         if_block.p(ctx2, dirty);
       } else {
         if (if_block)
@@ -77244,7 +79129,7 @@ function create_if_block_2(ctx) {
     c() {
       p = element("p");
       t_1 = text2(t_1_value);
-      attr(p, "class", "ftp-success-info svelte-hnzno1");
+      attr(p, "class", "ftp-success-info svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, p, anchor);
@@ -77269,7 +79154,7 @@ function create_if_block_1(ctx) {
       t_1 = text2(ctx[15]);
       attr(a, "href", ctx[15]);
       attr(a, "target", "_blank");
-      attr(a, "class", "publish-url svelte-hnzno1");
+      attr(a, "class", "publish-url svelte-1soj2u");
     },
     m(target, anchor) {
       insert(target, a, anchor);
@@ -77289,7 +79174,7 @@ function create_if_block_1(ctx) {
   };
 }
 function create_fragment3(ctx) {
-  let div18;
+  let div24;
   let div5;
   let div0;
   let t0_value = ctx[4]("ui.multilingual_content") + "";
@@ -77319,93 +79204,115 @@ function create_fragment3(ctx) {
   let input;
   let input_placeholder_value;
   let t11;
-  let div8;
+  let div11;
   let div7;
-  let button0;
-  let span1;
+  let t12_value = ctx[4]("ui.site_assets") + "";
+  let t12;
   let t13;
-  let t14_value = ctx[4]("ui.advanced_settings") + "";
+  let div10;
+  let div8;
   let t14;
+  let div9;
+  let t15_value = ctx[4]("ui.site_assets_hint") + "";
   let t15;
   let t16;
-  let div11;
-  let label1;
-  let t17_value = ctx[4]("ui.theme") + "";
-  let t17;
+  let div13;
+  let div12;
+  let button0;
+  let span1;
   let t18;
-  let div10;
-  let div9;
-  let span2;
+  let t19_value = ctx[4]("ui.advanced_settings") + "";
   let t19;
   let t20;
-  let button1;
-  let t21_value = ctx[4]("ui.change_theme") + "";
   let t21;
-  let t22;
-  let div13;
-  let h30;
-  let t23_value = ctx[4]("ui.preview") + "";
-  let t23;
-  let t24;
-  let div12;
-  let current_block_type_index;
-  let if_block3;
-  let t25;
-  let t26;
   let div17;
-  let h31;
-  let t27_value = ctx[4]("ui.publish") + "";
-  let t27;
-  let t28;
+  let label1;
+  let t22_value = ctx[4]("ui.theme") + "";
+  let t22;
+  let t23;
   let div16;
   let div15;
+  let span2;
+  let t24;
+  let t25;
   let div14;
-  let select;
+  let button1;
+  let t26_value = ctx[4]("ui.change_theme") + "";
+  let t26;
+  let t27;
+  let t28;
+  let div19;
+  let h30;
+  let t29_value = ctx[4]("ui.preview") + "";
   let t29;
-  let current_block_type_index_1;
-  let if_block5;
   let t30;
+  let div18;
+  let current_block_type_index;
+  let if_block5;
+  let t31;
+  let t32;
+  let div23;
+  let h31;
+  let t33_value = ctx[4]("ui.publish") + "";
+  let t33;
+  let t34;
+  let div22;
+  let div21;
+  let div20;
+  let select;
+  let t35;
+  let current_block_type_index_1;
+  let if_block7;
+  let t36;
   let current;
   let mounted;
   let dispose;
-  let if_block0 = ctx[3].length > 0 && create_if_block_10(ctx);
+  let if_block0 = ctx[3].length > 0 && create_if_block_13(ctx);
   let each_value_1 = ctx[3];
-  const get_key = (ctx2) => ctx2[79].id;
+  const get_key = (ctx2) => ctx2[95].id;
   for (let i = 0; i < each_value_1.length; i += 1) {
     let child_ctx = get_each_context_1(ctx, each_value_1, i);
     let key = get_key(child_ctx);
     each0_lookup.set(key, each_blocks_1[i] = create_each_block_1(key, child_ctx));
   }
-  let if_block1 = ctx[3].length === 0 && create_if_block_7(ctx);
-  let if_block2 = ctx[5] && create_if_block_6(ctx);
+  let if_block1 = ctx[3].length === 0 && create_if_block_10(ctx);
+  function select_block_type(ctx2, dirty) {
+    if (ctx2[20])
+      return create_if_block_9;
+    return create_else_block_3;
+  }
+  let current_block_type = select_block_type(ctx, [-1, -1, -1, -1]);
+  let if_block2 = current_block_type(ctx);
+  let if_block3 = ctx[5] && create_if_block_8(ctx);
+  let if_block4 = ctx[19] && ctx[19].demo_notes_url && create_if_block_6(ctx);
   const if_block_creators = [create_if_block_5, create_else_block_1];
   const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
+  function select_block_type_2(ctx2, dirty) {
     if (ctx2[8])
       return 0;
     return 1;
   }
-  current_block_type_index = select_block_type(ctx, [-1, -1, -1]);
-  if_block3 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  let if_block4 = ctx[11] && ctx[10] && create_if_block_4(ctx);
-  let each_value = ctx[18];
+  current_block_type_index = select_block_type_2(ctx, [-1, -1, -1, -1]);
+  if_block5 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  let if_block6 = ctx[11] && ctx[10] && create_if_block_4(ctx);
+  let each_value = ctx[22];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
     each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
   }
   const if_block_creators_1 = [create_if_block_3, create_else_block];
   const if_blocks_1 = [];
-  function select_block_type_1(ctx2, dirty) {
+  function select_block_type_3(ctx2, dirty) {
     if (ctx2[12])
       return 0;
     return 1;
   }
-  current_block_type_index_1 = select_block_type_1(ctx, [-1, -1, -1]);
-  if_block5 = if_blocks_1[current_block_type_index_1] = if_block_creators_1[current_block_type_index_1](ctx);
-  let if_block6 = ctx[14] && create_if_block(ctx);
+  current_block_type_index_1 = select_block_type_3(ctx, [-1, -1, -1, -1]);
+  if_block7 = if_blocks_1[current_block_type_index_1] = if_block_creators_1[current_block_type_index_1](ctx);
+  let if_block8 = ctx[14] && create_if_block(ctx);
   return {
     c() {
-      div18 = element("div");
+      div24 = element("div");
       div5 = element("div");
       div0 = element("div");
       t0 = text2(t0_value);
@@ -77435,96 +79342,117 @@ function create_fragment3(ctx) {
       t10 = space();
       input = element("input");
       t11 = space();
-      div8 = element("div");
+      div11 = element("div");
       div7 = element("div");
+      t12 = text2(t12_value);
+      t13 = space();
+      div10 = element("div");
+      div8 = element("div");
+      if_block2.c();
+      t14 = space();
+      div9 = element("div");
+      t15 = text2(t15_value);
+      t16 = space();
+      div13 = element("div");
+      div12 = element("div");
       button0 = element("button");
       span1 = element("span");
       span1.textContent = "\u25B6";
-      t13 = space();
-      t14 = text2(t14_value);
-      t15 = space();
-      if (if_block2)
-        if_block2.c();
-      t16 = space();
-      div11 = element("div");
-      label1 = element("label");
-      t17 = text2(t17_value);
       t18 = space();
-      div10 = element("div");
-      div9 = element("div");
-      span2 = element("span");
-      t19 = text2(ctx[17]);
+      t19 = text2(t19_value);
       t20 = space();
-      button1 = element("button");
-      t21 = text2(t21_value);
-      t22 = space();
-      div13 = element("div");
-      h30 = element("h3");
-      t23 = text2(t23_value);
-      t24 = space();
-      div12 = element("div");
-      if_block3.c();
-      t25 = space();
-      if (if_block4)
-        if_block4.c();
-      t26 = space();
+      if (if_block3)
+        if_block3.c();
+      t21 = space();
       div17 = element("div");
-      h31 = element("h3");
-      t27 = text2(t27_value);
-      t28 = space();
+      label1 = element("label");
+      t22 = text2(t22_value);
+      t23 = space();
       div16 = element("div");
       div15 = element("div");
+      span2 = element("span");
+      t24 = text2(ctx[21]);
+      t25 = space();
       div14 = element("div");
+      button1 = element("button");
+      t26 = text2(t26_value);
+      t27 = space();
+      if (if_block4)
+        if_block4.c();
+      t28 = space();
+      div19 = element("div");
+      h30 = element("h3");
+      t29 = text2(t29_value);
+      t30 = space();
+      div18 = element("div");
+      if_block5.c();
+      t31 = space();
+      if (if_block6)
+        if_block6.c();
+      t32 = space();
+      div23 = element("div");
+      h31 = element("h3");
+      t33 = text2(t33_value);
+      t34 = space();
+      div22 = element("div");
+      div21 = element("div");
+      div20 = element("div");
       select = element("select");
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      t29 = space();
-      if_block5.c();
-      t30 = space();
-      if (if_block6)
-        if_block6.c();
-      attr(div0, "class", "section-label svelte-hnzno1");
-      attr(div1, "class", "multilang-header-cell svelte-hnzno1");
-      attr(div2, "class", "multilang-header-cell svelte-hnzno1");
-      attr(div3, "class", "multilang-header svelte-hnzno1");
-      attr(div4, "class", "multilang-table svelte-hnzno1");
-      attr(div5, "class", "section svelte-hnzno1");
-      attr(label0, "class", "section-label svelte-hnzno1");
+      t35 = space();
+      if_block7.c();
+      t36 = space();
+      if (if_block8)
+        if_block8.c();
+      attr(div0, "class", "section-label svelte-1soj2u");
+      attr(div1, "class", "multilang-header-cell svelte-1soj2u");
+      attr(div2, "class", "multilang-header-cell svelte-1soj2u");
+      attr(div3, "class", "multilang-header svelte-1soj2u");
+      attr(div4, "class", "multilang-table svelte-1soj2u");
+      attr(div5, "class", "section svelte-1soj2u");
+      attr(label0, "class", "section-label svelte-1soj2u");
       attr(label0, "for", "site-name");
       attr(input, "type", "text");
-      attr(input, "class", "form-input svelte-hnzno1");
+      attr(input, "class", "form-input svelte-1soj2u");
       attr(input, "placeholder", input_placeholder_value = ctx[4]("ui.site_name_placeholder"));
-      attr(div6, "class", "section svelte-hnzno1");
-      attr(span1, "class", "toggle-icon svelte-hnzno1");
+      attr(div6, "class", "section svelte-1soj2u");
+      attr(div7, "class", "section-label svelte-1soj2u");
+      attr(div8, "class", "assets-display svelte-1soj2u");
+      attr(div9, "class", "assets-hint svelte-1soj2u");
+      attr(div10, "class", "site-assets-container svelte-1soj2u");
+      attr(div11, "class", "section svelte-1soj2u");
+      attr(span1, "class", "toggle-icon svelte-1soj2u");
       toggle_class(span1, "expanded", ctx[5]);
-      attr(button0, "class", "advanced-toggle svelte-hnzno1");
+      attr(button0, "class", "advanced-toggle svelte-1soj2u");
       attr(button0, "aria-expanded", ctx[5]);
-      attr(div7, "class", "advanced-settings svelte-hnzno1");
-      attr(div8, "class", "section svelte-hnzno1");
-      attr(label1, "class", "section-label svelte-hnzno1");
+      attr(div12, "class", "advanced-settings svelte-1soj2u");
+      attr(div13, "class", "section svelte-1soj2u");
+      attr(label1, "class", "section-label svelte-1soj2u");
       attr(label1, "for", "themes");
-      attr(span2, "class", "theme-name svelte-hnzno1");
-      attr(button1, "class", "change-theme-btn svelte-hnzno1");
-      attr(div9, "class", "current-theme svelte-hnzno1");
-      attr(div10, "class", "theme-selector svelte-hnzno1");
-      attr(div11, "class", "section svelte-hnzno1");
-      attr(h30, "class", "section-title svelte-hnzno1");
-      attr(div12, "class", "preview-section svelte-hnzno1");
-      attr(div13, "class", "section svelte-hnzno1");
-      attr(h31, "class", "section-title svelte-hnzno1");
-      attr(select, "class", "form-select svelte-hnzno1");
+      attr(span2, "class", "theme-name svelte-1soj2u");
+      attr(button1, "class", "change-theme-btn svelte-1soj2u");
+      attr(div14, "class", "theme-actions svelte-1soj2u");
+      attr(div15, "class", "current-theme svelte-1soj2u");
+      attr(div16, "class", "theme-selector svelte-1soj2u");
+      attr(div17, "class", "section svelte-1soj2u");
+      attr(h30, "class", "section-title svelte-1soj2u");
+      attr(div18, "class", "preview-section svelte-1soj2u");
+      attr(div19, "class", "section svelte-1soj2u");
+      attr(h31, "class", "section-title svelte-1soj2u");
+      attr(select, "class", "form-select svelte-1soj2u");
       if (ctx[2] === void 0)
-        add_render_callback(() => ctx[47].call(select));
-      attr(div14, "class", "publish-select-wrapper svelte-hnzno1");
-      attr(div15, "class", "publish-options svelte-hnzno1");
-      attr(div16, "class", "publish-section svelte-hnzno1");
-      attr(div17, "class", "section svelte-hnzno1");
-      attr(div18, "class", "site-builder svelte-hnzno1");
+        add_render_callback(() => ctx[57].call(select));
+      attr(div20, "class", "publish-select-wrapper svelte-1soj2u");
+      attr(div21, "class", "publish-options svelte-1soj2u");
+      attr(div22, "class", "publish-section svelte-1soj2u");
+      attr(div23, "class", "section svelte-1soj2u");
+      attr(div24, "class", "site-builder svelte-1soj2u");
     },
     m(target, anchor) {
-      insert(target, div18, anchor);
-      append(div18, div5);
+      insert(target, div24, anchor);
+      append(div24, div5);
       append(div5, div0);
       append(div0, t0);
       append(div5, t1);
@@ -77548,72 +79476,87 @@ function create_fragment3(ctx) {
       append(div4, t7);
       if (if_block1)
         if_block1.m(div4, null);
-      append(div18, t8);
-      append(div18, div6);
+      append(div24, t8);
+      append(div24, div6);
       append(div6, label0);
       append(label0, t9);
       append(div6, t10);
       append(div6, input);
       set_input_value(input, ctx[0]);
-      append(div18, t11);
-      append(div18, div8);
-      append(div8, div7);
-      append(div7, button0);
-      append(button0, span1);
-      append(button0, t13);
-      append(button0, t14);
-      append(div7, t15);
-      if (if_block2)
-        if_block2.m(div7, null);
-      append(div18, t16);
-      append(div18, div11);
-      append(div11, label1);
-      append(label1, t17);
-      append(div11, t18);
+      append(div24, t11);
+      append(div24, div11);
+      append(div11, div7);
+      append(div7, t12);
+      append(div11, t13);
       append(div11, div10);
+      append(div10, div8);
+      if_block2.m(div8, null);
+      append(div10, t14);
       append(div10, div9);
-      append(div9, span2);
-      append(span2, t19);
-      append(div9, t20);
-      append(div9, button1);
-      append(button1, t21);
-      append(div18, t22);
-      append(div18, div13);
-      append(div13, h30);
-      append(h30, t23);
-      append(div13, t24);
+      append(div9, t15);
+      append(div24, t16);
+      append(div24, div13);
       append(div13, div12);
-      if_blocks[current_block_type_index].m(div12, null);
-      append(div12, t25);
-      if (if_block4)
-        if_block4.m(div12, null);
-      append(div18, t26);
-      append(div18, div17);
-      append(div17, h31);
-      append(h31, t27);
-      append(div17, t28);
+      append(div12, button0);
+      append(button0, span1);
+      append(button0, t18);
+      append(button0, t19);
+      append(div12, t20);
+      if (if_block3)
+        if_block3.m(div12, null);
+      append(div24, t21);
+      append(div24, div17);
+      append(div17, label1);
+      append(label1, t22);
+      append(div17, t23);
       append(div17, div16);
       append(div16, div15);
+      append(div15, span2);
+      append(span2, t24);
+      append(div15, t25);
       append(div15, div14);
-      append(div14, select);
+      append(div14, button1);
+      append(button1, t26);
+      append(div14, t27);
+      if (if_block4)
+        if_block4.m(div14, null);
+      append(div24, t28);
+      append(div24, div19);
+      append(div19, h30);
+      append(h30, t29);
+      append(div19, t30);
+      append(div19, div18);
+      if_blocks[current_block_type_index].m(div18, null);
+      append(div18, t31);
+      if (if_block6)
+        if_block6.m(div18, null);
+      append(div24, t32);
+      append(div24, div23);
+      append(div23, h31);
+      append(h31, t33);
+      append(div23, t34);
+      append(div23, div22);
+      append(div22, div21);
+      append(div21, div20);
+      append(div20, select);
       for (let i = 0; i < each_blocks.length; i += 1) {
         if (each_blocks[i]) {
           each_blocks[i].m(select, null);
         }
       }
       select_option(select, ctx[2], true);
-      append(div15, t29);
-      if_blocks_1[current_block_type_index_1].m(div15, null);
-      append(div16, t30);
-      if (if_block6)
-        if_block6.m(div16, null);
+      append(div21, t35);
+      if_blocks_1[current_block_type_index_1].m(div21, null);
+      append(div22, t36);
+      if (if_block8)
+        if_block8.m(div22, null);
       current = true;
       if (!mounted) {
         dispose = [
-          listen(input, "input", ctx[43]),
-          listen(button0, "click", ctx[25]),
-          listen(button1, "click", ctx[24]),
-          listen(select, "change", ctx[47])
+          listen(input, "input", ctx[53]),
+          listen(button0, "click", ctx[32]),
+          listen(button1, "click", ctx[30]),
+          listen(select, "change", ctx[57])
         ];
         mounted = true;
       }
@@ -77629,7 +79572,7 @@ function create_fragment3(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_10(ctx2);
+          if_block0 = create_if_block_13(ctx2);
           if_block0.c();
           if_block0.m(div2, null);
         }
@@ -77637,7 +79580,7 @@ function create_fragment3(ctx) {
         if_block0.d(1);
         if_block0 = null;
       }
-      if (dirty[0] & 7340056) {
+      if (dirty[0] & 234881048) {
         each_value_1 = ctx2[3];
         each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key, 1, ctx2, each_value_1, each0_lookup, div4, destroy_block, create_each_block_1, t7, get_each_context_1);
       }
@@ -77645,7 +79588,7 @@ function create_fragment3(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_7(ctx2);
+          if_block1 = create_if_block_10(ctx2);
           if_block1.c();
           if_block1.m(div4, null);
         }
@@ -77661,36 +79604,69 @@ function create_fragment3(ctx) {
       if (dirty[0] & 1 && input.value !== ctx2[0]) {
         set_input_value(input, ctx2[0]);
       }
+      if ((!current || dirty[0] & 16) && t12_value !== (t12_value = ctx2[4]("ui.site_assets") + ""))
+        set_data(t12, t12_value);
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block2) {
+        if_block2.p(ctx2, dirty);
+      } else {
+        if_block2.d(1);
+        if_block2 = current_block_type(ctx2);
+        if (if_block2) {
+          if_block2.c();
+          if_block2.m(div8, null);
+        }
+      }
+      if ((!current || dirty[0] & 16) && t15_value !== (t15_value = ctx2[4]("ui.site_assets_hint") + ""))
+        set_data(t15, t15_value);
       if (!current || dirty[0] & 32) {
         toggle_class(span1, "expanded", ctx2[5]);
       }
-      if ((!current || dirty[0] & 16) && t14_value !== (t14_value = ctx2[4]("ui.advanced_settings") + ""))
-        set_data(t14, t14_value);
+      if ((!current || dirty[0] & 16) && t19_value !== (t19_value = ctx2[4]("ui.advanced_settings") + ""))
+        set_data(t19, t19_value);
       if (!current || dirty[0] & 32) {
         attr(button0, "aria-expanded", ctx2[5]);
       }
       if (ctx2[5]) {
-        if (if_block2) {
-          if_block2.p(ctx2, dirty);
+        if (if_block3) {
+          if_block3.p(ctx2, dirty);
         } else {
-          if_block2 = create_if_block_6(ctx2);
-          if_block2.c();
-          if_block2.m(div7, null);
+          if_block3 = create_if_block_8(ctx2);
+          if_block3.c();
+          if_block3.m(div12, null);
         }
-      } else if (if_block2) {
-        if_block2.d(1);
-        if_block2 = null;
+      } else if (if_block3) {
+        if_block3.d(1);
+        if_block3 = null;
       }
-      if ((!current || dirty[0] & 16) && t17_value !== (t17_value = ctx2[4]("ui.theme") + ""))
-        set_data(t17, t17_value);
-      if (!current || dirty[0] & 131072)
-        set_data(t19, ctx2[17]);
-      if ((!current || dirty[0] & 16) && t21_value !== (t21_value = ctx2[4]("ui.change_theme") + ""))
-        set_data(t21, t21_value);
-      if ((!current || dirty[0] & 16) && t23_value !== (t23_value = ctx2[4]("ui.preview") + ""))
-        set_data(t23, t23_value);
+      if ((!current || dirty[0] & 16) && t22_value !== (t22_value = ctx2[4]("ui.theme") + ""))
+        set_data(t22, t22_value);
+      if (!current || dirty[0] & 2097152)
+        set_data(t24, ctx2[21]);
+      if ((!current || dirty[0] & 16) && t26_value !== (t26_value = ctx2[4]("ui.change_theme") + ""))
+        set_data(t26, t26_value);
+      if (ctx2[19] && ctx2[19].demo_notes_url) {
+        if (if_block4) {
+          if_block4.p(ctx2, dirty);
+          if (dirty[0] & 524288) {
+            transition_in(if_block4, 1);
+          }
+        } else {
+          if_block4 = create_if_block_6(ctx2);
+          if_block4.c();
+          transition_in(if_block4, 1);
+          if_block4.m(div14, null);
+        }
+      } else if (if_block4) {
+        group_outros();
+        transition_out(if_block4, 1, 1, () => {
+          if_block4 = null;
+        });
+        check_outros();
+      }
+      if ((!current || dirty[0] & 16) && t29_value !== (t29_value = ctx2[4]("ui.preview") + ""))
+        set_data(t29, t29_value);
       let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2, dirty);
+      current_block_type_index = select_block_type_2(ctx2, dirty);
       if (current_block_type_index === previous_block_index) {
         if_blocks[current_block_type_index].p(ctx2, dirty);
       } else {
@@ -77699,32 +79675,32 @@ function create_fragment3(ctx) {
           if_blocks[previous_block_index] = null;
         });
         check_outros();
-        if_block3 = if_blocks[current_block_type_index];
-        if (!if_block3) {
-          if_block3 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block3.c();
+        if_block5 = if_blocks[current_block_type_index];
+        if (!if_block5) {
+          if_block5 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block5.c();
         } else {
-          if_block3.p(ctx2, dirty);
+          if_block5.p(ctx2, dirty);
         }
-        transition_in(if_block3, 1);
-        if_block3.m(div12, t25);
+        transition_in(if_block5, 1);
+        if_block5.m(div18, t31);
       }
       if (ctx2[11] && ctx2[10]) {
-        if (if_block4) {
-          if_block4.p(ctx2, dirty);
+        if (if_block6) {
+          if_block6.p(ctx2, dirty);
         } else {
-          if_block4 = create_if_block_4(ctx2);
-          if_block4.c();
-          if_block4.m(div12, null);
+          if_block6 = create_if_block_4(ctx2);
+          if_block6.c();
+          if_block6.m(div18, null);
         }
-      } else if (if_block4) {
-        if_block4.d(1);
-        if_block4 = null;
+      } else if (if_block6) {
+        if_block6.d(1);
+        if_block6 = null;
       }
-      if ((!current || dirty[0] & 16) && t27_value !== (t27_value = ctx2[4]("ui.publish") + ""))
-        set_data(t27, t27_value);
-      if (dirty[0] & 262144) {
-        each_value = ctx2[18];
+      if ((!current || dirty[0] & 16) && t33_value !== (t33_value = ctx2[4]("ui.publish") + ""))
+        set_data(t33, t33_value);
+      if (dirty[0] & 4194304) {
+        each_value = ctx2[22];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
           const child_ctx = get_each_context(ctx2, each_value, i);
@@ -77741,11 +79717,11 @@ function create_fragment3(ctx) {
         }
         each_blocks.length = each_value.length;
       }
-      if (dirty[0] & 262148) {
+      if (dirty[0] & 4194308) {
         select_option(select, ctx2[2]);
       }
       let previous_block_index_1 = current_block_type_index_1;
-      current_block_type_index_1 = select_block_type_1(ctx2, dirty);
+      current_block_type_index_1 = select_block_type_3(ctx2, dirty);
       if (current_block_type_index_1 === previous_block_index_1) {
         if_blocks_1[current_block_type_index_1].p(ctx2, dirty);
       } else {
@@ -77754,44 +79730,46 @@ function create_fragment3(ctx) {
           if_blocks_1[previous_block_index_1] = null;
         });
         check_outros();
-        if_block5 = if_blocks_1[current_block_type_index_1];
-        if (!if_block5) {
-          if_block5 = if_blocks_1[current_block_type_index_1] = if_block_creators_1[current_block_type_index_1](ctx2);
-          if_block5.c();
+        if_block7 = if_blocks_1[current_block_type_index_1];
+        if (!if_block7) {
+          if_block7 = if_blocks_1[current_block_type_index_1] = if_block_creators_1[current_block_type_index_1](ctx2);
+          if_block7.c();
         } else {
-          if_block5.p(ctx2, dirty);
+          if_block7.p(ctx2, dirty);
         }
-        transition_in(if_block5, 1);
-        if_block5.m(div15, null);
+        transition_in(if_block7, 1);
+        if_block7.m(div21, null);
       }
       if (ctx2[14]) {
-        if (if_block6) {
-          if_block6.p(ctx2, dirty);
+        if (if_block8) {
+          if_block8.p(ctx2, dirty);
         } else {
-          if_block6 = create_if_block(ctx2);
-          if_block6.c();
-          if_block6.m(div16, null);
+          if_block8 = create_if_block(ctx2);
+          if_block8.c();
+          if_block8.m(div22, null);
         }
-      } else if (if_block6) {
-        if_block6.d(1);
-        if_block6 = null;
+      } else if (if_block8) {
+        if_block8.d(1);
+        if_block8 = null;
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block3);
+      transition_in(if_block4);
       transition_in(if_block5);
+      transition_in(if_block7);
       current = true;
     },
     o(local) {
-      transition_out(if_block3);
+      transition_out(if_block4);
       transition_out(if_block5);
+      transition_out(if_block7);
       current = false;
     },
     d(detaching) {
       if (detaching)
-        detach(div18);
+        detach(div24);
       if (if_block0)
         if_block0.d();
       for (let i = 0; i < each_blocks_1.length; i += 1) {
@@ -77799,15 +79777,18 @@ function create_fragment3(ctx) {
       }
       if (if_block1)
         if_block1.d();
-      if (if_block2)
-        if_block2.d();
-      if_blocks[current_block_type_index].d();
+      if_block2.d();
+      if (if_block3)
+        if_block3.d();
       if (if_block4)
         if_block4.d();
-      destroy_each(each_blocks, detaching);
-      if_blocks_1[current_block_type_index_1].d();
+      if_blocks[current_block_type_index].d();
       if (if_block6)
         if_block6.d();
+      destroy_each(each_blocks, detaching);
+      if_blocks_1[current_block_type_index_1].d();
+      if (if_block8)
+        if_block8.d();
       mounted = false;
       run_all(dispose);
     }
@@ -77819,6 +79800,7 @@ var BOOK_THEME_NAME = "Obsidian Book";
 var NOTE_THEME_URL = "https://gohugo.net/note.zip?version=1.2";
 var NOTE_THEME_ID = "2";
 var NOTE_THEME_NAME = "Note";
+var FRIDAY_ROOT_FOLDER = "MDFriday";
 var serverHost = "localhost";
 var serverPort = 8090;
 function normalizeSitePath(path6) {
@@ -77836,27 +79818,33 @@ function generateRandomId() {
 function instance3($$self, $$props, $$invalidate) {
   let site;
   let languageContents;
+  let siteAssets;
   let t;
   let currentContents;
+  let currentAssets;
   let isForSingleFile;
   let defaultContentLanguage;
   let publishOptions;
   let displayThemeName;
-  let $languageContents, $$unsubscribe_languageContents = noop, $$subscribe_languageContents = () => ($$unsubscribe_languageContents(), $$unsubscribe_languageContents = subscribe(languageContents, ($$value) => $$invalidate(40, $languageContents = $$value)), languageContents);
+  let $siteAssets, $$unsubscribe_siteAssets = noop, $$subscribe_siteAssets = () => ($$unsubscribe_siteAssets(), $$unsubscribe_siteAssets = subscribe(siteAssets, ($$value) => $$invalidate(49, $siteAssets = $$value)), siteAssets);
+  let $languageContents, $$unsubscribe_languageContents = noop, $$subscribe_languageContents = () => ($$unsubscribe_languageContents(), $$unsubscribe_languageContents = subscribe(languageContents, ($$value) => $$invalidate(50, $languageContents = $$value)), languageContents);
+  $$self.$$.on_destroy.push(() => $$unsubscribe_siteAssets());
   $$self.$$.on_destroy.push(() => $$unsubscribe_languageContents());
   var _a, _b, _c, _d, _e;
   let { app } = $$props;
   let { plugin } = $$props;
   const isWindows = process.platform === "win32";
   let basePath = plugin.pluginDir;
-  let absSelectedFolderPath = "";
-  let absProjContentPath = "";
+  let absSelectedFolderPath = [];
+  let absProjContentPath = [];
   let contentPath = "";
   let siteName = "";
+  let previousContentLength = 0;
   let sitePath = "/";
   let selectedThemeDownloadUrl = BOOK_THEME_URL;
   let selectedThemeName = BOOK_THEME_NAME;
   let selectedThemeId = BOOK_THEME_ID;
+  let userHasSelectedTheme = false;
   let showAdvancedSettings = false;
   let googleAnalyticsId = "";
   let disqusShortname = "";
@@ -77873,17 +79861,18 @@ function instance3($$self, $$props, $$invalidate) {
   let publishUrl = "";
   let selectedPublishOption = plugin.settings.publishMethod || "netlify";
   let isExporting = false;
+  let isDownloadingSample = false;
+  let sampleDownloadProgress = 0;
+  let currentThemeWithSample = null;
   let httpServer;
   let serverRunning = false;
   onMount(async () => {
-    console.log("Site component mounting...");
     themesDir = path2.join(plugin.pluginDir, "themes");
     await createThemesDirectory();
     const adapter = app.vault.adapter;
     if (adapter instanceof import_obsidian3.FileSystemAdapter) {
       basePath = adapter.getBasePath();
     }
-    console.log("Site component mounted successfully");
   });
   onDestroy(() => {
     if (serverRunning) {
@@ -77933,6 +79922,12 @@ function instance3($$self, $$props, $$invalidate) {
       name: "\uD55C\uAD6D\uC5B4",
       direction: "ltr",
       englishName: "Korean"
+    },
+    {
+      code: "pt",
+      name: "Portugu\xEAs",
+      direction: "ltr",
+      englishName: "Portuguese"
     }
   ];
   function updateLanguageCode(contentId, newLanguageCode) {
@@ -77944,6 +79939,9 @@ function instance3($$self, $$props, $$invalidate) {
   function clearAllContent() {
     site.clearAllContent();
   }
+  function clearSiteAssets() {
+    site.clearSiteAssets();
+  }
   function getLanguageName(code) {
     const lang = SUPPORTED_LANGUAGES.find((l) => l.code === code);
     return lang ? lang.name : code;
@@ -77952,11 +79950,62 @@ function instance3($$self, $$props, $$invalidate) {
     new import_obsidian3.Notice(t("messages.add_language_instruction"), 5e3);
   }
   function openThemeModal() {
-    plugin.showThemeSelectionModal(selectedThemeId, (themeUrl, themeName, themeId) => {
-      $$invalidate(37, selectedThemeDownloadUrl = themeUrl);
-      $$invalidate(38, selectedThemeName = themeName || (isForSingleFile ? "Note" : "Book"));
+    plugin.showThemeSelectionModal(selectedThemeId, async (themeUrl, themeName, themeId) => {
+      $$invalidate(45, selectedThemeDownloadUrl = themeUrl);
+      $$invalidate(46, selectedThemeName = themeName || (isForSingleFile ? "Note" : "Book"));
       selectedThemeId = themeId || selectedThemeId;
+      $$invalidate(47, userHasSelectedTheme = true);
+      if (themeId) {
+        try {
+          $$invalidate(19, currentThemeWithSample = await themeApiService.getThemeById(themeId, plugin));
+        } catch (error) {
+          console.warn("Failed to get theme info:", error);
+          $$invalidate(19, currentThemeWithSample = null);
+        }
+      }
     }, isForSingleFile);
+  }
+  async function downloadThemeSample() {
+    if (!currentThemeWithSample || !currentThemeWithSample.demo_notes_url) {
+      return;
+    }
+    $$invalidate(17, isDownloadingSample = true);
+    $$invalidate(18, sampleDownloadProgress = 0);
+    try {
+      await ensureRootFolderExists();
+      const baseName = currentThemeWithSample.name.toLowerCase().replace(/\s+/g, "-");
+      const targetFolderName = await generateUniqueFolderName(baseName);
+      const adapter = app.vault.adapter;
+      let targetFolderPath;
+      if (adapter instanceof import_obsidian3.FileSystemAdapter) {
+        const vaultBasePath = adapter.getBasePath();
+        targetFolderPath = path2.join(vaultBasePath, FRIDAY_ROOT_FOLDER, targetFolderName);
+      } else {
+        targetFolderPath = path2.join(FRIDAY_ROOT_FOLDER, targetFolderName);
+      }
+      if (isWindows) {
+        targetFolderPath = path2.normalize(targetFolderPath);
+      }
+      await downloadAndUnzipSample(currentThemeWithSample.demo_notes_url, targetFolderPath, (progress) => {
+        $$invalidate(18, sampleDownloadProgress = progress);
+      });
+      new import_obsidian3.Notice(t("messages.sample_downloaded_successfully", {
+        themeName: currentThemeWithSample.name,
+        folderName: targetFolderName
+      }), 5e3);
+    } catch (error) {
+      console.error("Sample download failed:", error);
+      console.error("Error details:", {
+        themeName: currentThemeWithSample === null || currentThemeWithSample === void 0 ? void 0 : currentThemeWithSample.name,
+        downloadUrl: currentThemeWithSample === null || currentThemeWithSample === void 0 ? void 0 : currentThemeWithSample.demo_notes_url,
+        platform: process.platform,
+        error: error.message
+      });
+      new import_obsidian3.Notice(t("messages.sample_download_failed", { error: error.message }), 5e3);
+    } finally {
+      $$invalidate(17, isDownloadingSample = false);
+      $$invalidate(18, sampleDownloadProgress = 0);
+    }
   }
   function toggleAdvancedSettings() {
     $$invalidate(5, showAdvancedSettings = !showAdvancedSettings);
@@ -77967,7 +80016,7 @@ function instance3($$self, $$props, $$invalidate) {
   async function createRendererBasedOnTheme() {
     var _a2, _b2, _c2, _d2, _e2, _f, _g;
     try {
-      const themeInfo = await themeApiService.getThemeById(selectedThemeId);
+      const themeInfo = await themeApiService.getThemeById(selectedThemeId, plugin);
       const obImagesDir = path2.join(absPreviewDir, "public", "ob-images");
       const hasOBTag = ((_a2 = themeInfo === null || themeInfo === void 0 ? void 0 : themeInfo.tags) === null || _a2 === void 0 ? void 0 : _a2.some((tag) => tag.toLowerCase() === "obsidian")) || false;
       if (hasOBTag) {
@@ -78065,16 +80114,80 @@ function instance3($$self, $$props, $$invalidate) {
       $$invalidate(9, buildProgress = 10);
       await linkMultiLanguageContents(previewDir);
       $$invalidate(9, buildProgress = 15);
+      if (currentAssets && currentAssets.folder) {
+        await copySiteAssetsToPreview(previewDir);
+        $$invalidate(9, buildProgress = 18);
+      }
       absPreviewDir = path2.join(basePath, previewDir);
       const absThemesDir = path2.join(basePath, themesDir);
       const serverRootDir = await createSitePathStructure(previewDir);
       const obImagesDir = path2.join(absPreviewDir, "public", "ob-images");
       const styleRenderer = await createRendererBasedOnTheme();
+      const httpClient = {
+        async download(url, targetPath, options) {
+          try {
+            if (options === null || options === void 0 ? void 0 : options.onProgress) {
+              options.onProgress({ percentage: 0, loaded: 0 });
+            }
+            const response = await (0, import_obsidian3.requestUrl)({
+              url,
+              method: "GET",
+              headers: options === null || options === void 0 ? void 0 : options.headers
+            });
+            if (response.status !== 200) {
+              throw new Error(`Download failed with status: ${response.status}`);
+            }
+            if (options === null || options === void 0 ? void 0 : options.onProgress) {
+              const arrayBuffer = response.arrayBuffer;
+              const total = arrayBuffer.byteLength;
+              options.onProgress({ percentage: 50, loaded: total / 2, total });
+            }
+            const targetDir = path2.dirname(targetPath);
+            if (!await checkFolderExists(targetDir)) {
+              if (path2.isAbsolute(targetDir)) {
+                await fs2.promises.mkdir(targetDir, { recursive: true });
+              } else {
+                await app.vault.adapter.mkdir(targetDir);
+              }
+            }
+            const fileContent = new Uint8Array(response.arrayBuffer);
+            if (path2.isAbsolute(targetPath)) {
+              await fs2.promises.writeFile(targetPath, fileContent);
+            } else {
+              await app.vault.adapter.writeBinary(targetPath, fileContent.buffer);
+            }
+            if (options === null || options === void 0 ? void 0 : options.onProgress) {
+              const total = fileContent.length;
+              options.onProgress({ percentage: 100, loaded: total, total });
+            }
+          } catch (error) {
+            console.error("HTTP download failed:", error);
+            throw error;
+          }
+        },
+        async get(url, options) {
+          try {
+            const response = await (0, import_obsidian3.requestUrl)({
+              url,
+              method: "GET",
+              headers: options === null || options === void 0 ? void 0 : options.headers
+            });
+            return {
+              data: response.arrayBuffer,
+              headers: response.headers || {},
+              status: response.status
+            };
+          } catch (error) {
+            console.error("HTTP get failed:", error);
+            throw error;
+          }
+        }
+      };
       httpServer = await (0, import_foundry2.startIncrementalBuild)({
         projDir: absPreviewDir,
         modulesDir: absThemesDir,
-        contentDir: absSelectedFolderPath,
-        projContentDir: absProjContentPath,
+        contentDirs: absSelectedFolderPath,
+        projContentDirs: absProjContentPath,
         publicDir: path2.join(basePath, serverRootDir),
         enableWatching: true,
         batchDelay: 500,
@@ -78082,6 +80195,7 @@ function instance3($$self, $$props, $$invalidate) {
           $$invalidate(9, buildProgress = 15 + progress.percentage / 100 * 85);
         },
         markdown: styleRenderer,
+        httpClient,
         liveReload: {
           enabled: true,
           port: serverPort,
@@ -78192,7 +80306,6 @@ function instance3($$self, $$props, $$invalidate) {
       if (!plugin.ftp) {
         throw new Error("FTP uploader not initialized - please check FTP settings");
       }
-      console.log("Starting FTP upload from:", publicDir);
       plugin.ftp.setProgressCallback((progress) => {
         $$invalidate(13, publishProgress = Math.round(progress.percentage));
       });
@@ -78235,6 +80348,12 @@ function instance3($$self, $$props, $$invalidate) {
     if (!await app.vault.adapter.exists(obImagesDir)) {
       await app.vault.adapter.mkdir(obImagesDir);
     }
+    if (currentAssets && currentAssets.folder) {
+      const staticDir = path2.join(previewDir, "static");
+      if (!await app.vault.adapter.exists(staticDir)) {
+        await app.vault.adapter.mkdir(staticDir);
+      }
+    }
   }
   async function createThemesDirectory() {
     if (!await app.vault.adapter.exists(themesDir)) {
@@ -78264,7 +80383,7 @@ function instance3($$self, $$props, $$invalidate) {
     if (Object.keys(services).length > 0) {
       config.services = services;
     }
-    if (currentContents.length > 1) {
+    if (currentContents.length > 0) {
       const languages = {};
       currentContents.forEach((content, index) => {
         const contentDir = index === 0 ? "content" : `content.${content.languageCode}`;
@@ -78323,8 +80442,8 @@ function instance3($$self, $$props, $$invalidate) {
     if (adapter instanceof import_obsidian3.FileSystemAdapter) {
       sourcePath = path2.join(adapter.getBasePath(), folder.path);
       absTargetPath = path2.join(adapter.getBasePath(), targetPath);
-      absSelectedFolderPath = sourcePath;
-      absProjContentPath = absTargetPath;
+      absSelectedFolderPath.push(sourcePath);
+      absProjContentPath.push(absTargetPath);
     } else {
       console.warn("Not using FileSystemAdapter, falling back to copying files");
       await copyFolderContents(folder, targetPath);
@@ -78375,8 +80494,8 @@ function instance3($$self, $$props, $$invalidate) {
       sourcePath = path2.join(adapter.getBasePath(), file.path);
       absContentDir = path2.join(adapter.getBasePath(), targetPath);
       absTargetPath = path2.join(absContentDir, "index.md");
-      absSelectedFolderPath = path2.dirname(sourcePath);
-      absProjContentPath = absContentDir;
+      absSelectedFolderPath.push(path2.dirname(sourcePath));
+      absProjContentPath.push(absContentDir);
     } else {
       console.warn("Not using FileSystemAdapter, falling back to copying file");
       await copySingleFileContent(file, targetPath);
@@ -78412,6 +80531,166 @@ function instance3($$self, $$props, $$invalidate) {
       throw error;
     }
   }
+  async function copySiteAssetsToPreview(previewDir) {
+    if (!currentAssets || !currentAssets.folder) {
+      return;
+    }
+    const assetsSourceFolder = currentAssets.folder;
+    const staticTargetDir = path2.join(previewDir, "static");
+    try {
+      const adapter = app.vault.adapter;
+      if (adapter instanceof import_obsidian3.FileSystemAdapter) {
+        const absSourcePath = path2.join(adapter.getBasePath(), assetsSourceFolder.path);
+        const absTargetPath = path2.join(adapter.getBasePath(), staticTargetDir);
+        await fs2.promises.cp(absSourcePath, absTargetPath, {
+          recursive: true,
+          force: true
+        });
+      } else {
+        await copyAssetsUsingObsidianAPI(assetsSourceFolder, staticTargetDir);
+      }
+    } catch (error) {
+      console.error("Failed to copy site assets:", error);
+    }
+  }
+  async function copyAssetsUsingObsidianAPI(sourceFolder, targetDir) {
+    const copyRecursive = async (sourceFolder2, destPath) => {
+      for (const child of sourceFolder2.children) {
+        if (child instanceof import_obsidian3.TFolder) {
+          const childDestPath = path2.join(destPath, child.name);
+          if (!await app.vault.adapter.exists(childDestPath)) {
+            await app.vault.adapter.mkdir(childDestPath);
+          }
+          await copyRecursive(child, childDestPath);
+        } else if (child instanceof import_obsidian3.TFile) {
+          const childDestPath = path2.join(destPath, child.name);
+          try {
+            const content = await app.vault.readBinary(child);
+            await app.vault.adapter.writeBinary(childDestPath, content);
+          } catch (error) {
+            console.warn(`Failed to copy asset file ${child.path}:`, error);
+          }
+        }
+      }
+    };
+    await copyRecursive(sourceFolder, targetDir);
+  }
+  async function ensureRootFolderExists() {
+    const adapter = app.vault.adapter;
+    let rootFolderPath;
+    if (adapter instanceof import_obsidian3.FileSystemAdapter) {
+      const vaultBasePath = adapter.getBasePath();
+      rootFolderPath = path2.join(vaultBasePath, FRIDAY_ROOT_FOLDER);
+    } else {
+      rootFolderPath = FRIDAY_ROOT_FOLDER;
+    }
+    if (isWindows) {
+      rootFolderPath = path2.normalize(rootFolderPath);
+    }
+    if (!await adapter.exists(rootFolderPath)) {
+      if (adapter instanceof import_obsidian3.FileSystemAdapter && path2.isAbsolute(rootFolderPath)) {
+        await fs2.promises.mkdir(rootFolderPath, { recursive: true });
+      } else {
+        await adapter.mkdir(rootFolderPath);
+      }
+    }
+  }
+  async function generateUniqueFolderName(baseName) {
+    let folderName = baseName;
+    let counter = 0;
+    const adapter = app.vault.adapter;
+    let rootFolderPath;
+    if (adapter instanceof import_obsidian3.FileSystemAdapter) {
+      const vaultBasePath = adapter.getBasePath();
+      rootFolderPath = path2.join(vaultBasePath, FRIDAY_ROOT_FOLDER);
+    } else {
+      rootFolderPath = FRIDAY_ROOT_FOLDER;
+    }
+    if (isWindows) {
+      rootFolderPath = path2.normalize(rootFolderPath);
+    }
+    while (await checkFolderExists(path2.join(rootFolderPath, folderName))) {
+      counter++;
+      folderName = `${baseName} ${counter}`;
+    }
+    return folderName;
+  }
+  async function checkFolderExists(folderPath) {
+    const adapter = app.vault.adapter;
+    if (adapter instanceof import_obsidian3.FileSystemAdapter && path2.isAbsolute(folderPath)) {
+      try {
+        await fs2.promises.access(folderPath);
+        return true;
+      } catch (_a2) {
+        return false;
+      }
+    } else {
+      return await adapter.exists(folderPath);
+    }
+  }
+  async function downloadAndUnzipSample(downloadUrl, targetFolderPath, progressCallback) {
+    try {
+      progressCallback(10);
+      const response = await (0, import_obsidian3.requestUrl)({ url: downloadUrl, method: "GET" });
+      if (response.status !== 200) {
+        throw new Error(`Download failed with status: ${response.status}`);
+      }
+      progressCallback(50);
+      const zip = new import_jszip.default();
+      const zipData = await zip.loadAsync(response.arrayBuffer);
+      progressCallback(70);
+      if (!await checkFolderExists(targetFolderPath)) {
+        if (path2.isAbsolute(targetFolderPath)) {
+          await fs2.promises.mkdir(targetFolderPath, { recursive: true });
+        } else {
+          await app.vault.adapter.mkdir(targetFolderPath);
+        }
+      }
+      const files = Object.keys(zipData.files);
+      let processedFiles = 0;
+      for (const fileName of files) {
+        const file = zipData.files[fileName];
+        let normalizedFileName = fileName;
+        if (isWindows) {
+          normalizedFileName = fileName.replace(/\//g, path2.sep);
+        }
+        normalizedFileName = path2.normalize(normalizedFileName);
+        if (file.dir) {
+          const dirPath = path2.join(targetFolderPath, normalizedFileName);
+          if (!await checkFolderExists(dirPath)) {
+            if (path2.isAbsolute(dirPath)) {
+              await fs2.promises.mkdir(dirPath, { recursive: true });
+            } else {
+              await app.vault.adapter.mkdir(dirPath);
+            }
+          }
+        } else {
+          const filePath = path2.join(targetFolderPath, normalizedFileName);
+          const parentDir = path2.dirname(filePath);
+          if (parentDir !== targetFolderPath && !await checkFolderExists(parentDir)) {
+            if (path2.isAbsolute(parentDir)) {
+              await fs2.promises.mkdir(parentDir, { recursive: true });
+            } else {
+              await app.vault.adapter.mkdir(parentDir);
+            }
+          }
+          const fileContent = await file.async("uint8array");
+          if (path2.isAbsolute(filePath)) {
+            await fs2.promises.writeFile(filePath, fileContent);
+          } else {
+            await app.vault.adapter.writeBinary(filePath, fileContent.buffer);
+          }
+        }
+        processedFiles++;
+        const extractProgress = 70 + processedFiles / files.length * 30;
+        progressCallback(Math.round(extractProgress));
+      }
+      progressCallback(100);
+    } catch (error) {
+      console.error("Download and unzip failed:", error);
+      throw error;
+    }
+  }
   async function createZipFromDirectory(sourceDir) {
     const zip = new import_jszip.default();
     const addDirectoryToZip = async (dirPath, zipFolder) => {
@@ -78436,7 +80715,7 @@ function instance3($$self, $$props, $$invalidate) {
   const click_handler = (content) => removeLanguageContent(content.id);
   function input_input_handler() {
     siteName = this.value;
-    $$invalidate(0, siteName), $$invalidate(3, currentContents), $$invalidate(35, _d), $$invalidate(36, _e), $$invalidate(40, $languageContents);
+    $$invalidate(0, siteName), $$invalidate(3, currentContents), $$invalidate(44, previousContentLength), $$invalidate(42, _d), $$invalidate(43, _e), $$invalidate(50, $languageContents);
   }
   function input0_input_handler() {
     sitePath = this.value;
@@ -78452,51 +80731,70 @@ function instance3($$self, $$props, $$invalidate) {
   }
   function select_change_handler() {
     selectedPublishOption = select_value(this);
-    $$invalidate(2, selectedPublishOption), $$invalidate(1, sitePath), $$invalidate(31, plugin);
-    $$invalidate(18, publishOptions), $$invalidate(4, t), $$invalidate(1, sitePath), $$invalidate(31, plugin), $$invalidate(32, _a);
+    $$invalidate(2, selectedPublishOption), $$invalidate(1, sitePath), $$invalidate(38, plugin);
+    $$invalidate(22, publishOptions), $$invalidate(4, t), $$invalidate(1, sitePath), $$invalidate(38, plugin), $$invalidate(39, _a);
   }
   $$self.$$set = ($$props2) => {
     if ("app" in $$props2)
-      $$invalidate(30, app = $$props2.app);
+      $$invalidate(37, app = $$props2.app);
     if ("plugin" in $$props2)
-      $$invalidate(31, plugin = $$props2.plugin);
+      $$invalidate(38, plugin = $$props2.plugin);
   };
   $$self.$$.update = () => {
-    if ($$self.$$.dirty[1] & 1) {
+    if ($$self.$$.dirty[1] & 128) {
       $:
-        $$invalidate(39, site = plugin.site);
+        $$invalidate(48, site = plugin.site);
     }
-    if ($$self.$$.dirty[1] & 256) {
+    if ($$self.$$.dirty[1] & 131072) {
       $:
-        $$subscribe_languageContents($$invalidate(19, languageContents = site ? site.languageContents : null));
+        $$subscribe_languageContents($$invalidate(24, languageContents = site ? site.languageContents : null));
     }
-    if ($$self.$$.dirty[1] & 3) {
+    if ($$self.$$.dirty[1] & 131072) {
       $:
-        $$invalidate(4, t = ($$invalidate(32, _a = plugin.i18n) === null || _a === void 0 ? void 0 : _a.t) || ((key) => key));
+        $$subscribe_siteAssets($$invalidate(23, siteAssets = site ? site.siteAssets : null));
     }
-    if ($$self.$$.dirty[1] & 512) {
+    if ($$self.$$.dirty[1] & 384) {
+      $:
+        $$invalidate(4, t = ($$invalidate(39, _a = plugin.i18n) === null || _a === void 0 ? void 0 : _a.t) || ((key) => key));
+    }
+    if ($$self.$$.dirty[1] & 524288) {
       $:
         $$invalidate(3, currentContents = $languageContents || []);
     }
-    if ($$self.$$.dirty[1] & 256) {
+    if ($$self.$$.dirty[1] & 262144) {
+      $:
+        $$invalidate(20, currentAssets = $siteAssets || null);
+    }
+    if ($$self.$$.dirty[1] & 131072) {
       $:
         isForSingleFile = site ? site.isForSingleFile() : false;
     }
-    if ($$self.$$.dirty[1] & 256) {
+    if ($$self.$$.dirty[1] & 131072) {
       $:
         defaultContentLanguage = site ? site.getDefaultContentLanguage() : "en";
     }
-    if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 64) {
+    if ($$self.$$.dirty[0] & 8) {
+      $:
+        if (currentContents.length === 0) {
+          $$invalidate(11, hasPreview = false);
+          $$invalidate(10, previewUrl = "");
+          previewId = "";
+          $$invalidate(0, siteName = "");
+          $$invalidate(47, userHasSelectedTheme = false);
+          $$invalidate(44, previousContentLength = 0);
+        }
+    }
+    if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 81920) {
       $: {
-        if (currentContents.length > 0) {
+        if (currentContents.length > 0 && !userHasSelectedTheme) {
           const firstContent = currentContents[0];
           if (firstContent.file && !selectedThemeDownloadUrl.includes("note")) {
-            $$invalidate(37, selectedThemeDownloadUrl = NOTE_THEME_URL);
-            $$invalidate(38, selectedThemeName = NOTE_THEME_NAME);
+            $$invalidate(45, selectedThemeDownloadUrl = NOTE_THEME_URL);
+            $$invalidate(46, selectedThemeName = NOTE_THEME_NAME);
             selectedThemeId = NOTE_THEME_ID;
           } else if (firstContent.folder && !selectedThemeDownloadUrl.includes("book")) {
-            $$invalidate(37, selectedThemeDownloadUrl = BOOK_THEME_URL);
-            $$invalidate(38, selectedThemeName = BOOK_THEME_NAME);
+            $$invalidate(45, selectedThemeDownloadUrl = BOOK_THEME_URL);
+            $$invalidate(46, selectedThemeName = BOOK_THEME_NAME);
             selectedThemeId = BOOK_THEME_ID;
           }
         }
@@ -78504,7 +80802,7 @@ function instance3($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty[0] & 18) {
       $:
-        $$invalidate(18, publishOptions = [
+        $$invalidate(22, publishOptions = [
           {
             value: "netlify",
             label: t("ui.publish_option_netlify")
@@ -78521,36 +80819,28 @@ function instance3($$self, $$props, $$invalidate) {
           ] : []
         ]);
     }
-    if ($$self.$$.dirty[0] & 6 | $$self.$$.dirty[1] & 1) {
+    if ($$self.$$.dirty[0] & 6 | $$self.$$.dirty[1] & 128) {
       $:
         if (!sitePath.startsWith("/preview/") && selectedPublishOption === "mdf-preview") {
           $$invalidate(2, selectedPublishOption = plugin.settings.publishMethod || "netlify");
         }
     }
-    if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 12) {
+    if ($$self.$$.dirty[0] & 8 | $$self.$$.dirty[1] & 1536) {
       $:
-        contentPath = currentContents.length > 0 ? ($$invalidate(33, _b = currentContents[0].folder) === null || _b === void 0 ? void 0 : _b.name) || ($$invalidate(34, _c = currentContents[0].file) === null || _c === void 0 ? void 0 : _c.name) || "" : "";
+        contentPath = currentContents.length > 0 ? ($$invalidate(40, _b = currentContents[0].folder) === null || _b === void 0 ? void 0 : _b.name) || ($$invalidate(41, _c = currentContents[0].file) === null || _c === void 0 ? void 0 : _c.name) || "" : "";
     }
-    if ($$self.$$.dirty[0] & 9 | $$self.$$.dirty[1] & 48) {
+    if ($$self.$$.dirty[0] & 9 | $$self.$$.dirty[1] & 14336) {
       $: {
-        if (currentContents.length > 0 && !siteName) {
+        if (previousContentLength === 0 && currentContents.length > 0 && !siteName) {
           const firstContent = currentContents[0];
-          $$invalidate(0, siteName = ($$invalidate(35, _d = firstContent.folder) === null || _d === void 0 ? void 0 : _d.name) || ($$invalidate(36, _e = firstContent.file) === null || _e === void 0 ? void 0 : _e.basename) || "");
+          $$invalidate(0, siteName = ($$invalidate(42, _d = firstContent.folder) === null || _d === void 0 ? void 0 : _d.name) || ($$invalidate(43, _e = firstContent.file) === null || _e === void 0 ? void 0 : _e.basename) || "");
         }
+        $$invalidate(44, previousContentLength = currentContents.length);
       }
     }
-    if ($$self.$$.dirty[0] & 8) {
+    if ($$self.$$.dirty[1] & 32768) {
       $:
-        if (currentContents.length === 0) {
-          $$invalidate(11, hasPreview = false);
-          $$invalidate(10, previewUrl = "");
-          previewId = "";
-          $$invalidate(0, siteName = "");
-        }
-    }
-    if ($$self.$$.dirty[1] & 128) {
-      $:
-        $$invalidate(17, displayThemeName = selectedThemeName || BOOK_THEME_NAME);
+        $$invalidate(21, displayThemeName = selectedThemeName || BOOK_THEME_NAME);
     }
   };
   return [
@@ -78571,14 +80861,21 @@ function instance3($$self, $$props, $$invalidate) {
     publishSuccess,
     publishUrl,
     isExporting,
+    isDownloadingSample,
+    sampleDownloadProgress,
+    currentThemeWithSample,
+    currentAssets,
     displayThemeName,
     publishOptions,
+    siteAssets,
     languageContents,
     SUPPORTED_LANGUAGES,
     updateLanguageCode,
     removeLanguageContent,
     clearAllContent,
+    clearSiteAssets,
     openThemeModal,
+    downloadThemeSample,
     toggleAdvancedSettings,
     handleSitePathChange,
     startPreview,
@@ -78591,9 +80888,12 @@ function instance3($$self, $$props, $$invalidate) {
     _c,
     _d,
     _e,
+    previousContentLength,
     selectedThemeDownloadUrl,
     selectedThemeName,
+    userHasSelectedTheme,
     site,
+    $siteAssets,
     $languageContents,
     change_handler,
     click_handler,
@@ -78607,7 +80907,7 @@ function instance3($$self, $$props, $$invalidate) {
 var Site = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance3, create_fragment3, safe_not_equal, { app: 30, plugin: 31 }, add_css3, [-1, -1, -1]);
+    init(this, options, instance3, create_fragment3, safe_not_equal, { app: 37, plugin: 38 }, add_css3, [-1, -1, -1, -1]);
   }
 };
 var Site_default = Site;
@@ -79003,7 +81303,7 @@ var ThemeSelectionModal = class extends import_obsidian7.Modal {
     this.loadingTags = true;
     this.loadingState = "tags";
     try {
-      this.allThemes = await themeApiService.getAllThemes();
+      this.allThemes = await themeApiService.getAllThemes(this.plugin);
       if (this.isForSingleFile) {
         this.allThemes = this.allThemes.filter((theme) => theme.tags.some((tag) => tag.toLowerCase() === "page"));
       }
@@ -79560,6 +81860,36 @@ var AVAILABLE_LANGUAGES = [
     code: "zh-cn",
     name: "Chinese (Simplified)",
     nativeName: "\u7B80\u4F53\u4E2D\u6587"
+  },
+  {
+    code: "es",
+    name: "Spanish",
+    nativeName: "Espa\xF1ol"
+  },
+  {
+    code: "fr",
+    name: "French",
+    nativeName: "Fran\xE7ais"
+  },
+  {
+    code: "de",
+    name: "German",
+    nativeName: "Deutsch"
+  },
+  {
+    code: "ja",
+    name: "Japanese",
+    nativeName: "\u65E5\u672C\u8A9E"
+  },
+  {
+    code: "ko",
+    name: "Korean",
+    nativeName: "\uD55C\uAD6D\uC5B4"
+  },
+  {
+    code: "pt",
+    name: "Portuguese",
+    nativeName: "Portugu\xEAs"
   }
 ];
 var DEFAULT_LANGUAGE = "en";
@@ -79620,7 +81950,31 @@ function normalizeLanguageCode(langCode) {
     "en-gb": "en",
     "en-au": "en",
     "en-ca": "en",
-    "english": "en"
+    "english": "en",
+    "es": "es",
+    "es-es": "es",
+    "es-mx": "es",
+    "es-ar": "es",
+    "spanish": "es",
+    "fr": "fr",
+    "fr-fr": "fr",
+    "fr-ca": "fr",
+    "french": "fr",
+    "de": "de",
+    "de-de": "de",
+    "de-at": "de",
+    "de-ch": "de",
+    "german": "de",
+    "ja": "ja",
+    "ja-jp": "ja",
+    "japanese": "ja",
+    "ko": "ko",
+    "ko-kr": "ko",
+    "korean": "ko",
+    "pt": "pt",
+    "pt-pt": "pt",
+    "pt-br": "pt",
+    "portuguese": "pt"
   };
   if (mappings[normalized]) {
     return mappings[normalized];
@@ -79696,6 +82050,11 @@ var en = {
     ftp_test_connection_testing: "Testing...",
     ftp_test_connection_success: "Connection Successful",
     ftp_test_connection_failed: "Connection Failed",
+    general_settings: "General Settings",
+    download_server: "Download Server",
+    download_server_desc: "Choose the server for downloading themes and resources",
+    download_server_global: "Global",
+    download_server_east: "East",
     mdfriday_account: "MDFriday Account (Optional)",
     mdfriday_account_desc: "Sign in to access advanced features like theme marketplace and cloud publishing."
   },
@@ -79714,6 +82073,10 @@ var en = {
     remove_language: "Remove language",
     site_name: "Site Name",
     site_name_placeholder: "Enter site name",
+    site_assets: "Site Assets",
+    site_assets_placeholder: "No assets folder set",
+    site_assets_hint: 'Right-click on a folder and select "Set as Site Assets" to configure',
+    clear_assets: "Clear",
     advanced_settings: "Advanced Settings",
     site_path: "Site Path",
     site_path_placeholder: "/",
@@ -79726,6 +82089,8 @@ var en = {
     disqus_hint: "Your Disqus shortname for comments (optional)",
     theme: "Theme",
     change_theme: "Change Theme",
+    download_sample: "Download Sample",
+    downloading_sample: "Downloading...",
     preview: "Preview",
     preview_building: "Building preview...",
     preview_success: "Preview ready!",
@@ -79750,7 +82115,8 @@ var en = {
     server_stopped: "Server Stopped"
   },
   menu: {
-    publish_to_web: "Publish to Web"
+    publish_to_web: "Publish to Web",
+    set_as_site_assets: "Set as Site Assets"
   },
   commands: {},
   theme: {
@@ -79807,6 +82173,13 @@ var en = {
     enter_valid_email: "Please enter a valid email address",
     login_failed: "Failed to login",
     register_failed: "Failed to register user",
+    invalid_assets_folder: "Invalid assets folder",
+    site_assets_set_successfully: "Site assets set successfully",
+    site_assets_cleared: "Site assets cleared",
+    sample_downloaded_successfully: 'Theme sample "{{themeName}}" downloaded successfully! Saved to folder: {{folderName}}',
+    sample_download_failed: "Sample download failed: {{error}}",
+    structured_folder_processed: 'Structured folder "{{folderName}}" detected, automatically added {{contentCount}} language contents',
+    static_folder_detected: "and detected static assets folder",
     failed_to_create_post: "Failed to create post.",
     failed_to_create_resource: "Failed to create resource."
   },
@@ -79875,6 +82248,11 @@ var zhCn = {
     ftp_test_connection_testing: "\u6D4B\u8BD5\u4E2D...",
     ftp_test_connection_success: "\u8FDE\u63A5\u6210\u529F",
     ftp_test_connection_failed: "\u8FDE\u63A5\u5931\u8D25",
+    general_settings: "\u901A\u7528\u8BBE\u7F6E",
+    download_server: "\u4E0B\u8F7D\u670D\u52A1\u5668",
+    download_server_desc: "\u9009\u62E9\u4E0B\u8F7D\u4E3B\u9898\u548C\u8D44\u6E90\u7684\u670D\u52A1\u5668",
+    download_server_global: "\u5168\u7403",
+    download_server_east: "\u4E1C\u533A",
     mdfriday_account: "MDFriday \u8D26\u6237\uFF08\u53EF\u9009\uFF09",
     mdfriday_account_desc: "\u767B\u5F55\u4EE5\u4F7F\u7528\u9AD8\u7EA7\u529F\u80FD\uFF0C\u5982\u4E3B\u9898\u5E02\u573A\u548C\u4E91\u7AEF\u53D1\u5E03\u3002"
   },
@@ -79893,6 +82271,10 @@ var zhCn = {
     remove_language: "\u79FB\u9664\u8BED\u8A00",
     site_name: "\u7AD9\u70B9\u540D\u79F0",
     site_name_placeholder: "\u8BF7\u8F93\u5165\u7AD9\u70B9\u540D\u79F0",
+    site_assets: "\u7AD9\u70B9\u8D44\u6E90",
+    site_assets_placeholder: "\u672A\u8BBE\u7F6E\u8D44\u6E90\u6587\u4EF6\u5939",
+    site_assets_hint: '\u53F3\u952E\u70B9\u51FB\u6587\u4EF6\u5939\u5E76\u9009\u62E9"\u8BBE\u4E3A\u7AD9\u70B9\u8D44\u6E90"\u6765\u8BBE\u7F6E',
+    clear_assets: "\u6E05\u9664",
     advanced_settings: "\u9AD8\u7EA7\u8BBE\u7F6E",
     site_path: "\u7AD9\u70B9\u8DEF\u5F84",
     site_path_placeholder: "/",
@@ -79905,6 +82287,8 @@ var zhCn = {
     disqus_hint: "\u60A8\u7684 Disqus \u77ED\u540D\u79F0\uFF0C\u7528\u4E8E\u8BC4\u8BBA\u529F\u80FD\uFF08\u53EF\u9009\uFF09",
     theme: "\u4E3B\u9898",
     change_theme: "\u66F4\u6362\u4E3B\u9898",
+    download_sample: "\u4E0B\u8F7D\u6837\u4F8B",
+    downloading_sample: "\u4E0B\u8F7D\u4E2D...",
     preview: "\u9884\u89C8",
     preview_building: "\u6B63\u5728\u6784\u5EFA\u9884\u89C8...",
     preview_success: "\u9884\u89C8\u5DF2\u5C31\u7EEA\uFF01",
@@ -79929,7 +82313,8 @@ var zhCn = {
     server_stopped: "\u670D\u52A1\u5668\u5DF2\u505C\u6B62"
   },
   menu: {
-    publish_to_web: "\u53D1\u5E03\u5230\u7F51\u7EDC"
+    publish_to_web: "\u53D1\u5E03\u5230\u7F51\u7EDC",
+    set_as_site_assets: "\u8BBE\u4E3A\u7AD9\u70B9\u8D44\u6E90"
   },
   commands: {},
   theme: {
@@ -79986,6 +82371,13 @@ var zhCn = {
     enter_valid_email: "\u8BF7\u8F93\u5165\u6709\u6548\u7684\u90AE\u7BB1\u5730\u5740",
     login_failed: "\u767B\u5F55\u5931\u8D25",
     register_failed: "\u6CE8\u518C\u7528\u6237\u5931\u8D25",
+    invalid_assets_folder: "\u65E0\u6548\u7684\u8D44\u6E90\u6587\u4EF6\u5939",
+    site_assets_set_successfully: "\u7AD9\u70B9\u8D44\u6E90\u8BBE\u7F6E\u6210\u529F",
+    site_assets_cleared: "\u7AD9\u70B9\u8D44\u6E90\u5DF2\u6E05\u9664",
+    sample_downloaded_successfully: '\u4E3B\u9898\u6837\u4F8B "{{themeName}}" \u4E0B\u8F7D\u6210\u529F\uFF01\u5DF2\u4FDD\u5B58\u5230\u6587\u4EF6\u5939\uFF1A{{folderName}}',
+    sample_download_failed: "\u6837\u4F8B\u4E0B\u8F7D\u5931\u8D25\uFF1A{{error}}",
+    structured_folder_processed: '\u68C0\u6D4B\u5230\u7ED3\u6784\u5316\u6587\u4EF6\u5939 "{{folderName}}"\uFF0C\u5DF2\u81EA\u52A8\u6DFB\u52A0 {{contentCount}} \u4E2A\u8BED\u8A00\u5185\u5BB9',
+    static_folder_detected: "\u5E76\u68C0\u6D4B\u5230\u9759\u6001\u8D44\u6E90\u6587\u4EF6\u5939",
     failed_to_create_post: "\u521B\u5EFA\u6587\u7AE0\u5931\u8D25\u3002",
     failed_to_create_resource: "\u521B\u5EFA\u8D44\u6E90\u5931\u8D25\u3002"
   },
@@ -80012,7 +82404,13 @@ var I18nService = class {
     this.currentLanguage = DEFAULT_LANGUAGE;
     this.translations = {
       "en": en,
-      "zh-cn": zhCn
+      "zh-cn": zhCn,
+      "es": en,
+      "fr": en,
+      "de": en,
+      "ja": en,
+      "ko": en,
+      "pt": en
     };
     this.ready = false;
     this.t = (key, params) => {
@@ -80285,6 +82683,7 @@ var Site2 = class {
     this.plugin = plugin;
     this.app = this.plugin.app;
     this.languageContents = writable([]);
+    this.siteAssets = writable(null);
   }
   generateRandomId() {
     return Math.random().toString(36).substr(2, 9);
@@ -80299,6 +82698,21 @@ var Site2 = class {
         folder,
         file,
         languageCode: "en",
+        weight: 1
+      };
+      return [initialContent];
+    });
+  }
+  initializeContentWithLanguage(folder, file, languageCode) {
+    this.languageContents.update((contents) => {
+      if (contents.length > 0) {
+        return contents;
+      }
+      const initialContent = {
+        id: this.generateRandomId(),
+        folder,
+        file,
+        languageCode,
         weight: 1
       };
       return [initialContent];
@@ -80336,6 +82750,37 @@ var Site2 = class {
     if (canAdd) {
       new import_obsidian10.Notice(this.plugin.i18n.t("messages.language_added_successfully"), 3e3);
     }
+    return canAdd;
+  }
+  addLanguageContentWithCode(folder, file, languageCode) {
+    let canAdd = false;
+    let currentContents = [];
+    this.languageContents.subscribe((contents) => {
+      currentContents = contents;
+    })();
+    if (currentContents.length === 0) {
+      new import_obsidian10.Notice(this.plugin.i18n.t("messages.please_use_publish_first"), 5e3);
+      return false;
+    }
+    const firstContent = currentContents[0];
+    const isFirstFolder = !!firstContent.folder;
+    const isNewFolder = !!folder;
+    if (isFirstFolder !== isNewFolder) {
+      const errorMessage = isFirstFolder ? this.plugin.i18n.t("messages.must_select_folder_type") : this.plugin.i18n.t("messages.must_select_file_type");
+      new import_obsidian10.Notice(errorMessage, 5e3);
+      return false;
+    }
+    this.languageContents.update((contents) => {
+      const newContent = {
+        id: this.generateRandomId(),
+        folder,
+        file,
+        languageCode,
+        weight: contents.length + 1
+      };
+      canAdd = true;
+      return [...contents, newContent];
+    });
     return canAdd;
   }
   updateLanguageCode(contentId, newLanguageCode) {
@@ -80378,6 +82823,33 @@ var Site2 = class {
     const contents = this.getCurrentContents();
     return contents.length > 0 && !!contents[0].file;
   }
+  setSiteAssets(folder) {
+    if (!folder) {
+      new import_obsidian10.Notice(this.plugin.i18n.t("messages.invalid_assets_folder"), 3e3);
+      return false;
+    }
+    this.siteAssets.set({
+      folder,
+      path: folder.path
+    });
+    new import_obsidian10.Notice(this.plugin.i18n.t("messages.site_assets_set_successfully"), 3e3);
+    return true;
+  }
+  clearSiteAssets() {
+    this.siteAssets.set(null);
+    new import_obsidian10.Notice(this.plugin.i18n.t("messages.site_assets_cleared"), 3e3);
+  }
+  getCurrentAssets() {
+    let currentAssets = null;
+    this.siteAssets.subscribe((assets) => {
+      currentAssets = assets;
+    })();
+    return currentAssets;
+  }
+  hasAssets() {
+    const assets = this.getCurrentAssets();
+    return assets !== null;
+  }
 };
 
 // src/main.ts
@@ -80385,6 +82857,7 @@ var DEFAULT_SETTINGS = {
   username: "",
   password: "",
   userToken: "",
+  downloadServer: "global",
   publishMethod: "netlify",
   netlifyAccessToken: "",
   netlifyProjectId: "",
@@ -80404,6 +82877,7 @@ var FridayPlugin2 = class extends import_obsidian11.Plugin {
   constructor() {
     super(...arguments);
     this.ftp = null;
+    this.previousDownloadServer = "global";
   }
   async onload() {
     this.pluginDir = `${this.manifest.dir}`;
@@ -80435,6 +82909,11 @@ var FridayPlugin2 = class extends import_obsidian11.Plugin {
             await this.openPublishPanel(file, null);
           });
         });
+        menu.addItem((item) => {
+          item.setTitle(this.i18n.t("menu.set_as_site_assets")).setIcon("folder-plus").onClick(async () => {
+            await this.setSiteAssets(file);
+          });
+        });
       } else if (file instanceof import_obsidian11.TFile && file.extension === "md") {
         menu.addItem((item) => {
           item.setTitle(this.i18n.t("menu.publish_to_web")).setIcon(FRIDAY_ICON).onClick(async () => {
@@ -80458,7 +82937,11 @@ var FridayPlugin2 = class extends import_obsidian11.Plugin {
         return;
       }
     } else {
-      this.site.initializeContent(folder, file);
+      if (folder && await this.detectStructuredFolder(folder)) {
+        await this.processStructuredFolder(folder);
+      } else {
+        this.site.initializeContent(folder, file);
+      }
     }
     const leaves = this.app.workspace.getLeavesOfType(FRIDAY_SERVER_VIEW_TYPE);
     if (leaves.length > 0) {
@@ -80470,6 +82953,115 @@ var FridayPlugin2 = class extends import_obsidian11.Plugin {
           type: FRIDAY_SERVER_VIEW_TYPE,
           active: true
         });
+      }
+    }
+  }
+  async detectStructuredFolder(folder) {
+    try {
+      const children2 = folder.children;
+      const childNames = children2.map((child) => child.name.toLowerCase());
+      const hasContentDirs = childNames.some((name) => name === "content" || name.startsWith("content."));
+      const hasStaticDir = childNames.includes("static");
+      return hasContentDirs;
+    } catch (error) {
+      console.warn("Error detecting structured folder:", error);
+      return false;
+    }
+  }
+  async processStructuredFolder(folder) {
+    try {
+      const children2 = folder.children;
+      const contentFolders = [];
+      let staticFolder = null;
+      for (const child of children2) {
+        if (!(child instanceof import_obsidian11.TFolder))
+          continue;
+        const childName = child.name.toLowerCase();
+        if (childName === "content") {
+          contentFolders.push({
+            folder: child,
+            languageCode: "en",
+            weight: 0
+          });
+        } else if (childName.startsWith("content.")) {
+          const langCode = childName.split(".")[1];
+          const mappedLangCode = this.mapLanguageCode(langCode);
+          contentFolders.push({
+            folder: child,
+            languageCode: mappedLangCode,
+            weight: 1
+          });
+        }
+        if (childName === "static") {
+          staticFolder = child;
+        }
+      }
+      contentFolders.sort((a, b) => {
+        if (a.weight !== b.weight) {
+          return a.weight - b.weight;
+        }
+        return a.folder.name.localeCompare(b.folder.name);
+      });
+      if (contentFolders.length > 0) {
+        this.site.initializeContentWithLanguage(contentFolders[0].folder, null, contentFolders[0].languageCode);
+        for (let i = 1; i < contentFolders.length; i++) {
+          this.site.addLanguageContentWithCode(contentFolders[i].folder, null, contentFolders[i].languageCode);
+        }
+      }
+      if (staticFolder) {
+        this.site.setSiteAssets(staticFolder);
+      }
+      const contentCount = contentFolders.length;
+      const hasStatic = staticFolder !== null;
+      let message = this.i18n.t("messages.structured_folder_processed", {
+        contentCount,
+        folderName: folder.name
+      });
+      if (hasStatic) {
+        message += " " + this.i18n.t("messages.static_folder_detected");
+      }
+      new import_obsidian11.Notice(message, 5e3);
+    } catch (error) {
+      console.error("Error processing structured folder:", error);
+      this.site.initializeContent(folder, null);
+    }
+  }
+  mapLanguageCode(code) {
+    const languageMap = {
+      "en": "en",
+      "zh": "zh",
+      "zh-cn": "zh",
+      "zh-hans": "zh",
+      "es": "es",
+      "fr": "fr",
+      "de": "de",
+      "ja": "ja",
+      "ko": "ko",
+      "pt": "pt"
+    };
+    return languageMap[code.toLowerCase()] || "en";
+  }
+  async setSiteAssets(folder) {
+    const success = this.site.setSiteAssets(folder);
+    if (success) {
+      const rightSplit = this.app.workspace.rightSplit;
+      if (!rightSplit) {
+        return;
+      }
+      if (rightSplit.collapsed) {
+        rightSplit.expand();
+      }
+      const leaves = this.app.workspace.getLeavesOfType(FRIDAY_SERVER_VIEW_TYPE);
+      if (leaves.length > 0) {
+        await this.app.workspace.revealLeaf(leaves[0]);
+      } else {
+        const leaf = this.app.workspace.getRightLeaf(false);
+        if (leaf) {
+          await leaf.setViewState({
+            type: FRIDAY_SERVER_VIEW_TYPE,
+            active: true
+          });
+        }
       }
     }
   }
@@ -80499,9 +83091,15 @@ var FridayPlugin2 = class extends import_obsidian11.Plugin {
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.previousDownloadServer = this.settings.downloadServer;
   }
   async saveSettings() {
+    const downloadServerChanged = this.previousDownloadServer !== this.settings.downloadServer;
     await this.saveData(this.settings);
+    if (downloadServerChanged) {
+      themeApiService.clearCache();
+      this.previousDownloadServer = this.settings.downloadServer;
+    }
     this.initializeFTP();
   }
   initializeFTP() {
@@ -80558,7 +83156,14 @@ var FridaySettingTab = class extends import_obsidian11.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    const { username, password, userToken, publishMethod, netlifyAccessToken, netlifyProjectId, ftpServer, ftpUsername, ftpPassword, ftpRemoteDir, ftpIgnoreCert } = this.plugin.settings;
+    const { username, password, userToken, downloadServer, publishMethod, netlifyAccessToken, netlifyProjectId, ftpServer, ftpUsername, ftpPassword, ftpRemoteDir, ftpIgnoreCert } = this.plugin.settings;
+    containerEl.createEl("h2", { text: this.plugin.i18n.t("settings.general_settings") });
+    new import_obsidian11.Setting(containerEl).setName(this.plugin.i18n.t("settings.download_server")).setDesc(this.plugin.i18n.t("settings.download_server_desc")).addDropdown((dropdown) => {
+      dropdown.addOption("global", this.plugin.i18n.t("settings.download_server_global")).addOption("east", this.plugin.i18n.t("settings.download_server_east")).setValue(downloadServer || "global").onChange(async (value2) => {
+        this.plugin.settings.downloadServer = value2;
+        await this.plugin.saveSettings();
+      });
+    });
     containerEl.createEl("h2", { text: this.plugin.i18n.t("settings.publish_settings") });
     let netlifySettingsContainer;
     let ftpSettingsContainer;

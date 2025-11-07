@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>MDFriday Slides</title>
+<meta name="description" content="A MDFriday theme for creating presentations with Markdown.">
+<meta name="author" content="MDFriday">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/reveal-js/reset.css">
+<link rel="stylesheet" href="/reveal-js/reveal.css">
+
+<link rel="stylesheet" href="/reveal-js/theme/robot-lung.css" id="theme">
+
+<link rel="stylesheet" href="/highlight-js/color-brewer.min.css">
+
+<!-- To insert markup before the closing head tag for all presentations,
+         create layouts/partials/reveal-hugo/head.html --><!-- override this partial to add content before the head tag closes --></head>
+  <body>
+    
+    <style>
+      #logo {
+        position: absolute;
+        top: 5%;
+        left: 4%;
+        width: 15%;
+      }
+    </style>
+    <img id="logo" src="/images/github-logo.png" alt="logo" >
+    
+    <div class="reveal">
+      <div class="slides">
+  <section><h1 data-heading="📽️" dir="auto" id="">📽️</h1>
+<h1 data-heading="MDFriday Slides" dir="auto" id="mdfriday-slides">MDFriday Slides</h1>
+<p dir="auto">A MDFriday theme for creating presentations with Markdown.</p>
+<p dir="auto">~ Theme made by <a data-tooltip-position="top" aria-label="https://joshed.io/" rel="noopener nofollow" class="external-link" href="https://joshed.io/" target="_blank">@dzello</a> ~</p></section>
+
+  <section><h2 data-heading="Fragment" dir="auto" id="fragment">Fragment</h2>
+<p dir="auto">The <code>fragment</code> shortcode makes content appear incrementally.</p>
+<pre><code>{{% fragment %}} One {{% /fragment %}}
+{{% fragment %}} Two {{% /fragment %}}
+{{% fragment %}} Three {{% /fragment %}}
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre>
+<p dir="auto">
+
+<span class='fragment ' ><p dir="auto"> One </p></span>
+
+<br>
+
+
+<span class='fragment ' ><p dir="auto"> Two </p></span>
+
+<br>
+
+
+<span class='fragment ' ><p dir="auto"> Three </p></span>
+
+</p>
+</section><section>
+<h2 data-heading="Frag" dir="auto" id="frag">Frag</h2>
+<p dir="auto">The <code>frag</code> shortcode is more terse than <code>fragment</code>. It accepts a <code>c</code> attribute.</p>
+<pre><code>{{&lt; frag c="One" &gt;}}
+{{&lt; frag c="Two" &gt;}}
+{{&lt; frag c="Three" &gt;}}
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre>
+<p dir="auto"><span class='fragment '
+  >
+  One
+</span><br>
+<span class='fragment '
+  >
+  Two
+</span><br>
+<span class='fragment '
+  >
+  Three
+</span></p></section><section><p dir="auto">
+
+<section data-shortcode-section>
+<h2 data-heading="Section" dir="auto" id="section">Section</h2>
+<p dir="auto">The <code>section</code> shortcode groups slides into a <strong>vertical display</strong>.</p>
+<br>
+<small>
+use the down arrow or swipe down to continue
+</small>
+<br>
+<a class="navigate-down" href="#" target="_blank" rel="noopener nofollow">🔽</a>
+</section><section>
+<p dir="auto">Put the shortcode around the slides you want to group together.</p>
+<pre class="language-markdown"><code class="language-markdown is-loaded">{{% section %}}
+
+<span class="token title important"><span class="token punctuation">##</span> Section slide 1</span>
+
+<span class="token hr punctuation">---</span>
+
+<span class="token title important"><span class="token punctuation">##</span> Section slide 2</span>
+
+{{% /section %}}
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre>
+<p dir="auto">Keep going down.</p>
+</section><section>
+<h2 data-heading="That's it!" dir="auto" id="thats-it">That's it!</h2>
+<p dir="auto">Use the right arrow or swipe right to continue.</p>
+</section></p></section><section><h2 data-heading="Slide" dir="auto" id="slide">Slide</h2>
+<p dir="auto">Use this shortcode when you need to customize slide attributes like id, class, background color and transition.</p>
+</section>
+<p dir="auto"><section data-noprocess data-shortcode-slide
+ data-transition="zoom"
+ data-transition-speed="fast">
+<h2 data-heading="Custom slide 1" dir="auto" id="custom-slide-1">Custom slide 1</h2>
+<p dir="auto"><small>Did you notice? This slide has a fast zoom transition.</small></p>
+<pre class="language-markdown"><code class="language-markdown is-loaded"><span class="token front-matter-block"><span class="token punctuation">---</span>
+
+<span class="token front-matter yaml language-yaml">{{% slide transition="zoom" transition-speed="fast" %&gt;}}
+
+## Custom slide 1
+
+{{% /slide %}}</span>
+
+<span class="token punctuation">---</span></span>
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre>
+</section>
+
+</p>
+</section>
+<p dir="auto"><section data-noprocess data-shortcode-slide
+ data-background-color="#FF4081">
+<h2 data-heading="Custom slide 2" dir="auto" id="custom-slide-2">Custom slide 2</h2>
+<p dir="auto"><small>This slide has a different background color.</small></p>
+</section>
+
+</p>
+</section>
+<p dir="auto"><section data-noprocess data-shortcode-slide
+ data-background-image="/images/bg.jpg"
+ data-background-color="#000000">
+<h2 data-heading="Custom slide 3" dir="auto" id="custom-slide-3">Custom slide 3</h2>
+<p dir="auto"><small>This slide has a background image.</small></p>
+<p dir="auto"><br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br></p>
+</section>
+
+</p></section><section><h1 data-heading="Math" dir="auto" id="math">Math</h1>
+</section><section>
+<ul>
+<li dir="auto">Block math:</li>
+</ul>
+<p dir="auto"><!-- Include katex only first time -->
+<link rel="stylesheet" href="/katex/katex.min.css" />
+<script defer src="/katex/katex.min.js"></script>
+<script defer src="/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
+  \[
+\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
+\]
+</span>
+</p>
+<ul>
+<li dir="auto">
+<p>Inline math:</p>
+<p>This is an inline polynomial: <span>
+  \(5x^2 + 2y -7\)
+</span>
+.</p>
+</li>
+</ul></section><section><h2 data-heading="Mermaid Chart Example" dir="auto" id="mermaid-chart-example">Mermaid Chart Example</h2>
+<pre class="language-tpl"><code class="language-tpl is-loaded">{{&lt; mermaid &gt;}}
+graph LR
+A --&gt; B
+B --&gt; C
+{{&lt; /mermaid &gt;}}
+</code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre>
+<p dir="auto"><div class="mermaid">
+graph LR
+A --> B
+B --> C
+
+</div>
+</p></section><section><h1 data-heading="Youtube" dir="auto" id="youtube">Youtube</h1>
+</section><section>
+<p dir="auto">
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/2maPgW5uDCI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p></section><section><h1 data-heading="Bilibili" dir="auto" id="bilibili">Bilibili</h1>
+</section><section>
+<p dir="auto">
+<div style="width: 100%; margin: 0 auto;">
+  <iframe src="//player.bilibili.com/player.html?isOutside=true&bvid=BV1bqsfzbEmt&p=1&autoplay=0"
+          width="100%" height="515" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="Bilibili Video"></iframe>
+</div></p></section><section><h1 data-heading="Thanks" dir="auto" id="thanks">Thanks</h1>
+</section><section>
+<h1 data-heading="↩️" dir="auto" id="">↩️</h1>
+<h4 data-heading="[Start over](#)" dir="auto"><a class="internal-link" data-href="#" href="#" target="_blank" rel="noopener nofollow">Start over</a></h4></section>
+
+</div>
+      <!-- To insert markup at the end of the .reveal tag for all presentations,
+           create layouts/partials/reveal-hugo/end.html --><!-- override this partial to add content before the .reveal tag closes -->
+<div class="line top"></div>
+<div class="line bottom"></div>
+<div class="line left"></div>
+<div class="line right"></div></div><!-- polyfill needed for IE11 and below -->
+<script type="text/javascript" src=/reveal-hugo/object-assign.js></script>
+<!-- load Reveal.js javascripts -->
+<script type="text/javascript" src="/reveal-js/reveal.js"></script>
+
+<script type="text/javascript" src="/reveal-js/plugin/markdown/markdown.js"></script>
+<script type="text/javascript" src="/reveal-js/plugin/highlight/highlight.js"></script>
+<script type="text/javascript" src="/reveal-js/plugin/zoom/zoom.js"></script>
+<script type="text/javascript" src="/reveal-js/plugin/notes/notes.js"></script>
+
+<!-- initialize Reveal.js -->
+<script type="text/javascript">
+  // Hugo lowercases all params and Reveal.js needs camelcase
+  // So params in Hugo must be stored in snakecase and we camelize them here
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+  var revealHugoSiteParams = {"history":true,"templates":{"grey":{"background":"#424242","transition":"convex"}}};
+  var revealHugoPageParams = {"custom_theme":"/reveal-js/theme/robot-lung.css","highlight_theme":"color-brewer","margin":0.2,"templates":{"hotpink":{"background":"#FF4081","class":"hotpink"}},"transition":"slide","transition_speed":"fast"};
+
+  var revealHugoPlugins = {
+
+      plugins: [RevealMarkdown,RevealHighlight,RevealZoom,RevealNotes]
+  };
+
+  // See all options - https://github.com/hakimel/reveal.js#configuration
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+
+  Reveal.initialize(options);
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script type="text/javascript">
+    mermaid.initialize({startOnLoad: false});
+    let render = (event) => {
+        let mermaidElems = event.currentSlide.querySelectorAll('.mermaid');
+        if (!mermaidElems.length){
+            return
+        }
+        mermaidElems.forEach(mermaidElem => {
+            let processed = mermaidElem.getAttribute('data-processed');
+            if (!processed){
+                // https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344
+                mermaid.init(undefined, mermaidElem);
+            }
+        });
+    };
+    // support current page reload with possible mermaid element
+    render({currentSlide: Reveal.getCurrentSlide()});
+
+    Reveal.on('slidechanged', render);
+    Reveal.on('ready', render);
+</script>
+    <!-- To insert markup before the closing body tag for all presentations,
+         create layouts/partials/reveal-hugo/body.html --><!-- override this partial to add content before the body tag closes -->
+  </body>
+</html>

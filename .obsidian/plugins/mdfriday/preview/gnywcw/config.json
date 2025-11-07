@@ -1,0 +1,27 @@
+{
+  "baseURL": "/",
+  "title": "Resume Clean",
+  "contentDir": "content",
+  "publishDir": "public",
+  "defaultContentLanguage": "en",
+  "taxonomies": {
+    "tag": "tags",
+    "category": "categories"
+  },
+  "module": {
+    "imports": [
+      {
+        "path": "https://sunwei.xyz/mdf/resume_clean_theme_east.zip?version=1.0"
+      }
+    ]
+  },
+  "params": {
+    "branding": false
+  },
+  "languages": {
+    "zh": {
+      "contentDir": "content",
+      "weight": 1
+    }
+  }
+}

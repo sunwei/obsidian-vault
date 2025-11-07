@@ -1,14 +1,59 @@
-- id: Search
-  translation: Search
+- id: home.recent_posts
+  translation: "Recent Posts"
 
-- id: Edit this page
-  translation: Edit this page
+- id: home.see_all_posts
+  translation: "See All Posts"
 
-- id: Last modified by
-  translation: Last modified by
+- id: home.featured_posts
+  translation: "Featured Posts"
 
-- id: Expand
-  translation: Expand
+- id: home.portfolio
+  translation: "Portfolio"
 
-- id: bookSearchConfig
-  translation: '{ cache: true }'
+- id: home.see_all_projects
+  translation: "See All Projects"
+
+- id: footer.go_to_top
+  translation: "Go to top"
+
+- id: nav.home
+  translation: "Home"
+
+- id: nav.about
+  translation: "About"
+
+- id: nav.blog
+  translation: "Blog"
+
+- id: nav.portfolio
+  translation: "Portfolio"
+
+- id: nav.contact
+  translation: "Contact"
+
+- id: page.read_more
+  translation: "Read more"
+
+- id: page.published_on
+  translation: "Published on"
+
+- id: page.updated_on
+  translation: "Updated on"
+
+- id: page.tags
+  translation: "Tags"
+
+- id: page.categories
+  translation: "Categories"
+
+- id: portfolio.demo
+  translation: "Demo"
+
+- id: portfolio.source
+  translation: "Source"
+
+- id: portfolio.technologies
+  translation: "Technologies Used"
+
+- id: posts.writing
+  translation: "Writing"

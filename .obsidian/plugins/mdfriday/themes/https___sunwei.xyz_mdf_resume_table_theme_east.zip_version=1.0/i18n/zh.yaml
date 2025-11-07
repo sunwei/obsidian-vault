@@ -1,0 +1,44 @@
+- id: name
+  translation: "姓 名"
+- id: position
+  translation: "求职岗位"
+- id: gender
+  translation: "性 别"
+- id: age
+  translation: "年 龄"
+- id: experience
+  translation: "工作年限"
+- id: location
+  translation: "籍 贯"
+- id: email
+  translation: "联系邮箱"
+- id: phone
+  translation: "联系电话"
+- id: male
+  translation: "男"
+- id: female
+  translation: "女"
+- id: photo
+  translation: "图片"
+- id: education
+  translation: "教育背景"
+- id: work_experience
+  translation: "工作经验"
+- id: skills
+  translation: "技能特长"
+- id: honors
+  translation: "荣誉证书"
+- id: project_experience
+  translation: "项目经验"
+- id: interests
+  translation: "兴趣爱好"
+- id: self_evaluation
+  translation: "自我评价"
+- id: awards
+  translation: "获奖情况"
+- id: social_practice
+  translation: "社会实践"
+- id: volunteer_service
+  translation: "志愿服务"
+- id: other_info
+  translation: "其他信息"

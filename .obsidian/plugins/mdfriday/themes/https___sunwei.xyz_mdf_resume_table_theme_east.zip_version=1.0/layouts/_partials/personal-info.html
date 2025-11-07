@@ -1,0 +1,28 @@
+<!-- 个人信息部分 -->
+<tr>
+    <td class="label">{{ i18n "name" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.name | default (i18n "name") }}</td>
+    <td class="label">{{ i18n "gender" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.gender | default (i18n "male") }}</td>
+    <td class="avatar-cell" rowspan="4">
+        {{ i18n "photo" }}
+    </td>
+</tr>
+<tr>
+    <td class="label">{{ i18n "age" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.age | default (i18n "age") }}</td>
+    <td class="label">{{ i18n "location" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.location | default (i18n "location") }}</td>
+</tr>
+<tr>
+    <td class="label">{{ i18n "experience" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.experience | default (i18n "experience") }}</td>
+    <td class="label">{{ i18n "phone" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.phone | default (i18n "phone") }}</td>
+</tr>
+<tr>
+    <td class="label">{{ i18n "email" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.email | default (i18n "email") }}</td>
+    <td class="label">{{ i18n "position" }}</td>
+    <td class="value">{{ .Site.Home.Params.author.position | default (i18n "position") }}</td>
+</tr>

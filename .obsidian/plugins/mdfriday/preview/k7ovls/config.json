@@ -1,0 +1,27 @@
+{
+  "baseURL": "/",
+  "title": "content",
+  "contentDir": "content",
+  "publishDir": "public",
+  "defaultContentLanguage": "en",
+  "taxonomies": {
+    "tag": "tags",
+    "category": "categories"
+  },
+  "module": {
+    "imports": [
+      {
+        "path": "https://gohugo.net/slides_theme.zip?version=1.0"
+      }
+    ]
+  },
+  "params": {
+    "branding": false
+  },
+  "languages": {
+    "en": {
+      "contentDir": "content",
+      "weight": 1
+    }
+  }
+}

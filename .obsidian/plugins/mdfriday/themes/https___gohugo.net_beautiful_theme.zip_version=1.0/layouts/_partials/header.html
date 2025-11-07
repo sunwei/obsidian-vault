@@ -1,0 +1,74 @@
+{{- partial "load-photoswipe-theme.html" . }}
+
+{{ $bigimg := .Params.bigImages }}
+{{ $title := .Params.title }}
+{{ $subtitle := .Params.subtitle }}
+
+{{ if or $bigimg $title }}
+  {{ if $bigimg }}
+    <div id="header-big-imgs" data-num-img={{len $bigimg}}
+      {{range $i, $img := $bigimg}}
+         data-img-src-{{add $i 1}}="{{$img | relURL }}"
+      {{end}}></div>
+  {{ end }}
+
+  <header class="header-section {{ if $bigimg }}has-img{{ end }}">
+    {{ if $bigimg }}
+      {{ $firstimg := index $bigimg 0 }}
+      <div class="intro-header big-img" style="background-image: url('{{$firstimg}}');">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class="{{ .Type }}-heading">
+                <h1>{{ with $title }}{{.}}{{ else }}<br/>{{ end }}</h1>
+                  {{ if $subtitle }}
+                    {{ if eq .Type "page" }}
+                      <hr class="small">
+                      <span class="{{ .Type }}-subheading">{{ $subtitle }}</span>
+                    {{ else }}
+                      <h2 class="{{ .Type }}-subheading">{{ $subtitle }}</h2>
+                    {{ end }}
+                  {{ end }}
+                  {{ if eq .Type "posts" }}
+                    {{ partial "post_meta.html" . }}
+                  {{ end }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{end}}
+    {{ if $title }}
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="{{ .Type }}-heading">
+              {{ if eq .Type "list" }}
+                <h1>{{ if .Data.Singular }}#{{ end }}{{ .Title }}</h1>
+              {{ else }}
+                <h1>{{ with $title }}{{.}}{{ else }}<br/>{{ end }}</h1>
+              {{ end }}
+              {{ if ne .Type "posts" }}
+                <hr class="small">
+              {{ end }}
+              {{ if $subtitle }}
+                {{ if eq .Type "page" }}
+                  <span class="{{ .Type }}-subheading">{{ $subtitle }}</span>
+                {{ else }}
+                  <h2 class="{{ .Type }}-subheading">{{ $subtitle }}</h2>
+                {{ end }}
+              {{ end }}
+              {{ if eq .Type "posts" }}
+                {{ partial "post_meta.html" . }}
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{ end }}
+  </header>
+{{ else }}
+  <div class="intro-header"></div>
+{{ end }}

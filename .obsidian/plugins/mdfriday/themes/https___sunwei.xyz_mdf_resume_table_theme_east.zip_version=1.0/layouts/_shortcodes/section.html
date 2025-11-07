@@ -1,0 +1,18 @@
+{{- $title := .Get "title" -}}
+{{- $i18nKey := .Get "i18n" -}}
+{{- $content := .Inner -}}
+{{- $displayTitle := "" -}}
+
+{{- if $i18nKey -}}
+    {{- $displayTitle = i18n $i18nKey -}}
+{{- else if $title -}}
+    {{- $displayTitle = $title -}}
+{{- else -}}
+    {{- $displayTitle = i18n "other_info" -}}
+{{- end -}}
+
+<!-- 通用信息部分 -->
+<tr>
+    <td class="section-header">{{ $displayTitle }}</td>
+    <td class="section-content certificate-content" colspan="4">{{ $content }}</td>
+</tr>

@@ -1,0 +1,27 @@
+<div class="featuredpost" style="background-color: {{ .Params.color | default "#f5f5f5" }};">
+    {{- if .Params.featured_image -}}
+    <picture>
+        <img alt="{{ .Params.featured_image_alt | default "" }}" 
+             class="featuredpost__image" 
+             height="500"
+             src="{{ .Params.featured_image | relURL }}" 
+             width="500" 
+             decoding="auto"
+             loading="eager"
+             sizes="(min-width:1270px) 264px, 95vw"
+             {{- if .Params.featured_image_srcset -}}
+             srcset="{{ .Params.featured_image_srcset }}"
+             {{- end -}}>
+    </picture>
+    {{- end -}}
+    <div class="featuredpost__inner">
+        <a href="{{ .RelPermalink }}" class="featuredpost__link">
+            <span class="featuredpost__title">{{ .Title }}</span>
+        </a>
+        {{- if .Params.description -}}
+        <p class="featuredpost__description">{{ .Params.description }}</p>
+        {{- else if .Summary -}}
+        <p class="featuredpost__description">{{ .Summary }}</p>
+        {{- end -}}
+    </div>
+</div>

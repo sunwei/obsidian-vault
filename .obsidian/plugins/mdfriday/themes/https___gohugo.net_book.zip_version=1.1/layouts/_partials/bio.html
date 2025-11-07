@@ -1,0 +1,63 @@
+<div class="author">
+    {{- if .Site.Home.Params.organization -}}
+    <div class="organization-info">
+        {{- if .Site.Home.Params.organization.logo -}}
+        <img
+            class="organization-logo"
+            src="{{ .Site.Home.Params.organization.logo | relURL }}"
+            alt="{{ .Site.Home.Params.organization.name }}"
+            width="70"
+            height="70" />
+        {{- end -}}
+        <h2 class="organization-name">{{ .Site.Home.Params.organization.name }}</h2>
+        {{- if .Site.Home.Params.organization.description -}}
+        <p class="organization-description">{{ .Site.Home.Params.organization.description }}</p>
+        {{- end -}}
+        {{- if .Site.Home.Params.organization.vision -}}
+        <p class="organization-vision">{{ .Site.Home.Params.organization.vision }}</p>
+        {{- end -}}
+        {{- if .Site.Home.Params.organization.website -}}
+        <p class="organization-website">
+            <a href="{{ .Site.Home.Params.organization.website }}" target="_blank" rel="noopener">
+                {{ .Site.Home.Params.organization.website }}
+            </a>
+        </p>
+        {{- end -}}
+    </div>
+    {{- end -}}
+    
+    {{- if .Site.Home.Params.author -}}
+    <div class="author-info">
+        {{- if .Site.Home.Params.author.avatar -}}
+        <img
+            class="author-avatar"
+            src="{{ .Site.Home.Params.author.avatar | relURL }}"
+            alt="{{ .Site.Home.Params.author.name }}"
+            width="70"
+            height="70" />
+        {{- end -}}
+        <h3 class="author-name">{{ .Site.Home.Params.author.name }}</h3>
+        {{- if .Site.Home.Params.author.description -}}
+        <p class="author-bio">{{ .Site.Home.Params.author.description }}</p>
+        {{- end -}}
+        {{- if .Site.Home.Params.author.website -}}
+        <p class="author-website">
+            <a href="{{ .Site.Home.Params.author.website }}" target="_blank" rel="noopener">
+                {{ .Site.Home.Params.author.website }}
+            </a>
+        </p>
+        {{- end -}}
+    </div>
+    {{- else if .Site.Params.avatar -}}
+    <img
+        class="author-avatar"
+        src="{{ .Site.Params.avatar | relURL }}"
+        alt="{{ .Site.Author.Name }}"
+        width="70"
+        height="70" />
+    <h2 class="author-name">{{ .Site.Author.Name }}</h2>
+    {{- if .Site.Author.Description -}}
+    <p class="author-bio">{{ .Site.Author.Description }}</p>
+    {{- end -}}
+    {{- end -}}
+</div>

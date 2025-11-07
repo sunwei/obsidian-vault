@@ -1,0 +1,9 @@
+{{- $skill := .Get "skill" -}}
+{{- $level := .Get "level" -}}
+{{- $text := .Get "text" -}}
+
+<div class="skill-item">
+    <span class="skill-name">{{ $skill }}</span>
+    <span class="skill-bar {{ $level }}"></span>
+    <span>{{ $text }}</span>
+</div>

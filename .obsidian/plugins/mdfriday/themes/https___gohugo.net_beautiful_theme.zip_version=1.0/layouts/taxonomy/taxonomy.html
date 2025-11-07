@@ -1,0 +1,39 @@
+{{ define "main" }}
+
+{{ with index .Site.Taxonomies.Values .Page.Type }}
+{{ $taxonomies := . }}
+
+<div class="container" role="main">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <article class="post-preview">
+      <div class="panel-group" id="accordion">
+        {{ range $name, $pages := $taxonomies.Values }}
+          <div class="panel panel-default">
+            <a class="collapsed" role="button" data-toggle="collapse" data-target="#collapse{{ $name }}" data-parent="#accordion">
+                <div class="panel-heading" id="header{{ $name }}">
+                  <h4 class="panel-title">
+                      {{ $name }}
+                    <span class="badge">{{ len $pages }}</span>
+                  </h4>
+                </div>
+            </a>
+            <div id="collapse{{ $name }}" class="panel-collapse collapse">
+              <div class="panel-body">
+                {{- $path := printf "%s/%s" $.Page.Type $name }}
+                <a href="{{ $path | relURL }}" class="list-group-item view-all">View all</a>
+                <div class="list-group">
+                  {{ range $item := $pages }}
+                    <a href="{{$item.RelPermalink}}" class="list-group-item">{{ $item.Title }}</a>
+                  {{ end }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {{ end }}
+      </div>
+    </article>
+  </div>
+</div>
+
+{{ end }}
+{{ end }}

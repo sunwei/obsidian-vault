@@ -1,0 +1,10 @@
+{{- $href := .Get "href" -}}
+{{- $content := .Get "content" | default (.Inner | plainify) -}}
+
+<p class="hero__pretitle">
+    {{- if $href -}}
+    <a href="{{ $href }}">{{ $content }}</a>
+    {{- else -}}
+    {{ $content }}
+    {{- end -}}
+</p>

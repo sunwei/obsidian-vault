@@ -1,0 +1,16 @@
+{{ range . -}}
+  {{- if .Content  -}}
+    {{- $content := replace .Content "<div class=\"footnotes\">\n\n<hr />" "<div class=\"footnotes\">" -}}
+    {{- $content := replaceRE `<code class="language-\w+"\s+data-lang="\w+"` `<code class="nohighlight" data-noescape` $content -}}
+    {{- $content := replaceRE `(<code class="language-\w+){}(">)` `$1" data-line-numbers>` $content -}}
+    {{- $content := replaceRE `(<code class="language-\w+){(\S+)}(">)` `$1" data-line-numbers="$2">` $content -}}
+    {{- $content := replace $content "<hr>" "<hr />" -}}
+    {{- range (split $content "<hr />") -}}
+      {{- if not (in . "data-noprocess") -}}
+<section>
+          {{- end -}}
+  {{- . | safeHTML -}}
+</section>
+    {{- end -}}
+  {{- end -}}
+{{- end }}

@@ -1,0 +1,27 @@
+<div class="header">
+    <h1>{{ .Site.Home.Params.author.name | default "姓名" }}</h1>
+    <div class="avatar"></div>
+    <div class="basic-info">
+        {{ with .Site.Home.Params.author.position }}
+        <div>{{ i18n "position" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.gender }}
+        <div>{{ i18n "gender" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.age }}
+        <div>{{ i18n "age" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.experience }}
+        <div>{{ i18n "experience" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.location }}
+        <div>{{ i18n "location" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.email }}
+        <div>{{ i18n "email" }}：{{ . }}</div>
+        {{ end }}
+        {{ with .Site.Home.Params.author.phone }}
+        <div>{{ i18n "phone" }}：{{ . }}</div>
+        {{ end }}
+    </div>
+</div>

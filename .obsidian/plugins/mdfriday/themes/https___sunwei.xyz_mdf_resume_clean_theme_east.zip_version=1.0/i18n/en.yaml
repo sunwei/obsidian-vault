@@ -1,0 +1,36 @@
+- id: position
+  translation: "Position"
+- id: gender
+  translation: "Gender"
+- id: age
+  translation: "Age"
+- id: experience
+  translation: "Experience"
+- id: location
+  translation: "Location"
+- id: email
+  translation: "Email"
+- id: phone
+  translation: "Phone"
+- id: education
+  translation: "Education"
+- id: work_experience
+  translation: "Work Experience"
+- id: skills
+  translation: "Skills"
+- id: honors
+  translation: "Honors & Certificates"
+- id: self_evaluation
+  translation: "Self Evaluation"
+- id: project_experience
+  translation: "Project Experience"
+- id: interests
+  translation: "Interests"
+- id: awards
+  translation: "Awards"
+- id: social_practice
+  translation: "Social Practice"
+- id: volunteer_service
+  translation: "Volunteer Service"
+- id: other_info
+  translation: "Other Information"

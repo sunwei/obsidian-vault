@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.Language.Lang }}">
-
-  <head>
-    {{ partial "docs/html-head" . }}
-    {{ partial "docs/inject/head" . }}
-
-    <style>
-      .not-found {
-        text-align: center;
-      }
-      .not-found h1 {
-        margin: .25em 0 0 0;
-        opacity: .25;
-        font-size: 40vmin;
-      }
-    </style>
-  </head>
-
-  <body>
-    <main class="flex justify-center not-found">
-      <div>
-        <h1>404</h1>
-        <h2>Page Not Found</h2>
-        <h3>
-          <a href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
-        </h3>
-      </div>
-    </main>
-
-    {{ partial "docs/inject/body" . }}
-  </body>
-
-  </html>
+{{ define "main" }}
+<main class="container main" id="main" role="main" tabindex="-1">
+    <div class="page page--404">
+        <div class="page__content">
+            <h1 class="page__title">404 - Page Not Found</h1>
+            <p class="page__description">
+                Sorry, the page you are looking for doesn't exist or has been moved.
+            </p>
+            <div class="page__actions">
+                <a href="{{ .Site.Home.RelPermalink }}" class="btn btn--primary">
+                    Go Home
+                </a>
+                <a href="/blog/" class="btn btn--secondary">
+                    Browse Blog
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+{{ end }}

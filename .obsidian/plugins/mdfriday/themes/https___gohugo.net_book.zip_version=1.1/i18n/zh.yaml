@@ -1,20 +1,59 @@
-- id: Search
-  translation: 搜索
+- id: home.recent_posts
+  translation: "最新文章"
 
-- id: Edit this page
-  translation: 编辑本页
+- id: home.see_all_posts
+  translation: "查看所有文章"
 
-- id: Last modified by
-  translation: 最后修改者
+- id: home.featured_posts
+  translation: "精选文章"
 
-- id: Expand
-  translation: 展开
+- id: home.portfolio
+  translation: "作品集"
 
-- id: bookSearchConfig
-  translation: |
-    {
-      encode: false,
-      tokenize: function(str) {
-        return str.replace(/[\x00-\x7F]/g, '').split('');
-      }
-    }
+- id: home.see_all_projects
+  translation: "查看所有项目"
+
+- id: footer.go_to_top
+  translation: "回到顶部"
+
+- id: nav.home
+  translation: "首页"
+
+- id: nav.about
+  translation: "关于"
+
+- id: nav.blog
+  translation: "博客"
+
+- id: nav.portfolio
+  translation: "作品集"
+
+- id: nav.contact
+  translation: "联系"
+
+- id: page.read_more
+  translation: "阅读更多"
+
+- id: page.published_on
+  translation: "发布于"
+
+- id: page.updated_on
+  translation: "更新于"
+
+- id: page.tags
+  translation: "标签"
+
+- id: page.categories
+  translation: "分类"
+
+- id: portfolio.demo
+  translation: "演示"
+
+- id: portfolio.source
+  translation: "源码"
+
+- id: portfolio.technologies
+  translation: "使用技术"
+
+- id: posts.writing
+  translation: "写作"

@@ -1,19 +1,49 @@
 {{ define "main" }}
-{{ range sort .Paginator.Pages }}
-<article class="markdown book-post">
-    <h2>
-        <a href="{{ .RelPermalink }}">{{ partial "docs/title.html" . }}</a>
-    </h2>
-    {{ partial "docs/post-meta" . }}
-    <div class="book-post-content">
-        {{- .Summary -}}
+<main class="container main" id="main" role="main" tabindex="-1">
+    <div class="page page--blog">
+        <header class="page__header">
+            <h1 class="page__title">{{ .Title | default "Writing" }}</h1>
+            {{- if .Content -}}
+            <div class="page__content">
+                {{ .Content }}
+            </div>
+            {{- end -}}
+        </header>
+        
+        <div class="page__content">
+            <ol class="postlist" reversed start="{{ len .Pages }}">
+                {{- $pages := sort .Pages "Params.weight" -}}
+                {{- range $pages -}}
+                <li class="h-entry postlist__item">
+                    <h2 class="p-name postlist__title">
+                        <a href="{{ .RelPermalink }}" class="u-url postlist__link" rel="bookmark">{{ .Title }}</a>
+                    </h2>
+                    <div class="postlist__meta">
+                        {{ $ISO_date := "2006-01-02T15:04:05Z0700" }}
+                        {{ $configDateFormat := .Site.Params.dateFormat | default "2 Jan 2006" }}
+                        <time class="dt-published postlist__date" datetime="{{ dateFormat $ISO_date .Date }}">
+                            {{ time.Format $configDateFormat .Date }}
+                        </time>
+
+                        {{- if .Params.tags -}}
+                        <span aria-hidden="true">⋅</span> 
+                        <span class="p-category postlist__tags">
+                            {{- range $index, $tag := .Params.tags -}}
+                                {{- if $index -}}, {{ end -}}{{ $tag -}}
+                            {{- end -}}
+                        </span>
+                        {{- end -}}
+
+                    </div>
+                    {{- if .Params.description -}}
+                    <p class="p-summary postlist__excerpt">{{ .Params.description }}</p>
+                    {{- else if .Summary -}}
+                    <p class="p-summary postlist__excerpt">{{ .Summary }}</p>
+                    {{- end -}}
+                </li>
+                {{- end -}}
+            </ol>
+        </div>
     </div>
-</article>
-{{ end }}
-
-{{ partial "pagination.html" . }}
-{{ end }}
-
-{{ define "toc" }}
-{{ partial "docs/taxonomy" . }}
+</main>
 {{ end }}
